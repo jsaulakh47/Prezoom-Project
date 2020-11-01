@@ -1,4 +1,4 @@
-# **Requirements**
+# **Prezoom Project Requirements**
 
 ## Domain model:
 
@@ -83,7 +83,7 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 ## Use Cases
 
 ### Use Case 1: Overview
-**Subject**: The Alfa Project  
+**Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.\*, 2.\*, 3.\*, 4.\*, 5.\*  
 **Precondition**: The system not started yet
@@ -116,7 +116,7 @@ the process starts again at step 2.
 
 
 ### Use Case 2: Switching between modes
-**Subject**: The Alfa Project  
+**Subject**: The Prezoom System
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 6.\*  
 **Precondition**: The system is started
@@ -129,7 +129,7 @@ the process starts again at step 2.
 
 
 ### Use Case 3: Exit
-**Subject**: The Alfa Project  
+**Subject**: The Prezoom System
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.5  
 **Precondition**: The system is started
