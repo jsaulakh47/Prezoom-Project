@@ -88,8 +88,8 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 **Requirements addressed**: 1.\*, 2.\*, 3.\*, 4.\*, 5.\*  
 **Precondition**: The system not started yet
 
-Typical flow:
--------------
+#### Typical flow:
+
 1. User request Operating System to start the Alfa Project
 2. Operating System prompts user to create new or sheet are use an existing sheeet
 3. if the user selects "Create new"  
@@ -108,8 +108,7 @@ Typical flow:
         <li> User can again exit the system using the toolbar. </li>
     </ol>
 
-Alternative flow:
------------------
+#### Alternative flow:
 - If the user selects cancel in the file picker (in step 4.a),
 the process starts again at step 2.  
 
@@ -122,8 +121,7 @@ the process starts again at step 2.
 **Requirements addressed**: 6.\*  
 **Precondition**: The system is started
 
-Typical flow:
--------------
+#### Typical flow:
 1. When in edit mode, User can click "Present" to switch directly to presentation mode.
 2. When in presentation mdode, user can press "ESC" to switch to edit mode.
 
@@ -136,8 +134,7 @@ Typical flow:
 **Requirements addressed**: 1.5  
 **Precondition**: The system is started
 
-Typical flow:
--------------
+#### Typical flow:
 1. The user selects the exit from toolbar, or by using the OS to send a “close” message to the main window.
 2. Include “ensure the data is safe”
 3. The system requests the Operating System to terminate its process.
