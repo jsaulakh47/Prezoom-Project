@@ -86,7 +86,7 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 **Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.\*, 2.\*, 3.\*, 4.\*, 5.\*  
-**Precondition**: The system not started yet
+**Precondition**: The system is not started yet
 
 #### Typical flow:
 
@@ -112,27 +112,27 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 - If the user selects cancel in the file picker (in step 4.a),
 the process starts again at step 2.  
 
-**Postcondition**: The system is operational.
+**Postcondition**: The system is in running state.
 
 
 ### Use Case 2: Switching between modes
-**Subject**: The Prezoom System
+**Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 6.\*  
-**Precondition**: The system is started
+**Precondition**: The system is in running state.
 
 #### Typical flow:
 1. When in edit mode, User can click "Present" to switch directly to presentation mode.
 2. When in presentation mdode, user can press "ESC" to switch to edit mode.
 
-**Postcondition**: The system is started.
+**Postcondition**: The system is in running state.
 
 
 ### Use Case 3: Exit
-**Subject**: The Prezoom System
+**Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.5  
-**Precondition**: The system is started
+**Precondition**: The system is in running state.
 
 #### Typical flow:
 1. The user selects the exit from toolbar, or by using the OS to send a “close” message to the main window.
@@ -142,3 +142,17 @@ the process starts again at step 2.
 **Postcondition**: The system is terminated  
 **Alternative paths**: If the user selects cancel in step 2 the use case stops with postcondition “The system is started”. 
 
+## Use Case Diagrams
+
+### Case 1 : Overview
+![image info](images/use_case_1.png)
+
+### Case 2: Switching between modes 
+![image info](images/use_case_2.png)
+
+
+## State Diagram
+
+### Pre- and postconditions as states 
+
+![image info](images/state_diagram.png)
