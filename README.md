@@ -179,3 +179,28 @@ the process starts again at step 2.
 
 ### Widgets
 ![image info](images/widgets.png)
+ 
+
+## Deliverables
+
+### Iteration 0:
+- Domain Model.
+- Lexicon.
+- User Stories.
+- Use Case.
+- Use Case diagram and State diagram.
+- Wireframe.
+    
+### Iteration 1:
+- Template UI
+- Transitions between states
+- Adding object in the state
+- Defining various attributes for each object.
+- Changing attribute values.
+    
+### Iteration 2:
+- Presentation mode.
+- Save/Load file.
+- Camera.
+- Switching the modes between edit and presentation mode.
+- Interpolation.
