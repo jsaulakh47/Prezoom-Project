@@ -130,7 +130,7 @@ the process starts again at step 2.
 
 #### Typical flow:
 1. When in edit mode, User can click "Present" to switch directly to presentation mode.
-2. When in presentation mdode, user can press "ESC" to switch to edit mode.
+2. When in presentation mode, user can press "ESC" to switch to edit mode.
 
 **Postcondition**: The system is in running state.
 
