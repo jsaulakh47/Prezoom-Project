@@ -1,10 +1,10 @@
-# **Prezoom Project Requirements**
+# **Prezoom Software Requirements Specification**
 
 ## Team Alfa Members
     1. Disha Bodiwala
-    4. Kwame Owusu-Boakye
-    2. Jagbir Singh Aulakh
-    3. Shiv Umeshbhai Tilva
+    2. Kwame Owusu-Boakye
+    3. Jagbir Singh Aulakh
+    4. Shiv Umeshbhai Tilva
     5. Vraj Sanjaykumar Patel
 
 ## Domain model:
@@ -163,3 +163,18 @@ the process starts again at step 2.
 ### Preconditions and postconditions as states 
 
 ![image info](images/state_diagram.png)
+
+
+## Wireframe
+
+### Edit Mode [All States]
+![image info](images/edit_mode.png)
+
+### Edit Mode [Single State]
+![image info](images/state_mode.png)
+
+### Presentation Mode
+![image info](images/presentation_mode.png)
+
+### Widgets
+![image info](images/widgets.png)
