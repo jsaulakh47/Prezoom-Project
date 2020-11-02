@@ -1,9 +1,17 @@
 # **Prezoom Project Requirements**
 
+## Team Alfa Members
+    1. Disha Bodiwala
+    4. Kwame Owusu-Boakye
+    2. Jagbir Singh Aulakh
+    3. Shiv Umeshbhai Tilva
+    5. Vraj Sanjaykumar Patel
+
 ## Domain model:
 
+![image info](images/domain_model.png)
 
-```mermaid
+<!-- ```mermaid
 classDiagram
     Sheet "1" o-- "0..*" States
     States "1" o-- "0..*" Objects
@@ -18,7 +26,7 @@ classDiagram
     Transitions : trigger()
     Mode : edit()
     Mode : presentation()
-```
+``` -->
 
 ## Lexicon
 ### [1] State
@@ -51,33 +59,32 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 
 ## User Stories
     1. Sheets
-        1.1. A user can create a new SHEET.
-        1.2. A user can load a previously saved sheet.
-        1.3. A user can save a sheet.
-        1.4. A user can specify the start state.
-        1.5. A user can exit a sheet.
+        1.1. As a user, I should be able to create a new SHEET.
+        1.2. As a user, I should be able to load a previously saved sheet.
+        1.3. As a user, I should be able to save a sheet.
+        1.4. As a user, I should be able to specify the start state.
 
     2. States
-        2.1. A user can add a state to a sheet.
-        2.2. A user can delete a state.
-        2.3. A user can reorder states.
-        2.4. A user can view the presentation at any state.
+        2.1. As a user, I should be able to add a state to a sheet.
+        2.2. As a user, I should be able to delete a state.
+        2.3. As a user, I should be able to reorder states.
+        2.4. As a user, I should be able to view the presentation at any state.
 
     3. Objects
-        3.1. A user can add different type of objects.
-        3.2. A user can delete an object.
-        3.3. A user can edit an object (by changing value of attributes).
-
+        3.1. As a user, I should be able to add different type of objects.
+        3.2. As a user, I should be able to delete an object.
+        3.3. As a user, I should be able to edit an object (by changing value of attributes).
+    
     4. Transition
-        4.1. A user can add a transition.
-        4.2. A user can delete a transition.
-        4.3. A user can edit a transition.
-
+        4.1. As a user, I should be able to add a transition.
+        4.2. As a user, I should be able to delete a transition.
+        4.3. As a user, I should be able to edit a transition.
+    
     5. Interpolation
-        5.1. A user can adjust an object’s mode of transition.
-
+        5.1. As a user, I should be able to adjust an object’s mode of transition.
+    
     6. Mode
-        6.1. User can switch two modes (Edit or Presentation).
+        6.1. As a user, I should be able to switch two modes (Edit or Presentation).
 
 
 ## Use Cases
@@ -86,7 +93,7 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 **Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.\*, 2.\*, 3.\*, 4.\*, 5.\*  
-**Precondition**: The system not started yet
+**Precondition**: The system is not started yet
 
 #### Typical flow:
 
@@ -112,27 +119,27 @@ User can create a new sheet or load an existing sheet. After editing a sheet, us
 - If the user selects cancel in the file picker (in step 4.a),
 the process starts again at step 2.  
 
-**Postcondition**: The system is operational.
+**Postcondition**: The system is in running state.
 
 
 ### Use Case 2: Switching between modes
-**Subject**: The Prezoom System
+**Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 6.\*  
-**Precondition**: The system is started
+**Precondition**: The system is in running state.
 
 #### Typical flow:
 1. When in edit mode, User can click "Present" to switch directly to presentation mode.
 2. When in presentation mdode, user can press "ESC" to switch to edit mode.
 
-**Postcondition**: The system is started.
+**Postcondition**: The system is in running state.
 
 
 ### Use Case 3: Exit
-**Subject**: The Prezoom System
+**Subject**: The Prezoom System  
 **Actors involved**: User, The operating System  
 **Requirements addressed**: 1.5  
-**Precondition**: The system is started
+**Precondition**: The system is in running state.
 
 #### Typical flow:
 1. The user selects the exit from toolbar, or by using the OS to send a “close” message to the main window.
@@ -142,3 +149,17 @@ the process starts again at step 2.
 **Postcondition**: The system is terminated  
 **Alternative paths**: If the user selects cancel in step 2 the use case stops with postcondition “The system is started”. 
 
+## Use Case Diagrams
+
+### Case 1 : Overview
+![image info](images/use_case_1.png)
+
+### Case 2: Switching between modes 
+![image info](images/use_case_2.png)
+
+
+## State Diagram
+
+### Preconditions and postconditions as states 
+
+![image info](images/state_diagram.png)
