@@ -1,4 +1,4 @@
-# **Prezoom Project Requirements**
+# **Prezoom Software Requirements Specification**
 
 ## Team Alfa Members
     1. Disha Bodiwala
