@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Requirements Specification</title>
+<title>README.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -392,31 +392,35 @@ classDiagram
     Mode : presentation()
 ``` -->
 <h2 id="lexicon">Lexicon</h2>
-<h3 id="1-state">[1] State</h3>
-<p>A state is a combination of objects (0 or more). Multiple states are present on a single sheet and change according to transitions.</p>
-<h3 id="2-attributes">[2] Attributes</h3>
-<p>It provides a description of objects and camera where attributes vary as per different objects.</p>
-<h3 id="3-objects">[3] Objects</h3>
-<p>Objects can have 0 or more attributes. There will be a combination of objects in states. Various objects can have same interpolation methods.</p>
-<h3 id="4-transitions">[4] Transitions</h3>
-<p>Transition provides a triggering of states (Transformation) with respect to interpolation. The camera moves according to the transition of states.</p>
-<h3 id="5-interpolation">[5] Interpolation</h3>
+<h3 id="1-state">[1]	State:</h3>
+<p>A state is a combination of 0 or more objects. Multiple states are present on a single sheet and change according to transitions.</p>
+<h3 id="2-objects">[2]	Objects:</h3>
+<p>Objects can have 1 attribution and can belong to multiple states.</p>
+<h3 id="3-attribution">[3]	Attribution:</h3>
+<p>This describes a set of attributes which belongs to a particular object.</p>
+<h3 id="4-attributes">[4]	Attributes:</h3>
+<p>It describes a set of possible features related to an object (through attribution) or the camera.</p>
+<h3 id="5-transitions">[5]	Transitions:</h3>
+<p>Transitions provide a transformation from one state to another through a triggering mechanism. This causes the camera to move to the next state accordingly.</p>
+<h3 id="6-interpolation">[6]	Interpolation:</h3>
 <p>Interpolation provides information about transition of objects. The same interpolation method can be applied to multiple objects.</p>
-<h3 id="6-camera">[6] Camera</h3>
-<p>It has multiple attributes, which focuses on current state.</p>
-<h3 id="7-timeline">[7] Timeline</h3>
-<p>A timeline describes the sequence (flow) of transitions which can be presented or edited according to modes</p>
-<h3 id="8-mode">[8] Mode</h3>
-<p>Each sheet consists of two mode types (Edit and Presentation) where edit mode isthe default one in which user can define and manipulate various states, transitions, objects, and interpolation.</p>
-<h3 id="9-sheet">[9] Sheet</h3>
+<h3 id="7-camera">[7]	Camera:</h3>
+<p>It has 1 or more attributes and focuses on current state.</p>
+<h3 id="8-timeline">[8]	Timeline:</h3>
+<p>A timeline describes the sequence (flow) of transitions which can be presented or edited according to modes.</p>
+<h3 id="9-mode">[9]	Mode:</h3>
+<p>Each sheet consists of two mode types (Edit and Presentation) where edit mode is the default one in which user can define and manipulate various states, transitions, objects, and interpolation. The presentation mode presents the timeline.</p>
+<h3 id="10-sheet">[10] Sheet:</h3>
 <p>User can create a new sheet or load an existing sheet. After editing a sheet, user can save it for later use. Each sheet can contain multiple states.</p>
+<h3 id="11-trigger">[11] Trigger:</h3>
+<p>This describes the occurrence of an event in relation to a transition.</p>
 <h2 id="user-stories">User Stories</h2>
 <pre><code>1. Sheets
     1.1. As a user, I should be able to create a new SHEET.
     1.2. As a user, I should be able to load a previously saved sheet.
     1.3. As a user, I should be able to save a sheet.
     1.4. As a user, I should be able to specify the start state.
-	1.5. As a user, I should be able to exit the sheet.
+    1.5. As a user, I should be able to exit the sheet.
 
 2. States
     2.1. As a user, I should be able to add a state to a sheet.
@@ -513,6 +517,32 @@ the process starts again at step 2.</li>
 <p><img src="images/presentation_mode.png" alt="image info"></p>
 <h3 id="widgets">Widgets</h3>
 <p><img src="images/widgets.png" alt="image info"></p>
+<h2 id="deliverables">Deliverables</h2>
+<h3 id="iteration-0">Iteration 0:</h3>
+<ul>
+<li>Domain Model.</li>
+<li>Lexicon.</li>
+<li>User Stories.</li>
+<li>Use Case.</li>
+<li>Use Case diagram and State diagram.</li>
+<li>Wireframe.</li>
+</ul>
+<h3 id="iteration-1">Iteration 1:</h3>
+<ul>
+<li>Template UI</li>
+<li>Transitions between states</li>
+<li>Adding object in the state</li>
+<li>Defining various attributes for each object.</li>
+<li>Changing attribute values.</li>
+</ul>
+<h3 id="iteration-2">Iteration 2:</h3>
+<ul>
+<li>Presentation mode.</li>
+<li>Save/Load file.</li>
+<li>Camera.</li>
+<li>Switching the modes between edit and presentation mode.</li>
+<li>Interpolation.</li>
+</ul>
 
 </body>
 </html>
