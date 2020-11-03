@@ -29,32 +29,38 @@ classDiagram
 ``` -->
 
 ## Lexicon
-### [1] State
-A state is a combination of objects (0 or more). Multiple states are present on a single sheet and change according to transitions.
+### [1]	State:
+A state is a combination of 0 or more objects. Multiple states are present on a single sheet and change according to transitions. 
 
-### [2] Attributes
-It provides a description of objects and camera where attributes vary as per different objects.
+### [2]	Objects:
+Objects can have 1 attribution and can belong to multiple states.
 
-### [3] Objects
-Objects can have 0 or more attributes. There will be a combination of objects in states. Various objects can have same interpolation methods.
+### [3]	Attribution:
+This describes a set of attributes which belongs to a particular object. 
 
-### [4] Transitions
-Transition provides a triggering of states (Transformation) with respect to interpolation. The camera moves according to the transition of states.
+### [4]	Attributes:
+It describes a set of possible features related to an object (through attribution) or the camera.
 
-### [5] Interpolation
+### [5]	Transitions:
+Transitions provide a transformation from one state to another through a triggering mechanism. This causes the camera to move to the next state accordingly.
+
+### [6]	Interpolation:
 Interpolation provides information about transition of objects. The same interpolation method can be applied to multiple objects.
 
-### [6] Camera
-It has multiple attributes, which focuses on current state.
+### [7]	Camera:
+It has 1 or more attributes and focuses on current state.
 
-### [7] Timeline
-A timeline describes the sequence (flow) of transitions which can be presented or edited according to modes
+### [8]	Timeline:
+A timeline describes the sequence (flow) of transitions which can be presented or edited according to modes.
 
-### [8] Mode
-Each sheet consists of two mode types (Edit and Presentation) where edit mode isthe default one in which user can define and manipulate various states, transitions, objects, and interpolation.
+### [9]	Mode:
+Each sheet consists of two mode types (Edit and Presentation) where edit mode is the default one in which user can define and manipulate various states, transitions, objects, and interpolation. The presentation mode presents the timeline.
 
-### [9] Sheet
+### [10] Sheet:
 User can create a new sheet or load an existing sheet. After editing a sheet, user can save it for later use. Each sheet can contain multiple states.
+
+### [11] Trigger:
+This describes the occurrence of an event in relation to a transition.
 
 
 ## User Stories
