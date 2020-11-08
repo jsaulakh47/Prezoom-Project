@@ -17,17 +17,17 @@ public class Main {
 
     private static Properties readProperties() 
     {
-        Properties props = new Properties();
-        Path myPath = Paths.get("config.properties");
+        Properties properties = new Properties();
+        Path path = Paths.get("config.properties");
        
         try {
-            BufferedReader bf = Files.newBufferedReader(myPath, StandardCharsets.UTF_8);
-            props.load(bf);
+            BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+            properties.load(reader);
         } catch (IOException ex) {
             System.out.println(ex);
         }
 
-        return props;
+        return properties;
     }
 
     public static String getTitle()
