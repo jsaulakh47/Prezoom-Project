@@ -10,9 +10,13 @@ import java.io.File;
 // import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.chart.BubbleChart;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -43,15 +47,20 @@ public class Controller {
     @FXML
     private Button interpolationsButton;
 
+    @FXML
+    private Label leftStatus;
+
+    @FXML
+    private Label rightStatus;
+
 
     public void initialize() {
        
     }
 
-
     @FXML
     public void handleSaveClick() {
-        System.out.println("Saving file");
+        logger("Saving file");
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Save Application File");
@@ -61,15 +70,15 @@ public class Controller {
 
         File file = chooser.showSaveDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            System.out.println("File saved as: " + file.getPath());
+            logger("File saved as: " + file.getPath());
         } else {
-            System.out.println("Save cancelled");
+            logger("Save cancelled");
         }
     }
 
     @FXML
     public void handleLoadClick() {
-        System.out.println("Loading file");
+        logger("Loading file");
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Load Application File");
@@ -79,44 +88,59 @@ public class Controller {
 
         File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            System.out.println("File loaded as: " + file.getPath());
+            logger("File loaded as: " + file.getPath());
         } else {
-            System.out.println("Load cancelled");
+            logger("Load cancelled");
         }
     }
 
     @FXML
-    public void handlePresentClick() {
-        System.out.println("Presentation!!!");
+    public void handlePresentClick() throws Exception {
+        Stage primaryStage = new Stage();
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
+
+
+        primaryStage.show();
     }
 
     @FXML
     public void handlePreviewClick() {
-        System.out.println("Preview!!!");
+        logger("Preview!!!");
     }
 
     @FXML
     public void handleAttributesClick() {
-        System.out.println("Attributes!!!");
+        logger("Attributes!!!");
     }
 
     @FXML
     public void handleSettingsClick() {
-        System.out.println("Settings!!!");
+        logger("Settings!!!");
     }
 
     @FXML
     public void handleTransitionsClick() {
-        System.out.println("Transitions!!!");
+        logger("Transitions!!!");
     }
 
     @FXML
     public void handleInterpolationsClick() {
-        System.out.println("Interpolations!!!");
+        logger("Interpolations!!!");
     }
 
     @FXML
     public void handleCameraClick() {
-        System.out.println("Camera!!!");
+        logger("Camera!!!");
+    }
+
+    public void logger(String value) {
+        System.out.println(value);
+        rightStatus.setText(value);
     }
 }
