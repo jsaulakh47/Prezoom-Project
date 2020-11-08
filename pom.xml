@@ -48,7 +48,6 @@
       <artifactId>javafx-fxml</artifactId>
       <version>11.0.1</version>
     </dependency>
-  
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-runner</artifactId>
@@ -75,9 +74,14 @@
             </execution>
         </executions>
         <configuration>
-            <mainClass>main.App</mainClass>
+            <mainClass>app.Main</mainClass>
         </configuration>
     </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 </project>
