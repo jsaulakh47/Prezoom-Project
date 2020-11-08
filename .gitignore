@@ -1,3 +1,7 @@
 .vscode
 *.lck
 *.bak*
+.project
+.classpath
+target
+config.properties
