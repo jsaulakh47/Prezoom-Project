@@ -1,0 +1,37 @@
+package app;
+
+import java.io.BufferedReader;
+// import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Starting GUI...");
+        gui.javafx.Main.main(args);
+    }
+
+    private static Properties readProperties() 
+    {
+        Properties properties = new Properties();
+        Path path = Paths.get("config.properties");
+       
+        try {
+            BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+            properties.load(reader);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+        return properties;
+    }
+
+    public static String getTitle()
+    {
+        return readProperties().getProperty("title");
+    }
+}
