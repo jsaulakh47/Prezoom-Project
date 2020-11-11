@@ -24,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/" fx:controller="gui.javafx.Controller">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.javafx.Controller">
   <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -90,12 +90,12 @@
                     </rowConstraints>
                   </GridPane>
                </content></ScrollPane>
-            <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="215.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="260.0">
+            <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="215.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="253.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="674.4827585220337" AnchorPane.topAnchor="260.0">
                <image>
                   <Image url="@../../../resources/back_not.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="859.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
+            <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="859.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="253.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
                <image>
                   <Image url="@../../../resources/forward_not.png" />
                </image>
