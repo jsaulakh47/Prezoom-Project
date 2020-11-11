@@ -25,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="gui.javafx.Controller">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.javafx.Controller">
   <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -61,7 +61,7 @@
                      </image>
                   </ImageView>
                   <Text fx:id="text" fill="#1b195b" onDragDetected="#handleDragDetected" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.rowIndex="2" />
-                  <Line fx:id="line" endX="-135.61026000976562" endY="103.38975524902344" onDragDetected="#handleDragDetected" startX="-176.38844299316406" startY="78.611572265625" stroke="#1b195b" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Line fx:id="line" endX="-135.61026000976562" endY="103.38975524902344" onDragDetected="#handleDragDetected" startX="-176.38844299316406" startY="78.611572265625" stroke="#1b195b" strokeWidth="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <TextArea fx:id="textArea" editable="false" layoutX="6.0" layoutY="19.0" prefHeight="43.0" prefWidth="67.0" style="-fx-background-color: #1b195b; -fx-border-color: #1b195b;" text="&#10; Text Aea&#10;">
@@ -148,7 +148,7 @@
                         <Font size="9.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="addButton" fitHeight="17.0" fitWidth="20.0" onMouseClicked="#handleAddClick" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../resources/add.png" />
                      </image>
@@ -162,7 +162,7 @@
             <Button fx:id="previewButton" layoutX="738.0" layoutY="498.0" mnemonicParsing="false" onAction="#handlePreviewClick" text="Preview" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="100.0" />
             <Pane fx:id="canvasPane" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <Canvas height="403.0" width="630.0" />
+                  <Canvas fx:id="canvas" height="403.0" onDragDropped="#handleDragDrop" onDragOver="#handleDragOver" width="630.0" />
                </children></Pane>
          </children>
       </AnchorPane>
