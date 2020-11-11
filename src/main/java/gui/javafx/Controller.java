@@ -2,23 +2,37 @@ package gui.javafx;
 
 import java.io.File;
 
-// import gui.javafx.datamodel.TodoItem;
-
-// import java.time.LocalDate;
-// import java.time.Month;
-// import java.util.ArrayList;
-// import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.chart.BubbleChart;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Controller {
+    private GraphicsContext context;
+
+    @FXML
+    private Canvas canvas;
+
+    @FXML 
+    private Pane canvasPane;
 
     @FXML
     private Button saveButton;
@@ -27,7 +41,7 @@ public class Controller {
     private Button loadButton;
 
     @FXML
-    private Button presentButton;
+    private ImageView presentButton;
 
     @FXML
     private Button previewButton;
@@ -48,14 +62,37 @@ public class Controller {
     private Button interpolationsButton;
 
     @FXML
+    private ImageView addButton;
+
+    @FXML
     private Label leftStatus;
 
     @FXML
     private Label rightStatus;
 
+    @FXML
+    private Rectangle rectangle;
+
+    @FXML
+    private Circle circle;
+
+    @FXML
+    private Line line;
+
+    @FXML
+    private Text text;
+
+    @FXML
+    private TextArea textArea;
+
+    @FXML
+    private ImageView image;
+
 
     public void initialize() {
-       
+        canvas.heightProperty().bind(canvasPane.heightProperty());
+        canvas.widthProperty().bind(canvasPane.widthProperty());
+        context = canvas.getGraphicsContext2D();
     }
 
     @FXML
@@ -105,27 +142,26 @@ public class Controller {
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
 
-
         primaryStage.show();
     }
 
     @FXML
-    public void handlePreviewClick() {
+    private void handlePreviewClick() {
         logger("Preview!!!");
     }
 
     @FXML
-    public void handleAttributesClick() {
+    private void handleAttributesClick() {
         logger("Attributes!!!");
     }
 
     @FXML
-    public void handleSettingsClick() {
+    private void handleSettingsClick() {
         logger("Settings!!!");
     }
 
     @FXML
-    public void handleTransitionsClick() {
+    private void handleTransitionsClick() {
         logger("Transitions!!!");
     }
 
@@ -135,8 +171,38 @@ public class Controller {
     }
 
     @FXML
-    public void handleCameraClick() {
+    private void handleCameraClick() {
         logger("Camera!!!");
+    }
+
+    @FXML
+    private void handleAddClick() {
+        logger("add State!!!");
+    }
+
+    @FXML
+    private void handleDragDetected(MouseEvent event) {
+        String object = event.getSource().getClass().getSimpleName();
+        logger(object + " selected");
+
+        Dragboard dragboard = rectangle.startDragAndDrop(TransferMode.COPY);
+        ClipboardContent cc = new ClipboardContent();
+        cc.putString(object);
+
+        dragboard.setContent(cc);
+        event.consume();
+    }
+
+    @FXML
+    private void handleDragOver(DragEvent event) {
+        event.acceptTransferModes(TransferMode.ANY);
+        event.consume();
+    }
+
+    @FXML
+    private void handleDragDrop(DragEvent event) {
+        logger(event.getDragboard().getString() + " created");
+        // context.fillRect(event.getX(), event.getY(), 50.0, 50.0);
     }
 
     public void logger(String value) {
