@@ -1,14 +1,14 @@
 package app.interfaces;
 
 public interface ObjectFactoryI {
-    
-    public ObjectsI MakeCircle ();
-    public ObjectsI MakePolygon ();
-    public ObjectsI MakeLine ();
-    public ObjectsI MakeRectangular ();
-    public ObjectsI MakeEclipse ();
-    public ObjectsI MakeText ();
-    public ObjectsI MakeTextArea ();
-    public ObjectsI MakeImage();
+
+    public ObjectsI makecircle ();
+    public ObjectsI makepolygon ();
+    public ObjectsI makeline ();
+    public ObjectsI makerectangular ();
+    public ObjectsI makeeclipse ();
+    public ObjectsI maketext ();
+    public ObjectsI maketextArea ();
+    public ObjectsI makeimage();
 
 }
