@@ -4,11 +4,10 @@ import java.io.File;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -16,20 +15,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Controller {
-    private GraphicsContext context;
-
-    @FXML
-    private Canvas canvas;
+    private Interactor interactor;
 
     @FXML 
     private Pane canvasPane;
@@ -69,35 +62,26 @@ public class Controller {
 
     @FXML
     private Label rightStatus;
-
-    @FXML
-    private Rectangle rectangle;
-
-    @FXML
-    private Circle circle;
-
-    @FXML
-    private Line line;
-
-    @FXML
-    private Text text;
-
-    @FXML
-    private TextArea textArea;
-
-    @FXML
-    private ImageView image;
-
-
+    
     public void initialize() {
-        canvas.heightProperty().bind(canvasPane.heightProperty());
-        canvas.widthProperty().bind(canvasPane.widthProperty());
-        context = canvas.getGraphicsContext2D();
+        interactor = new Interactor(rightStatus);
+        Region region = (Region) canvasPane;
+
+        final Rectangle outputClip = new Rectangle();
+
+        outputClip.setArcWidth(1.0);
+        outputClip.setArcHeight(1.0);
+        region.setClip(outputClip);
+
+        region.layoutBoundsProperty().addListener((ov, oldValue, newValue) -> {
+            outputClip.setWidth(newValue.getWidth());
+            outputClip.setHeight(newValue.getHeight());
+        });        
     }
 
     @FXML
     public void handleSaveClick() {
-        logger("Saving file");
+        interactor.logger("Saving file");
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Save Application File");
@@ -107,15 +91,15 @@ public class Controller {
 
         File file = chooser.showSaveDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            logger("File saved as: " + file.getPath());
+            interactor.logger("File saved as: " + file.getPath());
         } else {
-            logger("Save cancelled");
+            interactor.logger("Save cancelled");
         }
     }
 
     @FXML
     public void handleLoadClick() {
-        logger("Loading file");
+        interactor.logger("Loading file");
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Load Application File");
@@ -125,9 +109,9 @@ public class Controller {
 
         File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            logger("File loaded as: " + file.getPath());
+            interactor.logger("File loaded as: " + file.getPath());
         } else {
-            logger("Load cancelled");
+            interactor.logger("Load cancelled");
         }
     }
 
@@ -147,45 +131,50 @@ public class Controller {
 
     @FXML
     private void handlePreviewClick() {
-        logger("Preview!!!");
+        interactor.logger("Preview!!!");
     }
 
     @FXML
     private void handleAttributesClick() {
-        logger("Attributes!!!");
+        interactor.logger("Attributes!!!");
     }
 
     @FXML
     private void handleSettingsClick() {
-        logger("Settings!!!");
+        interactor.logger("Settings!!!");
     }
 
     @FXML
     private void handleTransitionsClick() {
-        logger("Transitions!!!");
+        interactor.logger("Transitions!!!");
     }
 
     @FXML
     public void handleInterpolationsClick() {
-        logger("Interpolations!!!");
+        interactor.logger("Interpolations!!!");
     }
 
     @FXML
     private void handleCameraClick() {
-        logger("Camera!!!");
+        interactor.logger("Camera!!!");
     }
 
     @FXML
     private void handleAddClick() {
-        logger("add State!!!");
+        interactor.logger("Add State!!!");
     }
 
     @FXML
     private void handleDragDetected(MouseEvent event) {
         String object = event.getSource().getClass().getSimpleName();
-        logger(object + " selected");
+        interactor.logger(object + " selected");
 
-        Dragboard dragboard = rectangle.startDragAndDrop(TransferMode.COPY);
+        Node node = (Node) event.getSource();
+        Dragboard dragboard = node.startDragAndDrop(TransferMode.COPY);
+        // SnapshotParameters snapshotParams = new SnapshotParameters();
+        // WritableImage image = node.snapshot(snapshotParams, null);
+        // dragboard.setDragView(image, event.getX(), event.getY());
+
         ClipboardContent cc = new ClipboardContent();
         cc.putString(object);
 
@@ -195,18 +184,31 @@ public class Controller {
 
     @FXML
     private void handleDragOver(DragEvent event) {
-        event.acceptTransferModes(TransferMode.ANY);
-        event.consume();
+        if (event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.ANY);
+            event.consume();
+        }
     }
 
     @FXML
     private void handleDragDrop(DragEvent event) {
-        logger(event.getDragboard().getString() + " created");
-        // context.fillRect(event.getX(), event.getY(), 50.0, 50.0);
+        String object = event.getDragboard().getString();
+        Node node = interactor.createObject(object);
+        node.relocate(event.getX(), event.getY());
+        canvasPane.getChildren().add(node);
+
+        interactor.addContextMenu(node, canvasPane);
+        interactor.logger(object + " created");
+        event.setDropCompleted(true);
     }
 
-    public void logger(String value) {
-        System.out.println(value);
-        rightStatus.setText(value);
+    @FXML
+    private void handleMouseEntered(MouseEvent event) {
+        ((Node) event.getSource()).setCursor(Cursor.OPEN_HAND);
+    }
+
+    @FXML
+    private void handleMouseExited(MouseEvent event) {
+        ((Node) event.getSource()).setCursor(Cursor.DEFAULT);
     }
 }
