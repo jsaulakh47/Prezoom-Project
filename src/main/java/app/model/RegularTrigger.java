@@ -8,5 +8,5 @@ public class RegularTrigger implements TransitionI {
     public void trigger() {
         // TODO Auto-generated method stub
     }
-    
-}
+} 
+
