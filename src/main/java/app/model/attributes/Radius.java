@@ -2,7 +2,7 @@ package app.model.attributes;
 
 //import app.model.attributes.Attributes;;
 
-public class RadiusAttributes extends Attributes {
+public class Radius extends Attributes {
 
     private double radius; 
 

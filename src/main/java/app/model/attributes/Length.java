@@ -3,7 +3,7 @@ package app.model.attributes;
 //import app.model.attributes.Attributes;
 
 
-public class LengthAttributes extends Attributes {
+public class Length extends Attributes {
     
     private double length;
 
