@@ -2,7 +2,7 @@ package app.model.attributes;
 
 //import app.model.attributes.Attributes;
 
-public class ColorAttributes extends Attributes {
+public class Color extends Attributes {
 
     private double color;
     
