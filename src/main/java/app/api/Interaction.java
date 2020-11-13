@@ -3,10 +3,9 @@ package app.api;
 import app.model.State;
 
 public class Interaction {
-    public int addState()
+    public static void addState()
     {
-        State state = new State();
-        return state.getId();
+        new State();
 
     }
     // public void addObject();
