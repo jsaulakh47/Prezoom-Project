@@ -1,6 +1,11 @@
 package app.interfaces;
 
+/**
+ * adapter interface for drawing objects on presentation mode
+ */
+
 public interface DrawingAdapterI {
+   
 
     public void SetStrokeColor (String color);
     public void SetFillColor (String color);
