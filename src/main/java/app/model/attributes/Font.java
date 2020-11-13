@@ -1,6 +1,6 @@
 package app.model.attributes;
 
-public class FontAttributes extends Attributes {
+public class Font extends Attributes {
     
     private double fontSize;
 
