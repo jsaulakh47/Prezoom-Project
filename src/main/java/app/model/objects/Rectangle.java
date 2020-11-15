@@ -1,15 +1,18 @@
 package app.model.objects;
 
 
-import app.model.attributes.Radius;
+import app.model.attributes.Width;
+import app.model.attributes.Height;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 
-public class Circle extends Objects
+public class Rectangle extends Objects
 {
-	public Circle(String x, String y, String radius) {
+	public Rectangle(String x, String y, String width, String height) {
+		
 		super(x, y);
-		addAttribute(new Radius(radius));
+		addAttribute(new Width(width));
+		addAttribute(new Height(height));
 		addAttribute(new FillColor("#FF0000"));
 		addAttribute(new StrokeColor("#000000"));
 	}
