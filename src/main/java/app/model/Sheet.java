@@ -4,12 +4,15 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import app.model.objects.Objects;
 
 public class Sheet {
     PropertyChangeSupport changes = new  PropertyChangeSupport(this);
 
     private List<States> states;
-
+    private Map<Integer, List<Objects>> objects;
     private static Sheet instance;
 
     private Sheet() {
@@ -46,4 +49,9 @@ public class Sheet {
     public List<States> getStates() {
         return states;
     } 
+
+    public void addObject(int stateId , Object object)
+    {
+        objects.put(stateId, object);
+    }
 }
