@@ -6,5 +6,9 @@ public class Width extends Attributes {
         super("Width", data);
         
     }
+
+    Width() {
+        this("100");
+    }
     
 }

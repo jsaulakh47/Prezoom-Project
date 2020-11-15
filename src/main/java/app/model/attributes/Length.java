@@ -7,5 +7,8 @@ public class Length extends Attributes {
         
     }
     
+    Length() {
+        this("100");
+    }   
     
 }

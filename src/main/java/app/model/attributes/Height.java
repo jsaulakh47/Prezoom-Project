@@ -6,5 +6,9 @@ public class Height extends Attributes {
         super("Height", data);
         
     }
-    
+
+    Height() {
+        this("100");
+    }
+      
 }

@@ -6,5 +6,9 @@ public class Text extends Attributes {
         super("Text", data);
         
     }
+
+    Text() {
+        this("Alfa");
+    }
     
 }

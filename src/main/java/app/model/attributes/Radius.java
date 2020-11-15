@@ -4,6 +4,10 @@ public class Radius extends Attributes {
 
     public Radius(String data) {
         super("Radius", data);
-    }    
+    }  
+    
+    Radius() {
+        this("50");
+    } 
     
 }
