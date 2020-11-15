@@ -44,20 +44,21 @@ public class Interactor {
     }
 
     public Node createObject(String type) {
-        Node node;
+        Map<String, String> attr = Interaction.createObject(type, "10", "10");
         
+        Node node;
         if ("Circle".equals(type)) {
-            node = createCircle();
+            node = createCircle(attr);
         } else if ("ImageView".equals(type)) {
-            node = createImage();
+            node = createImage(attr);
         } else if ("Line".equals(type)) {
-            node = createLine();
+            node = createLine(attr);
         } else if ("Text".equals(type)) {
-            node = createText();
+            node = createText(attr);
         }  else if ("Pane".equals(type)) {
-            node = createTextArea();
+            node = createTextArea(attr);
         } else {
-            node = createRectangle();
+            node = createRectangle(attr);
         }
 
         node.setOnMouseEntered(e -> {
@@ -71,10 +72,13 @@ public class Interactor {
         return node;
     }
 
-    public Node createRectangle() {
-        Map<String, String> attr = Interaction.createObject("Rectangle", "10", "10");
+    public Node createRectangle(Map<String, String> attr) {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setWidth(Double.parseDouble(attr.get("Width")));
+        rectangle.setHeight(Double.parseDouble(attr.get("Height")));
 
-        Rectangle rectangle = new Rectangle(100, 100, Color.RED);
+        rectangle.setFill(Color.web(attr.get("Fill color")));
+        rectangle.setStroke(Color.web(attr.get("Stroke color")));
     
         rectangle.setOnMouseDragged(e -> {
             rectangle.setX(e.getX() - rectangle.getWidth() / 2);
@@ -95,7 +99,7 @@ public class Interactor {
     }
 
 
-    public Node createCircle() {
+    public Node createCircle(Map<String, String> attr) {
         Circle circle = new Circle(20, Color.RED);
 
         circle.setOnMouseDragged(e -> {
@@ -116,7 +120,7 @@ public class Interactor {
         return (Node) circle;
     }
 
-    public Node createImage() {
+    public Node createImage(Map<String, String> attr) {
         File file = new File("src/main/resources/img-icon.png");
         Image image = new Image(file.toURI().toString());
         ImageView imageView = new ImageView();
@@ -132,7 +136,7 @@ public class Interactor {
         return (Node) imageView;
     }
 
-    public Node createLine() {
+    public Node createLine(Map<String, String> attr) {
         Line line = new Line(100, 100, 200, 200);
 
         line.setOnMouseDragged(e -> {
@@ -143,7 +147,7 @@ public class Interactor {
         return (Node) line;
     }
 
-    public Node createText() {
+    public Node createText(Map<String, String> attr) {
         Text text = new Text("Text");
 
         text.setOnMouseDragged(e -> {
@@ -154,7 +158,7 @@ public class Interactor {
         return (Node) text;
     }
 
-    public Node createTextArea() {
+    public Node createTextArea(Map<String, String> attr) {
         Pane pane = new Pane();
         TextArea textArea = new TextArea();
 

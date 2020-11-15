@@ -52,6 +52,6 @@ public class Sheet {
 
     public void addObject(int stateId , Object object)
     {
-        objects.put(stateId, object);
+        // objects.put(stateId, object);
     }
 }
