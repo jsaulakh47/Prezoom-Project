@@ -1,3 +1,29 @@
+#Prezoom Project
+
+## Tools and technologies used
+
+#### Maven
+
+#### JUnit
+
+#### JavaFX
+
+#### Test Driven Development
+
+## Maven Setup on various OS
+
+#### Windows
+
+#### Linux
+
+#### MacOS
+
+
+## How to setup and run application
+
+#### Maven Lifecycle
+
+
 # Installation
 
 ## Download maven 3.6.3
