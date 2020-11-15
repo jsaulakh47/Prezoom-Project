@@ -16,6 +16,10 @@ public class Line extends Objects
 		addAttribute(new StrokeColor("#000000"));
 	}
 
+	public Line(String x, String y) {
+		this(x, y, "100" , "100" );
+	}
+
     @Override
 	public void draw() {
 		// TODO Auto-generated method stub

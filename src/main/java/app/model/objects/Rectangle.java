@@ -9,7 +9,7 @@ import app.model.attributes.StrokeColor;
 public class Rectangle extends Objects
 {
 	public Rectangle(String x, String y, String width, String height) {
-		
+
 		super(x, y);
 		addAttribute(new Width(width));
 		addAttribute(new Height(height));
@@ -17,10 +17,13 @@ public class Rectangle extends Objects
 		addAttribute(new StrokeColor("#000000"));
 	}
 
+	public Rectangle(String x, String y) {
+		this(x, y,  "100" , "80");
+	}
+
     @Override
 	public void draw() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub;
 	}
 }
 

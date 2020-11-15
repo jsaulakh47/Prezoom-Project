@@ -14,6 +14,10 @@ public class Circle extends Objects
 		addAttribute(new StrokeColor("#000000"));
 	}
 
+	public Circle(String x, String y) {
+		this(x, y, "50" );
+	}
+
     @Override
 	public void draw() {
 		// TODO Auto-generated method stub
