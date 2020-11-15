@@ -1,4 +1,4 @@
-#Prezoom Project
+# Prezoom Project
 
 ## Tools and technologies used
 
@@ -12,6 +12,8 @@ Maven is useful in the following scenarios:
 2. When the libraries/JARs being used are updated frequently.
 3. Continuous integration, continuous deployment and testing is handled by Maven.
 4. Building the application package (JAR, WAR, ZIP etc.) and generating the documentation from source code is very easy using Maven.
+
+<br/>
 
 ### JUnit
 JUnit is an testing framework for Java applications. We need to create unit test case files in order to do unit testing. Unit test case code can help us ensure that the application logic is working as per our expectations.
@@ -33,6 +35,8 @@ Following are the some the annotations in Junit testing:
 5. **@After**: It indicates that the method will be called after each test.
 6. **@AfterClass**: It indicates that the method will be called after completing any test case.
 
+<br/>
+
 ### JavaFX
 JavaFX is a software platform that provides plenty of media and graphics packages for creating Java desktop application. It can also be used to create rich web applications that can run on wide variety of devices. It helps developers to design, create, deploy, debug, and test client applications that run on variety of of platforms.
 
@@ -46,6 +50,8 @@ Following are some of the features of JavaFX:
 4. **CSS Styling**: We can also use CSS classes to provide styling in our UI.
 
 5. **Rich sets of API’s**: JavaFX provide plethora of APIs to develop GUI applications.
+
+<br/>
 
 ### Test Driven Development
 We have used Test Driven Development (TDD) software practice in our project. It is a "Test-first" approach, which means that it requires unit testing code to be written before implementing the actual business logic code. Therefore, at the beginning all the test cases will be failing, and after writing the code logic, the test cases should pass without changing anything. On the surface, it might seem that writing all the test case is a lot of extra code, and it takes extra time. However, after one has successfully understood, it helps the developer to code faster with unit testing by following TDD rather than without TDD.
@@ -71,6 +77,8 @@ For example, `JAVA_HOME` can be `C:\Program Files\Java\jdk-13.0.2`
 
 4. Open new command window and run `mvn --version` to make sure that the installation was successful.
 
+<br/>
+
 ### Linux
 1. Download Maven using following command:
 `wget https://www-us.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp`
@@ -86,6 +94,8 @@ For example, `JAVA_HOME` can be `C:\Program Files\Java\jdk-13.0.2`
 
 5. Make sure that the installation was successful by using following command.
 `mvn --version`
+
+<br/>
 
 ### MacOS
 1.  Download  latest Maven  binary archive from [here](http://maven.apache.org/download.cgi).
@@ -114,3 +124,19 @@ For example, `JAVA_HOME` can be `C:\Program Files\Java\jdk-13.0.2`
 ## How to setup and run application
 
 ### Maven Lifecycle
+As we are using Maven for dependency management, there is no need to download the dependencies separately. Maven will take care of it. We can run following maven commands to build the project  and run the application.
+
+1. Use the below command to remove the files generated at build-time in project's directory.
+`mvn clean`
+
+2.  Install all the dependencies required by the project using following command:
+`mvn install`
+
+3. Run the test cases by running following command:
+`mvn test`
+
+4. Build the application project using following command:
+`mvn package`
+
+5. Finally, execute the application by running following command:
+`mvn exec:java`
