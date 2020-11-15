@@ -23,12 +23,12 @@ public class States {
     //     return name;
     // }
 
-    public double getHeight()
+    public String getHeight()
     {
         return height;
     }
 
-    public double getWidth()
+    public String getWidth()
     {
         return width;
     }
