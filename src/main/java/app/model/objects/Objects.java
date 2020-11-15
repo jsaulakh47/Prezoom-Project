@@ -2,6 +2,8 @@ package app.model.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import app.interfaces.ObjectsI;
 import app.model.attributes.XPosition;
@@ -25,7 +27,18 @@ public abstract class  Objects implements ObjectsI {
         return id;
     }
 
+
     protected void addAttribute(Attributes attribute) {
         this.attributes.add(attribute);
     }
+
+    public Map<String,String> getAttributes()
+    {
+       Map<String,String> map = new HashMap<String,String>(); 
+      for (Attributes attribute : attributes)
+      {
+               map.put(attribute.getLabel(),attribute.get());
+      }
+      return map;
+   }
 }
