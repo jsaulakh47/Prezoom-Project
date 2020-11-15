@@ -1,11 +1,11 @@
 package app.api;
 
-import app.model.State;
+import app.model.States;
 
 public class Interaction {
     public static void addState()
     {
-        new State();
+        new States();
 
     }
     // public void addObject();
