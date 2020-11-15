@@ -3,6 +3,7 @@ package gui.javafx;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.plaf.basic.BasicComboBoxUI.FocusHandler;
 
@@ -27,7 +28,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public class Interactor {
@@ -72,6 +72,8 @@ public class Interactor {
     }
 
     public Node createRectangle() {
+        Map<String, String> attr = Interaction.createObject("Rectangle", "10", "10");
+
         Rectangle rectangle = new Rectangle(100, 100, Color.RED);
     
         rectangle.setOnMouseDragged(e -> {
@@ -84,18 +86,8 @@ public class Interactor {
                 logger("Rectangle selected");
                 rectangle.requestFocus();
                 
-                addColor(rectangle);
-                changes.add(new Label("X position"), 0, 3, 1, 1);
-                changes.add(new TextField(String.valueOf(rectangle.getX())), 1, 3, 1, 1);
-
-                changes.add(new Label("Y position"), 0, 4, 1, 1);
-                changes.add(new TextField(String.valueOf(rectangle.getY())), 1, 4, 1, 1);
-
-                changes.add(new Label("Width"), 0, 5, 1, 1);
-                changes.add(new TextField(String.valueOf(rectangle.getWidth())), 1, 5, 1, 1);
-
-                changes.add(new Label("Height"), 0, 6, 1, 1);
-                changes.add(new TextField(String.valueOf(rectangle.getHeight())), 1, 6, 1, 1);
+                ShapeUtility.addFillColor(changes, rectangle, 0);
+                ShapeUtility.addStrokeColor(changes, rectangle, 1);
             }
         });
 
@@ -116,15 +108,8 @@ public class Interactor {
                 logger("Circle selected");
                 circle.requestFocus();
                 
-                addColor(circle);
-                changes.add(new Label("X position"), 0, 3, 1, 1);
-                changes.add(new TextField(String.valueOf(circle.getCenterX())), 1, 3, 1, 1);
-
-                changes.add(new Label("Y position"), 0, 4, 1, 1);
-                changes.add(new TextField(String.valueOf(circle.getCenterY())), 1, 4, 1, 1);
-
-                changes.add(new Label("Radius"), 0, 5, 1, 1);
-                changes.add(new TextField(String.valueOf(circle.getRadius())), 1, 5, 1, 1);
+                ShapeUtility.addFillColor(changes, circle, 0);
+                ShapeUtility.addStrokeColor(changes, circle, 1);
             }
         });
 
@@ -260,21 +245,5 @@ public class Interactor {
     public void logger(String value) {
         System.out.println(value);
         status.setText(value);
-    }
-
-    public void addColor(Shape shape) {
-        ColorPicker stroke = new ColorPicker((Color) shape.getStroke());
-        ColorPicker fill = new ColorPicker((Color) shape.getFill());
-        stroke.setOnAction(e -> {
-            // shape.setStr
-        });
-        stroke.setStyle("-fx-color-label-visible: false ;");
-        fill.setStyle("-fx-color-label-visible: false ;");
-
-        changes.add(new Label("Fill Color"), 0, 1, 1, 1);
-        changes.add(fill, 1, 1, 1, 1);
-        
-        changes.add(new Label("Stroke Color"), 0, 2, 1, 1);
-        changes.add(stroke, 1, 2, 1, 1);
     }
 }
