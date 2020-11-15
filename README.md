@@ -33,10 +33,31 @@ Following are the some the annotations in Junit testing:
 5. **@After**: It indicates that the method will be called after each test.
 6. **@AfterClass**: It indicates that the method will be called after completing any test case.
 
-
 #### JavaFX
+JavaFX is a software platform that provides plenty of media and graphics packages for creating Java desktop application. It can also be used to create rich web applications that can run on wide variety of devices. It helps developers to design, create, deploy, debug, and test client applications that run on variety of of platforms.
+
+Following are some of the features of JavaFX:
+1. **FXML**: — It is a XML-based UI markup language created by Oracle for defining and creating UI in Java based applications.
+
+2. **Scene Builder**: It is visual layout toll, which helps the users quickly create UI in JavaFX applications. Users can drag and drop UI components.
+
+3. **Swing Compatibility**: In JavaFX, Swing content can be embedded using Swing Node class. Also, existing Swing applications can be updated with JavaFX features such as rich graphics and embedded web content.
+
+4. **CSS Styling**: We can also use CSS classes to provide styling in our UI.
+
+5. **Rich sets of API’s**: JavaFX provide plethora of APIs to develop GUI applications.
 
 #### Test Driven Development
+We have used Test Driven Development (TDD) software practice in our project. It is a "Test-first" approach, which means that it requires unit testing code to be written before implementing the actual business logic code. Therefore, at the beginning all the test cases will be failing, and after writing the code logic, the test cases should pass without changing anything. On the surface, it might seem that writing all the test case is a lot of extra code, and it takes extra time. However, after one has successfully understood, it helps the developer to code faster with unit testing by following TDD rather than without TDD.
+
+Following are some of the advantages of TDD.
+1. We receive faster feedback on code logic.
+2. Developer has to spend less time on debugging.
+3. It reduces the time required to do the rework.
+4. It helps to identify whether the last refactoring change broke the code.
+5. Error and problems in the code are identifies quickly.
+6. It helps to create code which is felexible and easily maintainable.
+7. It forces us to write small classes, which has only one focus. Therefore, TDD helps to create SOLID code.
 
 ## Maven Setup on various OS
 
