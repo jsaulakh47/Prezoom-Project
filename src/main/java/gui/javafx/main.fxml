@@ -24,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.javafx.Controller">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.javafx.Controller">
   <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -40,7 +40,18 @@
       </ToolBar>
       <AnchorPane VBox.vgrow="ALWAYS">
          <children>
-            <Pane prefWidth="187.5" style="-fx-background-color: #cccccc;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="5.0" />
+            <Pane prefWidth="187.5" style="-fx-background-color: #cccccc;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <GridPane fx:id="changes" layoutX="8.0" layoutY="250.0" prefHeight="30.0" prefWidth="171.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children></Pane>
             <GridPane onMouseEntered="#handleMouseEntered" onMouseExited="#handleMouseExited" prefHeight="240.0" prefWidth="180.0" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="0.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -117,17 +128,17 @@
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="interpolationsButton" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleInterpolationsClick" text="Interpolations">
+                  <Button fx:id="interpolationsButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleInterpolationsClick" text="Interpolations">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="transitionsButton" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleTransitionsClick" text="Transitions">
+                  <Button fx:id="transitionsButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleTransitionsClick" text="Transitions">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="attributesButton" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleAttributesClick" text="Attributes">
+                  <Button fx:id="attributesButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleAttributesClick" text="Attributes">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -142,11 +153,7 @@
             <HBox layoutX="200.0" layoutY="459.0" prefHeight="20.0" style="-fx-background-color: #ffffff; -fx-border-color: #cccccc;" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="100.0">
                <children>
                   <Label style="-fx-background-color: #f5f5f5;" text="    States  " />
-                  <Button mnemonicParsing="false" text="1">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Button>
+                  <HBox fx:id="bar" />
                   <ImageView fx:id="addButton" fitHeight="17.0" fitWidth="20.0" onMouseClicked="#handleAddClick" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../resources/add.png" />
@@ -158,7 +165,7 @@
                   <Image url="@../../../resources/present-icon.png" />
                </image>
             </ImageView>
-            <Button fx:id="previewButton" layoutX="738.0" layoutY="498.0" mnemonicParsing="false" onAction="#handlePreviewClick" text="Preview" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="100.0" />
+            <Button fx:id="previewButton" disable="true" layoutX="738.0" layoutY="498.0" mnemonicParsing="false" onAction="#handlePreviewClick" text="Preview" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="100.0" />
             <Pane fx:id="canvasPane" onDragDropped="#handleDragDrop" onDragOver="#handleDragOver" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
          </children>
       </AnchorPane>

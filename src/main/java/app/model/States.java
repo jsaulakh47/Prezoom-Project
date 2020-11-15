@@ -5,12 +5,12 @@ public class States {
     private static int id = 1;
     // private String name;
     private String height;
-    private  width;
+    private String  width;
 
     public States(){
         id++;
-        height = 720;
-        width = 1080;
+        height = "720";
+        width = "1080";
     }
 
     public int getId()
@@ -23,12 +23,12 @@ public class States {
     //     return name;
     // }
 
-    public double getHeight()
+    public String getHeight()
     {
         return height;
     }
 
-    public double getWidth()
+    public String getWidth()
     {
         return width;
     }

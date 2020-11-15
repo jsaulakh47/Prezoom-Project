@@ -1,8 +1,7 @@
 package app.interfaces;
 
-import java.util.Map;
+import javafx.util.Pair;
 
 public interface ObjectsI {
     public void draw(); 
-    public Map<String, Double> getPosition();
 }
