@@ -2,7 +2,7 @@
 
 ## Tools and technologies used
 
-#### Maven
+### Maven
 Maven is a build automation tools which is mainly used for Java bases project. Maven can help to build the whole application with just one command instead of manually writing long scripts for building the projects. It is also used for dependency management. Dependencies are nothing but third party libraries which are used in the application. If Maven is not used and any library or JAR is updated, then we have to manually update its JAR file in the project. However, with the help of Maven, it is very easy to update the dependencies i.e. we can just update the version number of the dependency in pom.xml. It dynamically downloads the libraries and plugins from the Maven Central Repository. Maven can also be used with other programming languages such as C#, Scala, and Ruby.
 
 Project Object Model (pom.xml) file is the heart of any maven project. It contains dependencies, plugins, goals to be executed, source directory for code, etc., which is used by Maven to build the application. When we want to build the project using Maven, we supply Maven with the pom.xml file, which needs to be used to execute all the commands.
@@ -13,7 +13,7 @@ Maven is useful in the following scenarios:
 3. Continuous integration, continuous deployment and testing is handled by Maven.
 4. Building the application package (JAR, WAR, ZIP etc.) and generating the documentation from source code is very easy using Maven.
 
-#### JUnit
+### JUnit
 JUnit is an testing framework for Java applications. We need to create unit test case files in order to do unit testing. Unit test case code can help us ensure that the application logic is working as per our expectations.
 Testing can of two types as following:
 1. **Manual Testing**: It means doing the tests on application manually, without use of any testing script code. It is less reliable, prone to human errors, and time consuming process.
@@ -33,7 +33,7 @@ Following are the some the annotations in Junit testing:
 5. **@After**: It indicates that the method will be called after each test.
 6. **@AfterClass**: It indicates that the method will be called after completing any test case.
 
-#### JavaFX
+### JavaFX
 JavaFX is a software platform that provides plenty of media and graphics packages for creating Java desktop application. It can also be used to create rich web applications that can run on wide variety of devices. It helps developers to design, create, deploy, debug, and test client applications that run on variety of of platforms.
 
 Following are some of the features of JavaFX:
@@ -47,7 +47,7 @@ Following are some of the features of JavaFX:
 
 5. **Rich sets of API’s**: JavaFX provide plethora of APIs to develop GUI applications.
 
-#### Test Driven Development
+### Test Driven Development
 We have used Test Driven Development (TDD) software practice in our project. It is a "Test-first" approach, which means that it requires unit testing code to be written before implementing the actual business logic code. Therefore, at the beginning all the test cases will be failing, and after writing the code logic, the test cases should pass without changing anything. On the surface, it might seem that writing all the test case is a lot of extra code, and it takes extra time. However, after one has successfully understood, it helps the developer to code faster with unit testing by following TDD rather than without TDD.
 
 Following are some of the advantages of TDD.
@@ -61,32 +61,56 @@ Following are some of the advantages of TDD.
 
 ## Maven Setup on various OS
 
-#### Windows
+### Windows
+1. Ensure that `JAVA_HOME` in Environment variable is set to JDK installed on the system.
+For example, `JAVA_HOME` can be `C:\Program Files\Java\jdk-13.0.2`
 
-#### Linux
+2. Download Maven from following [this URL](http://maven.apache.org/download.cgi), and extract it.
 
-#### MacOS
+3. Add Maven's path to `PATH` variable in Environment Variables. For example, it can be `C:\Program Files\apache-maven-3.6.3\bin`
 
+4. Open new command window and run `mvn --version` to make sure that the installation was successful.
+
+### Linux
+1. Download Maven using following command:
+`wget https://www-us.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp`
+
+2. Unzip(untar) the downloaded file using following command:
+`tar xf /tmp/apache-maven-*.tar.gz -C /opt`
+
+3. Install the alternative version for the mvn in your system
+`sudo update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven-3.6.3/bin/mvn 363`
+
+4. Check if your configuration is ok. You may use your current or the 3.6.3 whenever you wish, running the command below.
+`sudo update-alternatives --config mvn`
+
+5. Make sure that the installation was successful by using following command.
+`mvn --version`
+
+### MacOS
+1.  Download  latest Maven  binary archive from [here](http://maven.apache.org/download.cgi).
+
+2. Extract the contents of the archive:
+
+3. Move the extracted maven folder to any other location, eg Applications using below command:
+
+`mv Downloads/apache-maven* /Applications/apache-maven-3.6.3`
+
+4. Now open terminal and setup maven class path in environment variable by updating  `.bash_profile`  file by running following commands:
+
+`open ~/.bash_profile`
+ 
+5. Now edit the file by adding the following lines:
+
+`export M2_HOME=/Applications/apache-maven-3.6.3` 
+`export PATH=$PATH:$M2_HOME/bin`
+
+6. reload  `.bash_profile` by using following command:
+`source ~/.bash_profile`
+
+7. Make sure that the installation was successful by using following command.
+`mvn --version`
 
 ## How to setup and run application
 
-#### Maven Lifecycle
-
-
-# Installation
-
-## Download maven 3.6.3
-wget https://www-us.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
-
-## Untar to /opt
-tar xf /tmp/apache-maven-*.tar.gz -C /opt
-
-## Install the alternative version for the mvn in your system
-sudo update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven-3.6.3/bin/mvn 363
-
-## Check if your configuration is ok. You may use your current or the 3.6.3 whenever you wish, running the command below.
-
-sudo update-alternatives --config mvn
-
-## install javaFX
-sudo apt-get install openjfx
+### Maven Lifecycle
