@@ -17,6 +17,10 @@ public class Image extends Objects
 		
 	}
 
+	public Image(String x, String y) {
+		this(x, y, "" ,"100" ,"100" );
+	}
+
     @Override
 	public void draw() {
 		// TODO Auto-generated method stub
