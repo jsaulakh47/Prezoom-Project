@@ -1,16 +1,21 @@
 package app.api;
 
-import app.model.State;
+import java.util.List;
+
+import app.model.Sheet;
+import app.model.States;
 
 public class Interaction {
-    public static void addState()
+    public static int addState()
     {
-        new State();
-
+        return Sheet.getInstance().addState();
     }
-    // public void addObject();
-    // public void addAttributes();
-    
 
+    public static List<States> getStates() {
+        return Sheet.getInstance().getStates();
+    }
+
+    // public static List<States> addObject(int stateId) {
+    //     return Sheet.getInstance().adObject();
+    // }
 }
-
