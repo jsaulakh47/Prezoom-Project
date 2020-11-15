@@ -1,16 +1,16 @@
 package app.model;
 
-public class State {
+public class States {
 
     private static int id = 1;
     // private String name;
-    private double height;
-    private double width;
+    private String height;
+    private String  width;
 
-    public State(){
+    public States(){
         id++;
-        height = 720;
-        width = 1080;
+        height = "720";
+        width = "1080";
     }
 
     public int getId()

@@ -14,6 +14,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
@@ -62,21 +64,28 @@ public class Controller {
 
     @FXML
     private Label rightStatus;
+
+    @FXML
+    private HBox bar;
+
+    @FXML
+    private GridPane changes;
     
     public void initialize() {
-        interactor = new Interactor(rightStatus);
         Region region = (Region) canvasPane;
-
-        final Rectangle outputClip = new Rectangle();
+        Rectangle outputClip = new Rectangle();
+        interactor = new Interactor(rightStatus, changes);
 
         outputClip.setArcWidth(1.0);
         outputClip.setArcHeight(1.0);
+      
         region.setClip(outputClip);
-
         region.layoutBoundsProperty().addListener((ov, oldValue, newValue) -> {
             outputClip.setWidth(newValue.getWidth());
             outputClip.setHeight(newValue.getHeight());
-        });        
+        });
+        
+        interactor.addStateButton(bar);
     }
 
     @FXML
@@ -161,7 +170,9 @@ public class Controller {
 
     @FXML
     private void handleAddClick() {
-        interactor.logger("Add State!!!");
+        // interactor.addState();
+        interactor.addStateButton(bar);
+        interactor.logger("State added");
     }
 
     @FXML

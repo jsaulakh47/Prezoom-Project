@@ -1,5 +1,6 @@
 package app.interfaces;
 
 public interface AttributesI {
-    public double get(); 
+    public String get(); 
+    public String getLabel();
 }
