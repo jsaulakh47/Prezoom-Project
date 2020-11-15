@@ -1,21 +1,20 @@
 package app.model.objects;
 
-import app.model.attributes.TextArea;
+
 import app.model.attributes.Width;
 import app.model.attributes.Height;
-import app.model.attributes.FillColor;
-import app.model.attributes.StrokeColor;
+import app.model.attributes.Source;
 
-public class TextArea extends Objects
+
+public class Image extends Objects
 {
-	public TextArea(String x, String y, String text, String width , String height) {
+	public Image(String x, String y, String source, String width, String height) {
 
 		super(x, y);
-		addAttribute(new TextArea(text));
+		addAttribute(new Source(source));
 		addAttribute(new Width(width));	
 		addAttribute(new Height(height));	
-		addAttribute(new FillColor("#FF0000"));
-		addAttribute(new StrokeColor("#000000"));
+		
 	}
 
     @Override
