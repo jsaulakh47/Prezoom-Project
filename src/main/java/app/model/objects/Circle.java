@@ -8,7 +8,7 @@ import app.model.attributes.StrokeColor;
 public class Circle extends Objects
 {
 	public Circle(String x, String y, String radius) {
-		super(x, y);
+		super(x, y, "Circle");
 		addAttribute(new Radius(radius));
 		addAttribute(new FillColor("#FF0000"));
 		addAttribute(new StrokeColor("#000000"));

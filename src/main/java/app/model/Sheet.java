@@ -9,8 +9,8 @@ import app.model.objects.Objects;
 
 public class Sheet {
     private List<States> states;
-    private Map<Integer, ArrayList<Objects>> objects;
     private static Sheet instance;
+    private Map<Integer, ArrayList<Objects>> objects;
 
     private Sheet() {
         this.states = new ArrayList<States>();
@@ -36,14 +36,15 @@ public class Sheet {
         return states;
     }
 
+    public List<Objects> loadState(int stateId) {
+        return objects.get(stateId);
+    }
+
     public void addObject(int stateId, Objects object) {
         objects.get(stateId).add(object);
     }
 
     public void updateObject(int stateId, int objectId, Map<String, String> attr) {
-        System.out.println(stateId);
-        System.out.println(objects);
-        System.out.println( objects.get(stateId));
         for (Objects object : objects.get(stateId)) {
             if (object.getId() == objectId) {
                 for (Map.Entry<String, String> entry : attr.entrySet()) {

@@ -1,6 +1,7 @@
 package gui.javafx;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import app.api.Interaction;
@@ -26,6 +27,7 @@ import javafx.scene.text.Text;
 
 public class Interactor {
     public int state;
+    private int current;
     private Label status;
 
     private Pane pane;
@@ -35,11 +37,12 @@ public class Interactor {
         this.changes = changes;
         this.status = status;
         this.pane = pane;
-        this.state = 1;
+        this.current = 0;
+        this.state = 0;
     }
 
-    public Node createObject(String type, double x, double y) {
-        Objects attr = Interaction.createObject(type, String.valueOf(x), String.valueOf(y));
+    public void createObject(String type, double x, double y) {
+        Objects attr = Interaction.createObject(type, current, String.valueOf(x), String.valueOf(y));
         
         Node node = creator(type, attr, x, y);
 
@@ -51,9 +54,8 @@ public class Interactor {
             node.setCursor(Cursor.DEFAULT);
         });
 
-        node.getProperties().put("object_id", attr.getId());
-        node.getProperties().put("state_id", state);
-        return node;
+        pane.getChildren().add(node);
+        addContextMenu(node);
     }
 
     public Node creator (String type, Objects attr, double x, double y) {
@@ -71,6 +73,9 @@ public class Interactor {
         } else {
             node = createRectangle(attr.getAttributes(), x, y);
         }
+
+        node.getProperties().put("object_id", attr.getId());
+        node.getProperties().put("state_id", current);
 
         return node;
     }
@@ -123,7 +128,7 @@ public class Interactor {
             circle.setCenterX(e.getX());
             circle.setCenterY(e.getY());            
         });
-
+        
         circle.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 circle.requestFocus();
@@ -143,7 +148,6 @@ public class Interactor {
     }
 
     public Node createImage(Map<String, String> attr, double X, double Y) {
-        System.out.println(attr);
         Image file = new Image((new File(attr.get("Source"))).toURI().toString());
 
         ImageView image = new ImageView();
@@ -176,23 +180,63 @@ public class Interactor {
     }
 
     public Node createLine(Map<String, String> attr, double X, double Y) {
-        Line line = new Line(100, 100, 200, 200);
+        Line line = new Line();
+        line.setStartX(X);
+        line.setStartY(Y);
+        line.setEndX(Double.parseDouble(attr.get("End X")));
+        line.setEndY(Double.parseDouble(attr.get("End Y")));
+        line.setFill(Color.web(attr.get("Fill color")));
+        line.setStroke(Color.web(attr.get("Stroke color")));
 
         line.setOnMouseDragged(e -> {
             line.setTranslateX(e.getX() - Math.abs((line.getEndX() - line.getStartX()) / 2));
             line.setTranslateY(e.getY() - Math.abs((line.getEndY() - line.getStartY()) / 2));
         });
 
+        line.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                line.requestFocus();
+                logger("Line selected");
+                changes.getChildren().clear();
+                
+                ShapeUtility.addFillColor(changes, line, 1);
+                ShapeUtility.addStrokeColor(changes, line, 2);
+                ShapeUtility.addLineStartX(changes, line, 3);
+                ShapeUtility.addLineStartY(changes, line, 4);
+                ShapeUtility.addLineEndX(changes, line, 5);
+                ShapeUtility.addLineEndY(changes, line, 6);
+            }
+        });
+        
         line.getProperties().put("name", "Line");
         return (Node) line;
     }
 
     public Node createText(Map<String, String> attr, double X, double Y) {
-        Text text = new Text("Text");
+        Text text = new Text();
+        text.setX(X);
+        text.setY(Y);
+        text.setText(attr.get("Text"));
+        text.setFill(Color.web(attr.get("Fill color")));
+        text.setStroke(Color.web(attr.get("Stroke color")));
 
         text.setOnMouseDragged(e -> {
             text.setX(e.getX());
             text.setY(e.getY());
+        });
+
+        text.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                text.requestFocus();
+                logger("Text selected");
+                changes.getChildren().clear();
+                
+                ShapeUtility.addFillColor(changes, text, 1);
+                ShapeUtility.addStrokeColor(changes, text, 2);
+                ShapeUtility.addTextX(changes, text, 3);
+                ShapeUtility.addTextY(changes, text, 4);
+                ShapeUtility.addTextText(changes, text, 5);
+            }
         });
 
         text.getProperties().put("name", "Text");
@@ -208,8 +252,6 @@ public class Interactor {
         pane.getChildren().addAll(textArea);
 
         pane.setOnMouseDragged(e -> {
-
-            System.out.println("is dragged");
 
             // double offsetX = e.getSceneX() - orgSceneX;
             // double offsetY = e.getSceneY() - orgSceneY;
@@ -256,6 +298,8 @@ public class Interactor {
     
     public void addStateButton(Pane parent)
     { 
+        ++state;
+        current = state;
         Interaction.addState();
         Button node = new Button();
         node.setStyle("-fx-background-color:#f5f5f5");
@@ -287,13 +331,37 @@ public class Interactor {
             }
         });
 
-        node.setOnAction(e -> {
+        if (pane.getChildren().size() > 0) {
             for (Node child : pane.getChildren()) {
                 saveObject(child);
             }
+        }
+
+        pane.getChildren().clear();
+        changes.getChildren().clear();
+
+        node.setOnAction(e -> {
+            if (pane.getChildren().size() > 0) {
+                for (Node child : pane.getChildren()) {
+                    saveObject(child);
+                }
+            }
 
             pane.getChildren().clear();
-            logger("Sheet " + node.getProperties().get("id").toString());
+            changes.getChildren().clear();
+
+            current = Integer.parseInt(node.getProperties().get("id").toString());
+            List<Objects> shapes = Interaction.loadState(current);
+
+            if (shapes.size() > 0) {
+                for (Objects shape : shapes) {
+                    double x = Double.parseDouble(shape.getAttributes().get("X position"));
+                    double y = Double.parseDouble(shape.getAttributes().get("Y position"));
+                    Node object = creator(shape.getType(), shape, x, y);
+                    pane.getChildren().add(object);
+                }
+            }
+            logger("Sheet " + node.getText() + " loaded");
         });
     }
 
@@ -317,7 +385,6 @@ public class Interactor {
             attr = ShapeUtility.getRectangleProperties((Rectangle) object);
         }
 
-        System.out.println(attr);
         Interaction.saveObject(stateId, objectId, attr);
     }
     

@@ -12,19 +12,24 @@ import app.model.attributes.Attributes;
 
 public abstract class  Objects implements ObjectsI {
     private List<Attributes> attributes;
-
     private static int count = 1;
+    private String type;
     private int id;
 
-    public Objects(String x, String y) {
+    public Objects(String x, String y, String type) {
         attributes = new ArrayList<Attributes>();
 		addAttribute(new XPosition(x));
-		addAttribute(new YPosition(y));
+        addAttribute(new YPosition(y));
         this.id = count++;
+        this.type = type;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getType() {
+        return type;
     }
 
     protected void addAttribute(Attributes attribute) {

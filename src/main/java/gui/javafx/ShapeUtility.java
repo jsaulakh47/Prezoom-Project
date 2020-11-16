@@ -143,6 +143,69 @@ public class ShapeUtility {
         addLable(pane, textField, "Height", position);
     }
 
+    public static void addTextX(GridPane pane, Text shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getX()));
+        textField.setOnAction(e -> {
+            shape.setX(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "X position", position);
+    }
+
+    public static void addTextY(GridPane pane, Text shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getY()));
+        textField.setOnAction(e -> {
+            shape.setY(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "Y position", position);
+    }
+
+    public static void addTextText(GridPane pane, Text shape, int position) {
+        TextField textField = new TextField(shape.getText());
+        textField.setOnAction(e -> {
+            shape.setText(textField.getText());
+        });
+
+        addLable(pane, textField, "Text", position);
+    }
+
+    public static void addLineStartX(GridPane pane, Line shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getStartX()));
+        textField.setOnAction(e -> {
+            shape.setStartX(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "X position", position);
+    }
+
+    public static void addLineStartY(GridPane pane, Line shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getStartY()));
+        textField.setOnAction(e -> {
+            shape.setStartY(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "Y position", position);
+    }
+
+    public static void addLineEndX(GridPane pane, Line shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getEndX()));
+        textField.setOnAction(e -> {
+            shape.setEndX(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "End X", position);
+    }
+
+    public static void addLineEndY(GridPane pane, Line shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getEndY()));
+        textField.setOnAction(e -> {
+            shape.setEndY(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "End Y", position);
+    }
+
     public static Map<String, String> getRectangleProperties(Rectangle node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
@@ -193,10 +256,9 @@ public class ShapeUtility {
     public static Map<String, String> getTextProperties(Text node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        // attributes.put("X position", String.valueOf(node.getX()));
-        // attributes.put("Y position", String.valueOf(node.getY()));
-        // attributes.put("Width", String.valueOf(node.getFitWidth()));
-        // attributes.put("Height", String.valueOf(node.getFitHeight()));
+        attributes.put("X position", String.valueOf(node.getX()));
+        attributes.put("Y position", String.valueOf(node.getY()));
+        attributes.put("Text", String.valueOf(node.getText()));
 
         return attributes;
     }

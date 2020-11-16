@@ -198,7 +198,6 @@ public class Controller {
 
     @FXML
     private void handleAddClick() {
-        ++interactor.state;
         interactor.addStateButton(bar);
         interactor.logger("State added");
     }
@@ -233,13 +232,9 @@ public class Controller {
     @FXML
     private void handleDragDrop(DragEvent event) {
         String object = event.getDragboard().getString();
-
-        Node node = interactor.createObject(object, event.getX(), event.getY());
-        node.relocate(event.getX(), event.getY());
-        canvasPane.getChildren().add(node);
+        interactor.createObject(object, event.getX(), event.getY());
 
         interactor.logger(object + " created");
-        interactor.addContextMenu(node);
         event.setDropCompleted(true);
     }
 

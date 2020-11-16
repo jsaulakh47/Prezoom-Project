@@ -10,8 +10,7 @@ import app.model.attributes.StrokeColor;
 public class TextArea extends Objects
 {
 	public TextArea(String x, String y, String text, String width , String height) {
-
-		super(x, y);
+		super(x, y, "TextArea");
 		addAttribute(new Text(text));
 		addAttribute(new Width(width));	
 		addAttribute(new Height(height));	
