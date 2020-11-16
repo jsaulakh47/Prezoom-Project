@@ -103,10 +103,11 @@ public class Interactor {
                 
                 ShapeUtility.addFillColor(changes, rectangle, 1);
                 ShapeUtility.addStrokeColor(changes, rectangle, 2);
-                ShapeUtility.addRectangleX(changes, rectangle, 3);
-                ShapeUtility.addRectangleY(changes, rectangle, 4);
-                ShapeUtility.addRectangleWidth(changes, rectangle, 5);
-                ShapeUtility.addRectangleHeight(changes, rectangle, 6);
+                ShapeUtility.addStrokeWidth(changes, rectangle, 3);
+                ShapeUtility.addRectangleX(changes, rectangle, 4);
+                ShapeUtility.addRectangleY(changes, rectangle, 5);
+                ShapeUtility.addRectangleWidth(changes, rectangle, 6);
+                ShapeUtility.addRectangleHeight(changes, rectangle, 7);
             }
         });
 
@@ -137,9 +138,10 @@ public class Interactor {
                 
                 ShapeUtility.addFillColor(changes, circle, 1);
                 ShapeUtility.addStrokeColor(changes, circle, 2);
-                ShapeUtility.addCircleX(changes, circle, 3);
-                ShapeUtility.addCircleY(changes, circle, 4);
-                ShapeUtility.addCircleRadius(changes, circle, 5);
+                ShapeUtility.addStrokeWidth(changes, circle, 3);
+                ShapeUtility.addCircleX(changes, circle, 4);
+                ShapeUtility.addCircleY(changes, circle, 5);
+                ShapeUtility.addCircleRadius(changes, circle, 6);
             }
         });
 
@@ -201,10 +203,11 @@ public class Interactor {
                 
                 ShapeUtility.addFillColor(changes, line, 1);
                 ShapeUtility.addStrokeColor(changes, line, 2);
-                ShapeUtility.addLineStartX(changes, line, 3);
-                ShapeUtility.addLineStartY(changes, line, 4);
-                ShapeUtility.addLineEndX(changes, line, 5);
-                ShapeUtility.addLineEndY(changes, line, 6);
+                ShapeUtility.addStrokeWidth(changes, line, 3);
+                ShapeUtility.addLineStartX(changes, line, 4);
+                ShapeUtility.addLineStartY(changes, line, 5);
+                ShapeUtility.addLineEndX(changes, line, 6);
+                ShapeUtility.addLineEndY(changes, line, 7);
             }
         });
         
@@ -233,9 +236,10 @@ public class Interactor {
                 
                 ShapeUtility.addFillColor(changes, text, 1);
                 ShapeUtility.addStrokeColor(changes, text, 2);
-                ShapeUtility.addTextX(changes, text, 3);
-                ShapeUtility.addTextY(changes, text, 4);
-                ShapeUtility.addTextText(changes, text, 5);
+                ShapeUtility.addStrokeWidth(changes, text, 3);
+                ShapeUtility.addTextX(changes, text, 4);
+                ShapeUtility.addTextY(changes, text, 5);
+                ShapeUtility.addTextText(changes, text, 6);
             }
         });
 
@@ -250,19 +254,13 @@ public class Interactor {
         textArea.setWrapText(true);
         textArea.setMaxSize(300.0, 150.0);
         pane.getChildren().addAll(textArea);
+        textArea.setText(attr.get("Text"));
 
         pane.setOnMouseDragged(e -> {
 
-            // double offsetX = e.getSceneX() - orgSceneX;
-            // double offsetY = e.getSceneY() - orgSceneY;
-            // double newTranslateX = orgTranslateX + offsetX;
-            // double newTranslateY = orgTranslateY + offsetY;
-
-            // textarea.setXe;
-            // textarea.setTranslateY(newTranslateY);
         });
 
-        textArea.getProperties().put("name", "TextArea");
+        pane.getProperties().put("name", "TextArea");
         return pane;
     }
 
@@ -380,7 +378,7 @@ public class Interactor {
         } else if ("Text".equals(type)) {
             attr = ShapeUtility.getTextProperties((Text) object);
         } else if ("TextArea".equals(type)) {
-            attr = ShapeUtility.getTextAreaProperties((Text) object);
+            attr = ShapeUtility.getTextAreaProperties((Pane) object);
         } else {
             attr = ShapeUtility.getRectangleProperties((Rectangle) object);
         }

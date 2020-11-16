@@ -4,7 +4,7 @@ import app.model.attributes.Text;
 import app.model.attributes.FillColor;
 import app.model.attributes.FontSize;
 import app.model.attributes.StrokeColor;
-
+import app.model.attributes.StrokeWidth;
 
 public class PlainText extends Objects
 {
@@ -12,8 +12,9 @@ public class PlainText extends Objects
         super(x, y, "Text");
 		addAttribute(new Text(text));
 		addAttribute(new FontSize(fontsize));
-		addAttribute(new FillColor("#FF0000"));
-		addAttribute(new StrokeColor("#000000"));
+		addAttribute(new StrokeWidth());
+		addAttribute(new FillColor());
+		addAttribute(new StrokeColor());
 	}
 
 	public PlainText(String x, String y) {

@@ -7,8 +7,7 @@ public class EndX extends Attributes {
         
     }
 
-    EndX() {
+    public EndX() {
         this("100");
-    }
-    
+    }    
 }

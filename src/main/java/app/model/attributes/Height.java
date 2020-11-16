@@ -7,8 +7,7 @@ public class Height extends Attributes {
         
     }
 
-    Height() {
+    public Height() {
         this("100");
     }
-      
 }

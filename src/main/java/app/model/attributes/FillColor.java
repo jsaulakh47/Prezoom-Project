@@ -6,8 +6,7 @@ public class FillColor extends Attributes {
         super("Fill color", data);
     }
 
-    FillColor() {
+    public FillColor() {
         this("#FF0000");
-    }
-    
+    }    
 }

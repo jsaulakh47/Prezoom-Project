@@ -6,8 +6,7 @@ public class EndY extends Attributes {
         super("End Y", data);
     }
     
-    EndY() {
+    public EndY() {
         this("100");
-    }
-    
+    }    
 }

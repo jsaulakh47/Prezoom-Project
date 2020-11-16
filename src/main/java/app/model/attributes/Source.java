@@ -9,7 +9,5 @@ public class Source extends Attributes {
 
     public Source() {
         this("src/main/resources/alfa.png");
-        
     }
-    
 }
