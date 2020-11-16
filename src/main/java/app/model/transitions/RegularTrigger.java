@@ -1,4 +1,4 @@
-package app.model;
+package app.model.transitions;
 
 import app.interfaces.TransitionI;
 

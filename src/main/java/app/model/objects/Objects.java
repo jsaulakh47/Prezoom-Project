@@ -20,25 +20,33 @@ public abstract class  Objects implements ObjectsI {
         attributes = new ArrayList<Attributes>();
 		addAttribute(new XPosition(x));
 		addAttribute(new YPosition(y));
-        id = count++;
+        this.id = count++;
     }
 
     public int getId() {
         return id;
     }
 
-
     protected void addAttribute(Attributes attribute) {
         this.attributes.add(attribute);
     }
 
-    public Map<String,String> getAttributes()
+    public void setAttribute(String key, String value) {
+        for (Attributes attribute : attributes) {
+            if (key.equals(attribute.getLabel())) {
+                attribute.setData(value);
+            }
+        }
+    }
+
+    public Map<String, String> getAttributes()
     {
-       Map<String,String> map = new HashMap<String,String>(); 
-      for (Attributes attribute : attributes)
-      {
-               map.put(attribute.getLabel(),attribute.get());
-      }
-      return map;
+        Map<String, String> map = new HashMap<String, String>(); 
+
+        for (Attributes attribute : attributes) {
+            map.put(attribute.getLabel(),attribute.get());
+        }
+
+        return map;
    }
 }

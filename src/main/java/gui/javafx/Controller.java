@@ -6,9 +6,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -18,7 +20,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -70,11 +75,28 @@ public class Controller {
 
     @FXML
     private GridPane changes;
+
+    // Shapes
+    @FXML
+    private Rectangle rectangle;
     
+    @FXML
+    private Circle circle;
+
+    @FXML
+    private ImageView image;
+
+    @FXML
+    private Text text;
+
+    @FXML
+    private Line line;
+
+
     public void initialize() {
         Region region = (Region) canvasPane;
         Rectangle outputClip = new Rectangle();
-        interactor = new Interactor(rightStatus, changes);
+        interactor = new Interactor(rightStatus, changes, canvasPane);
 
         outputClip.setArcWidth(1.0);
         outputClip.setArcHeight(1.0);
@@ -84,6 +106,12 @@ public class Controller {
             outputClip.setWidth(newValue.getWidth());
             outputClip.setHeight(newValue.getHeight());
         });
+
+        rectangle.getProperties().put("name", "Rectangle");
+        circle.getProperties().put("name", "Circle");
+        image.getProperties().put("name", "Image");
+        text.getProperties().put("name", "Text");
+        line.getProperties().put("name", "Line");
         
         interactor.addStateButton(bar);
     }
@@ -170,18 +198,19 @@ public class Controller {
 
     @FXML
     private void handleAddClick() {
-        // interactor.addState();
+        ++interactor.state;
         interactor.addStateButton(bar);
         interactor.logger("State added");
     }
 
     @FXML
     private void handleDragDetected(MouseEvent event) {
-        String object = event.getSource().getClass().getSimpleName();
-        interactor.logger(object + " selected");
-
         Node node = (Node) event.getSource();
+        String object = node.getProperties().get("name").toString();
+
+        interactor.logger(object + " selected");
         Dragboard dragboard = node.startDragAndDrop(TransferMode.COPY);
+
         // SnapshotParameters snapshotParams = new SnapshotParameters();
         // WritableImage image = node.snapshot(snapshotParams, null);
         // dragboard.setDragView(image, event.getX(), event.getY());
@@ -204,12 +233,13 @@ public class Controller {
     @FXML
     private void handleDragDrop(DragEvent event) {
         String object = event.getDragboard().getString();
-        Node node = interactor.createObject(object);
+
+        Node node = interactor.createObject(object, event.getX(), event.getY());
         node.relocate(event.getX(), event.getY());
         canvasPane.getChildren().add(node);
 
-        interactor.addContextMenu(node, canvasPane);
         interactor.logger(object + " created");
+        interactor.addContextMenu(node);
         event.setDropCompleted(true);
     }
 

@@ -18,7 +18,7 @@ public class Image extends Objects
 	}
 
 	public Image(String x, String y) {
-		this(x, y, "" ,"100" ,"100" );
+		this(x, y, "src/main/resources/alfa.png" ,"100" ,"100" );
 	}
 
     @Override

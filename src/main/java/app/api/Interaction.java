@@ -8,39 +8,43 @@ import app.interfaces.ObjectsI;
 import app.model.Sheet;
 import app.model.States;
 import app.model.objects.ObjectFactory;
+import app.model.objects.Objects;
 
 public class Interaction {
-    public static int addState() {
-        return Sheet.getInstance().addState();
+    public static void addState() {
+        Sheet.getInstance().addState();
     }
 
     public static List<States> getStates() {
         return Sheet.getInstance().getStates();
     }
 
-    public static Map<String, String> createObject(String type, String x, String y) {
-        
-        ObjectFactoryI factory = new ObjectFactory();
+    public static Objects createObject(String type, String x, String y) {
         ObjectsI object;
+        ObjectFactoryI factory = new ObjectFactory();
+
         if ("Circle".equals(type)) {
             object = factory.makeCircle(x, y);
-            return object.getAttributes();
+            return (Objects) object;
         } else if ("Image".equals(type)) {
-            object = factory.makeCircle(x, y);
-            return object.getAttributes();
+            object = factory.makeImage(x, y);
+            return (Objects) object;
         } else if ("Line".equals(type)) {
             object = factory.makeLine(x, y);
-            return object.getAttributes();
+            return (Objects) object;
         } else if ("Text".equals(type)) {
             object = factory.makeText(x, y);
-            return object.getAttributes();
+            return (Objects) object;
         }  else if ("TextArea".equals(type)) {
-
+            object = factory.makeTextArea(x, y);
+            return (Objects) object;
         } else {
             object = factory.makeRectangle(x, y);
-            return object.getAttributes();
+            return (Objects) object;
         }
-        
-        return null;
+    }
+
+    public static void saveObject(int stateId, int objectId, Map<String, String> attr) {
+        Sheet.getInstance().updateObject(stateId, objectId, attr);
     }
 }

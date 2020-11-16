@@ -1,7 +1,7 @@
-package app.model;
+package app.utility;
 
 enum Trigger 
 {
- KEYED,
- TIMED;  
+    KEYED,
+    TIMED;  
 }
