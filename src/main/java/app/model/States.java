@@ -1,14 +1,13 @@
 package app.model;
 
 public class States {
-
-    private static int id = 1;
-    // private String name;
+    private static int count = 1;
     private String height;
     private String  width;
+    private int id;
 
     public States(){
-        id++;
+        this.id = count++;
         height = "720";
         width = "1080";
     }

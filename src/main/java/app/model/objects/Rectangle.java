@@ -9,8 +9,7 @@ import app.model.attributes.StrokeColor;
 public class Rectangle extends Objects
 {
 	public Rectangle(String x, String y, String width, String height) {
-
-		super(x, y);
+		super(x, y, "Rectangle");
 		addAttribute(new Width(width));
 		addAttribute(new Height(height));
 		addAttribute(new FillColor("#FF0000"));
