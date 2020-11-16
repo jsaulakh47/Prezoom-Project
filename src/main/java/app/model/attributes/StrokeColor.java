@@ -6,9 +6,7 @@ public class StrokeColor extends Attributes {
         super("Stroke color", data);
     }
 
-    StrokeColor() {
+    public StrokeColor() {
         this("#000000");
     }
-    
-       
 }

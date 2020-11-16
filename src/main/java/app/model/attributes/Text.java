@@ -4,11 +4,9 @@ public class Text extends Attributes {
 
     public Text(String data) {
         super("Text", data);
-        
     }
 
-    Text() {
+    public Text() {
         this("Alfa");
-    }
-    
+    }    
 }

@@ -1,10 +1,8 @@
 package app.model.objects;
 
-
 import app.model.attributes.Width;
 import app.model.attributes.Height;
 import app.model.attributes.Source;
-
 
 public class Image extends Objects
 {

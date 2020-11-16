@@ -2,6 +2,7 @@ package gui.javafx;
 
 import java.io.File;
 
+import app.model.attributes.TextArea;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -51,9 +52,6 @@ public class Controller {
     private Button cameraButton;
 
     @FXML
-    private Button attributesButton;
-
-    @FXML
     private Button transitionsButton;
 
     @FXML
@@ -90,6 +88,8 @@ public class Controller {
     @FXML
     private Line line;
 
+    @FXML
+    private Pane content;
 
     public void initialize() {
         Region region = (Region) canvasPane;
@@ -106,6 +106,7 @@ public class Controller {
         });
 
         rectangle.getProperties().put("name", "Rectangle");
+        content.getProperties().put("name", "TextArea");
         circle.getProperties().put("name", "Circle");
         image.getProperties().put("name", "Image");
         text.getProperties().put("name", "Text");
@@ -167,11 +168,6 @@ public class Controller {
     @FXML
     private void handlePreviewClick() {
         interactor.logger("Preview!!!");
-    }
-
-    @FXML
-    private void handleAttributesClick() {
-        interactor.logger("Attributes!!!");
     }
 
     @FXML

@@ -24,7 +24,6 @@ public class Attributes implements AttributesI {
     public String getLabel() {
         return label;
     }   
-    
 }
 
 

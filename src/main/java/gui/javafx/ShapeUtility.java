@@ -6,9 +6,11 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -42,6 +44,15 @@ public class ShapeUtility {
 
         stroke.setStyle("-fx-color-label-visible:false;");
         addLable(pane, stroke, "Stroke color", position);
+    }
+
+    public static void addStrokeWidth(GridPane pane, Shape shape, int position) {
+        TextField textField = new TextField(String.valueOf(shape.getStrokeWidth()));
+        textField.setOnAction(e -> {
+            shape.setStrokeWidth(Double.parseDouble(textField.getText()));
+        });
+
+        addLable(pane, textField, "Stroke width", position);
     }
 
     public static void addRectangleX(GridPane pane, Rectangle shape, int position) {
@@ -209,12 +220,10 @@ public class ShapeUtility {
     public static Map<String, String> getRectangleProperties(Rectangle node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        attributes.put("X position", String.valueOf(node.getX()));
-        attributes.put("Y position", String.valueOf(node.getY()));
+        ShapeUtility.postion(attributes, node.getX(), node.getY());
         attributes.put("Width", String.valueOf(node.getWidth()));
         attributes.put("Height", String.valueOf(node.getHeight()));
-        attributes.put("Fill color", String.valueOf(node.getFill()));
-        attributes.put("Stroke color", String.valueOf(node.getStroke()));
+        strokeFill(attributes, node);
 
         return attributes;
     }
@@ -222,11 +231,9 @@ public class ShapeUtility {
     public static Map<String, String> getCircleProperties(Circle node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        attributes.put("X position", String.valueOf(node.getCenterX()));
-        attributes.put("Y position", String.valueOf(node.getCenterY()));
+        ShapeUtility.postion(attributes, node.getCenterX(), node.getCenterY());
         attributes.put("Radius", String.valueOf(node.getRadius()));
-        attributes.put("Fill color", String.valueOf(node.getFill()));
-        attributes.put("Stroke color", String.valueOf(node.getStroke()));
+        strokeFill(attributes, node);
 
         return attributes;
     }
@@ -234,8 +241,7 @@ public class ShapeUtility {
     public static Map<String, String> getImageProperties(ImageView node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        attributes.put("X position", String.valueOf(node.getX()));
-        attributes.put("Y position", String.valueOf(node.getY()));
+        ShapeUtility.postion(attributes, node.getX(), node.getY());
         attributes.put("Width", String.valueOf(node.getFitWidth()));
         attributes.put("Height", String.valueOf(node.getFitHeight()));
 
@@ -245,10 +251,10 @@ public class ShapeUtility {
     public static Map<String, String> getLineProperties(Line node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        // attributes.put("X position", String.valueOf(node.getX()));
-        // attributes.put("Y position", String.valueOf(node.getY()));
-        // attributes.put("Width", String.valueOf(node.getFitWidth()));
-        // attributes.put("Height", String.valueOf(node.getFitHeight()));
+        ShapeUtility.postion(attributes, node.getStartX(), node.getStartY());
+        attributes.put("End X", String.valueOf(node.getEndX()));
+        attributes.put("End Y", String.valueOf(node.getEndY()));
+        strokeFill(attributes, node);
 
         return attributes;
     }
@@ -256,20 +262,35 @@ public class ShapeUtility {
     public static Map<String, String> getTextProperties(Text node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        attributes.put("X position", String.valueOf(node.getX()));
-        attributes.put("Y position", String.valueOf(node.getY()));
+        ShapeUtility.postion(attributes, node.getX(), node.getY());
         attributes.put("Text", String.valueOf(node.getText()));
+        ShapeUtility.strokeFill(attributes, node);
 
         return attributes;
     }
 
-    public static Map<String, String> getTextAreaProperties(Text node) {
+    public static Map<String, String> getTextAreaProperties(Pane node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
-        // attributes.put("X position", String.valueOf(node.getX()));
-        // attributes.put("Y position", String.valueOf(node.getY()));
-        // attributes.put("Width", String.valueOf(node.getFitWidth()));
-        // attributes.put("Height", String.valueOf(node.getFitHeight()));
+        ShapeUtility.postion(attributes, node.getScene().getX(), node.getScene().getY());
+        attributes.put("Width", String.valueOf(node.getWidth()));
+        attributes.put("Height", String.valueOf(node.getHeight()));
+        attributes.put("Text", ((TextArea) node.getChildren().get(0)).getText());
+        
+        return attributes;
+    }
+
+    public static Map<String, String> strokeFill(Map<String, String> attributes, Shape node) {
+        attributes.put("Fill color", String.valueOf(node.getFill()));
+        attributes.put("Stroke color", String.valueOf(node.getStroke()));
+        attributes.put("Stroke width", String.valueOf(node.getStrokeWidth()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> postion(Map<String, String> attributes, double X, double Y) {
+        attributes.put("X position", String.valueOf(X));
+        attributes.put("Y position", String.valueOf(Y));
 
         return attributes;
     }

@@ -74,7 +74,7 @@
                   <Line fx:id="line" endX="-135.61026000976562" endY="103.38975524902344" onDragDetected="#handleDragDetected" onMouseEntered="#handleMouseEntered" onMouseExited="#handleMouseExited" startX="-176.38844299316406" startY="78.611572265625" stroke="#1b195b" strokeWidth="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Pane fx:id="content" onDragDetected="#handleDragDetected" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextArea editable="false" layoutX="6.0" layoutY="19.0" onMouseExited="#handleMouseEntered" onMouseMoved="#handleMouseExited" prefHeight="43.0" prefWidth="67.0" style="-fx-background-color: #1b195b; -fx-border-color: #1b195b;" text="&#10; Text Aea&#10;">
+                        <TextArea editable="false" layoutX="6.0" layoutY="19.0" onMouseDragged="#handleDragDetected" onMouseExited="#handleMouseEntered" onMouseMoved="#handleMouseExited" prefHeight="43.0" prefWidth="67.0" style="-fx-background-color: #1b195b; -fx-border-color: #1b195b;" text="&#10; Text Aea&#10;">
                            <font>
                               <Font size="9.0" />
                            </font>
@@ -134,11 +134,6 @@
                      </font>
                   </Button>
                   <Button fx:id="transitionsButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleTransitionsClick" text="Transitions">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="attributesButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleAttributesClick" text="Attributes">
                      <font>
                         <Font size="10.0" />
                      </font>

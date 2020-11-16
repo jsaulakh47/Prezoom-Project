@@ -1,11 +1,10 @@
 package app.model.objects;
 
-
 import app.model.attributes.EndX;
 import app.model.attributes.EndY;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
-
+import app.model.attributes.StrokeWidth;
 
 public class Line extends Objects
 {
@@ -13,8 +12,9 @@ public class Line extends Objects
 		super(x, y, "Line");
 		addAttribute(new EndX(end_x));
 		addAttribute(new EndY(end_y));
-		addAttribute(new FillColor("#FF0000"));
-		addAttribute(new StrokeColor("#000000"));
+		addAttribute(new StrokeWidth());
+		addAttribute(new FillColor());
+		addAttribute(new StrokeColor());
 	}
 
 	public Line(String x, String y) {

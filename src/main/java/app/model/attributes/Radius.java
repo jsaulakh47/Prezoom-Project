@@ -6,8 +6,7 @@ public class Radius extends Attributes {
         super("Radius", data);
     }  
     
-    Radius() {
+    public Radius() {
         this("50");
-    } 
-    
+    }
 }
