@@ -1,8 +1,7 @@
 package app.api;
 
 import app.model.Sheet;
-import app.model.States;
-import org.junit.Before;
+import app.model.objects.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,5 +50,33 @@ public class InteractionTest {
                 Sheet.getInstance().getStates() instanceof List);
         assertEquals("Interaction api did not get states correctly.",
                 Sheet.getInstance().getStates().size(), 1);
+    }
+
+    @Test
+    public void testCreateObject() {
+        Interaction.addState();
+        Objects object = Interaction.createObject("Circle", 1, "1", "1");
+        assertTrue("Interaction did not create circle object",
+                object instanceof Circle);
+
+        object = Interaction.createObject("Line", 1, "1", "1");
+        assertTrue("Interaction did not create Line object",
+                object instanceof Line);
+
+        object = Interaction.createObject("Image", 1, "1", "1");
+        assertTrue("Interaction did not create circle object",
+                object instanceof Image);
+
+        object = Interaction.createObject("Text", 1, "1", "1");
+        assertTrue("Interaction did not create circle object",
+                object instanceof PlainText);
+
+        object = Interaction.createObject("TextArea", 1, "1", "1");
+        assertTrue("Interaction did not create circle object",
+                object instanceof TextArea);
+
+        object = Interaction.createObject("Rectangle", 1, "1", "1");
+        assertTrue("Interaction did not create circle object",
+                object instanceof Rectangle);
     }
 }
