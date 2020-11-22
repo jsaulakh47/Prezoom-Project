@@ -91,7 +91,7 @@
             <mainClass>app.Main</mainClass>
         </configuration>
     </plugin>
-    <!-- This plugin is required to run test cases using "mvn test" command in JUnit 5.
+    <!-- This plugin is required to run test cases using "mvn test" command, when working with JUnit 5.
          If this plugin is removed, then "mvn test" will not recognize the test cases. -->
     <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
