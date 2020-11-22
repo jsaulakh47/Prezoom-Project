@@ -1,57 +1,56 @@
 package app.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import app.model.objects.Objects;
 
 public class Sheet {
-    PropertyChangeSupport changes = new  PropertyChangeSupport(this);
-
     private List<States> states;
-    private Map<Integer, List<Objects>> objects;
     private static Sheet instance;
+    private Map<Integer, ArrayList<Objects>> objects;
 
     private Sheet() {
-        this.states =  new ArrayList<States>();
+        this.states = new ArrayList<States>();
+        this.objects = new HashMap<Integer, ArrayList<Objects>>();
     }
 
-    public static Sheet getInstance() 
-    { 
+    public static Sheet getInstance() {
         if (instance == null) {
-            instance = new Sheet(); 
+            instance = new Sheet();
         }
 
-        return instance; 
+        return instance;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        changes.addPropertyChangeListener(l);
-    }
-	
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        changes.removePropertyChangeListener(l);
-    }
-    
-    public int addState() {
-        List<States> old = states;
+    public void addState() {
         States state = new States();
 
         states.add(state);
-        changes.firePropertyChange("value", old, states);
-        
-        return state.getId();
+        objects.put(state.getId(), new ArrayList<Objects>());
     }
 
     public List<States> getStates() {
         return states;
-    } 
+    }
 
-    public void addObject(int stateId , Object object)
-    {
-        // objects.put(stateId, object);
+    public List<Objects> loadState(int stateId) {
+        return objects.get(stateId);
+    }
+
+    public void addObject(int stateId, Objects object) {
+        objects.get(stateId).add(object);
+    }
+
+    public void updateObject(int stateId, int objectId, Map<String, String> attr) {
+        for (Objects object : objects.get(stateId)) {
+            if (object.getId() == objectId) {
+                for (Map.Entry<String, String> entry : attr.entrySet()) {
+                    object.setAttribute(entry.getKey(), entry.getValue());
+                }
+            }
+        }
     }
 }

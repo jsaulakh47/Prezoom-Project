@@ -6,5 +6,8 @@ public class Source extends Attributes {
         super("Source", data);
         
     }
-    
+
+    public Source() {
+        this("src/main/resources/alfa.png");
+    }
 }

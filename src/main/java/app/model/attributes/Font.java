@@ -6,6 +6,8 @@ public class Font extends Attributes {
         super("Font", data);
         
     }
-    
 
+    public Font() {
+        this("");
+    }
 }

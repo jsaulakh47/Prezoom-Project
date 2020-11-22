@@ -7,8 +7,7 @@ public class FontSize extends Attributes {
         
     }
 
-    FontSize() {
+    public FontSize() {
         this("12");
-    }   
-
+    }
 }

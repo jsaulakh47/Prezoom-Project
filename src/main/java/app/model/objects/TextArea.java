@@ -6,17 +6,18 @@ import app.model.attributes.Width;
 import app.model.attributes.Height;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
+import app.model.attributes.StrokeWidth;
 
 public class TextArea extends Objects
 {
 	public TextArea(String x, String y, String text, String width , String height) {
-
-		super(x, y);
+		super(x, y, "TextArea");
 		addAttribute(new Text(text));
 		addAttribute(new Width(width));	
-		addAttribute(new Height(height));	
-		addAttribute(new FillColor("#FF0000"));
-		addAttribute(new StrokeColor("#000000"));
+		addAttribute(new Height(height));
+		addAttribute(new StrokeWidth());
+		addAttribute(new FillColor());
+		addAttribute(new StrokeColor());
 	}
 
 	public TextArea(String x, String y) {
