@@ -9,28 +9,28 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class LineTest {
-    Objects line;
+public class RectangleTest {
+    Objects rectangle;
 
     @BeforeAll
     public void setup() {
-        line = new Line("10", "20", "30", "40");
+        rectangle = new Rectangle("10", "20", "30", "40");
     }
 
     @Test
-    public void testLineAndItsAttributes() {
-        Map<String, String> attributes = line.getAttributes();
+    public void testRectangleAndItsAttributes() {
+        Map<String, String> attributes = rectangle.getAttributes();
 
-        assertEquals("Line does not have proper number of attributes.",
+        assertEquals("Rectangle does not have proper number of attributes.",
                 attributes.size(), 7);
+        assertEquals("Width attribute not set properly.",
+                attributes.get("Width"), "30");
+        assertEquals("Height attribute not set properly.",
+                attributes.get("Height"), "40");
         assertEquals("X position attribute not set properly.",
                 attributes.get("X position"), "10");
         assertEquals("Y position attribute not set properly.",
                 attributes.get("Y position"), "20");
-        assertEquals("End X attribute not set properly.",
-                attributes.get("End X"), "30");
-        assertEquals("End Y attribute not set properly.",
-                attributes.get("End Y"), "40");
         assertEquals("Stroke width attribute not set properly.",
                 attributes.get("Stroke width"), "1");
         assertEquals("Fill color attribute not set properly.",

@@ -9,28 +9,30 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class LineTest {
-    Objects line;
+public class TextAreaTest {
+    Objects textArea;
 
     @BeforeAll
     public void setup() {
-        line = new Line("10", "20", "30", "40");
+        textArea = new TextArea("30", "35", "This project is awesome." , "50" , "70");
     }
 
     @Test
-    public void testLineAndItsAttributes() {
-        Map<String, String> attributes = line.getAttributes();
+    public void testTextAreaAndItsAttributes() {
+        Map<String, String> attributes = textArea.getAttributes();
 
-        assertEquals("Line does not have proper number of attributes.",
-                attributes.size(), 7);
+        assertEquals("TextArea does not have proper number of attributes.",
+                attributes.size(), 8);
+        assertEquals("Text attribute not set properly.",
+                attributes.get("Text"), "This project is awesome.");
+        assertEquals("Width attribute not set properly.",
+                attributes.get("Width"), "50");
+        assertEquals("Height attribute not set properly.",
+                attributes.get("Height"), "70");
         assertEquals("X position attribute not set properly.",
-                attributes.get("X position"), "10");
+                attributes.get("X position"), "30");
         assertEquals("Y position attribute not set properly.",
-                attributes.get("Y position"), "20");
-        assertEquals("End X attribute not set properly.",
-                attributes.get("End X"), "30");
-        assertEquals("End Y attribute not set properly.",
-                attributes.get("End Y"), "40");
+                attributes.get("Y position"), "35");
         assertEquals("Stroke width attribute not set properly.",
                 attributes.get("Stroke width"), "1");
         assertEquals("Fill color attribute not set properly.",
