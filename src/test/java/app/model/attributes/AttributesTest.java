@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AttributesTest {
 
@@ -12,11 +15,16 @@ public class AttributesTest {
 
     @BeforeAll
     public void setup() {
-        attributes = new Attributes("", "");
+        attributes = new Attributes("Radius", "50");
     }
 
     @Test
-    public void testSetData() {
-        // TODO: Add test case code here for setData() method.
+    public void testGetData() {
+        assertEquals("Attributes data not set properly.", attributes.get(), "50");
+    }
+
+    @Test
+    public void testGetLabel() {
+        assertEquals("Attributes data not set properly.", attributes.getLabel(), "Radius");
     }
 }
