@@ -11,6 +11,13 @@ import app.model.objects.ObjectFactory;
 import app.model.objects.Objects;
 
 public class Interaction {
+
+    public static final String CIRCLE = "Circle";
+    public static final String IMAGE = "Image";
+    public static final String LINE = "Line";
+    public static final String TEXT = "Text";
+    public static final String TEXT_AREA = "TextArea";
+
     public static void addState() {
         Sheet.getInstance().addState();
     }
@@ -23,15 +30,15 @@ public class Interaction {
         ObjectsI object;
         ObjectFactoryI factory = new ObjectFactory();
 
-        if ("Circle".equals(type)) {
+        if (CIRCLE.equals(type)) {
             object = factory.makeCircle(x, y);
-        } else if ("Image".equals(type)) {
+        } else if (IMAGE.equals(type)) {
             object = factory.makeImage(x, y);
-        } else if ("Line".equals(type)) {
+        } else if (LINE.equals(type)) {
             object = factory.makeLine(x, y);
-        } else if ("Text".equals(type)) {
+        } else if (TEXT.equals(type)) {
             object = factory.makeText(x, y);
-        }  else if ("TextArea".equals(type)) {
+        }  else if (TEXT_AREA.equals(type)) {
             object = factory.makeTextArea(x, y);
         } else {
             object = factory.makeRectangle(x, y);

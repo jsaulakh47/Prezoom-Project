@@ -7,3 +7,5 @@ target
 config.properties
 .settings
 /bin/
+.idea/
+*.iml
