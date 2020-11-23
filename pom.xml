@@ -105,25 +105,25 @@
             </dependency>
         </dependencies>
     </plugin>
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>1.8</version>
-            <executions>
-                <execution>
-                    <id>add-test-source</id>
-                    <phase>generate-sources</phase>
-                    <goals>
-                        <goal>add-test-source</goal>
-                    </goals>
-                    <configuration>
-                        <sources>
-                            <source>src/testsrc/java</source>
-                        </sources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+            <execution>
+                <id>add-test-source</id>
+                <phase>generate-sources</phase>
+                <goals>
+                    <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                    <sources>
+                        <source>testsrc/java</source>
+                    </sources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-jar-plugin</artifactId>
