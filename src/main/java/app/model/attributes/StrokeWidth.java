@@ -5,7 +5,7 @@ public class StrokeWidth extends Attributes {
     public static final String DEFAULT_DATA = "1";
 
     public StrokeWidth(String data) {
-        super("Stroke width", data);
+        super(AttributeLabel.STROKE_WIDTH.getLabel(), data);
     }
 
     public StrokeWidth() {
