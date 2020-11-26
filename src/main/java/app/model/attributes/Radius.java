@@ -2,11 +2,13 @@ package app.model.attributes;
 
 public class Radius extends Attributes {
 
+    public static final String DEFAULT_DATA = "50";
+
     public Radius(String data) {
-        super("Radius", data);
+        super(AttributeLabel.RADIUS.getLabel(), data);
     }  
     
     public Radius() {
-        this("50");
+        this(DEFAULT_DATA);
     }
 }

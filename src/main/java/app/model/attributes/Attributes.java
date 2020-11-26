@@ -11,19 +11,19 @@ public class Attributes implements AttributesI {
         this.data = data;
     }
 
-    public void setData (String data){
+    public void setData(String data) {
         this.data = data;
     }
 
     @Override
-    public String get() {        
+    public String getData() {
         return data;
     }
 
     @Override
     public String getLabel() {
         return label;
-    }   
+    }
 }
 
 

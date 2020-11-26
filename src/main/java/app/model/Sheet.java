@@ -39,7 +39,7 @@ public class Sheet {
         States state = new States();
 
         states.add(state);
-        objects.put(state.getId(), new ArrayList<Objects>());
+        objects.put(state.getId(), new ArrayList<>());
     }
 
     public void replicateState(int index) {

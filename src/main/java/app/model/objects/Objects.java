@@ -10,15 +10,15 @@ import app.model.attributes.XPosition;
 import app.model.attributes.YPosition;
 import app.model.attributes.Attributes;
 
-public abstract class  Objects implements ObjectsI {
+public abstract class Objects implements ObjectsI {
     private List<Attributes> attributes;
     private static int count = 1;
     private String type;
     private int id;
 
     public Objects(String x, String y, String type) {
-        attributes = new ArrayList<Attributes>();
-		addAttribute(new XPosition(x));
+        attributes = new ArrayList<>();
+        addAttribute(new XPosition(x));
         addAttribute(new YPosition(y));
         this.id = count++;
         this.type = type;
@@ -44,14 +44,13 @@ public abstract class  Objects implements ObjectsI {
         }
     }
 
-    public Map<String, String> getAttributes()
-    {
-        Map<String, String> map = new HashMap<String, String>(); 
+    public Map<String, String> getAttributes() {
+        Map<String, String> map = new HashMap<>();
 
         for (Attributes attribute : attributes) {
-            map.put(attribute.getLabel(),attribute.get());
+            map.put(attribute.getLabel(), attribute.getData());
         }
 
         return map;
-   }
+    }
 }

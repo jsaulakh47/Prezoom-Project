@@ -8,6 +8,9 @@ import java.net.URL;
 import app.model.Sheet;
 import gui.javafx.views.EditView;
 import javafx.event.ActionEvent;
+import app.api.InvalidObjectTypeException;
+import app.model.attributes.TextArea;
+import app.model.objects.ObjectType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -109,12 +112,23 @@ public class EditController implements PropertyChangeListener {
         pane.getChildren().clear();
         pane.getChildren().add(this.view);
 
+<<<<<<< HEAD:src/main/java/gui/javafx/controllers/EditController.java
         line.getProperties().put("name", "Line");
         text.getProperties().put("name", "Text");
         image.getProperties().put("name", "Image");
         circle.getProperties().put("name", "Circle");
         content.getProperties().put("name", "TextArea");
         rectangle.getProperties().put("name", "Rectangle");
+=======
+        rectangle.getProperties().put("name", ObjectType.RECTANGLE.getType());
+        content.getProperties().put("name", ObjectType.TEXT_AREA.getType());
+        circle.getProperties().put("name", ObjectType.CIRCLE.getType());
+        image.getProperties().put("name", ObjectType.IMAGE.getType());
+        text.getProperties().put("name", ObjectType.PLAIN_TEXT.getType());
+        line.getProperties().put("name", ObjectType.LINE.getType());
+        
+        interactor.addStateButton(bar);
+>>>>>>> 187589e2978ba7787193123caaff5ecc14383d60:src/main/java/gui/javafx/Controller.java
     }
 
     @FXML
@@ -210,7 +224,32 @@ public class EditController implements PropertyChangeListener {
         dragboard.setContent(cc);
         event.consume();
     }
+<<<<<<< HEAD:src/main/java/gui/javafx/controllers/EditController.java
     
+=======
+
+    @FXML
+    private void handleDragOver(DragEvent event) {
+        if (event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.ANY);
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void handleDragDrop(DragEvent event) {
+        String object = event.getDragboard().getString();
+        try {
+            interactor.createObject(object, event.getX(), event.getY());
+
+            interactor.logger(object + " created");
+            event.setDropCompleted(true);
+        } catch (InvalidObjectTypeException e) {
+            interactor.logger(e.getMessage());
+        }
+    }
+
+>>>>>>> 187589e2978ba7787193123caaff5ecc14383d60:src/main/java/gui/javafx/Controller.java
     @FXML
     private void handleMouseEntered(MouseEvent event) {
         ((Node) event.getSource()).setCursor(Cursor.OPEN_HAND);
