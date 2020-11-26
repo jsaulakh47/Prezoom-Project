@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.api.Interaction;
+import app.api.InvalidObjectTypeException;
 import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
 import app.model.objects.Objects;
@@ -43,7 +44,7 @@ public class Interactor {
         this.state = 0;
     }
 
-    public void createObject(String type, double x, double y) {
+    public void createObject(String type, double x, double y) throws InvalidObjectTypeException {
         Objects attr = Interaction.createObject(type, current, String.valueOf(x), String.valueOf(y));
         
         Node node = creator(type, attr, x, y);

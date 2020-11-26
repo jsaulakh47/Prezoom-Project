@@ -21,7 +21,7 @@ public class Interaction {
         return Sheet.getInstance().getStates();
     }
 
-    public static Objects createObject(String type, int stateId, String x, String y) {
+    public static Objects createObject(String type, int stateId, String x, String y) throws InvalidObjectTypeException {
         ObjectsI object;
         ObjectFactoryI factory = new ObjectFactory();
 
@@ -35,8 +35,10 @@ public class Interaction {
             object = factory.makePlainText(x, y);
         } else if (ObjectType.TEXT_AREA.getType().equals(type)) {
             object = factory.makeTextArea(x, y);
-        } else {
+        } else if (ObjectType.RECTANGLE.getType().equals(type)) {
             object = factory.makeRectangle(x, y);
+        } else {
+            throw new InvalidObjectTypeException(type);
         }
 
         Sheet.getInstance().addObject(stateId, (Objects) object);

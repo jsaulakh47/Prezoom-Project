@@ -2,6 +2,7 @@ package gui.javafx;
 
 import java.io.File;
 
+import app.api.InvalidObjectTypeException;
 import app.model.attributes.TextArea;
 import app.model.objects.ObjectType;
 import javafx.fxml.FXML;
@@ -227,10 +228,14 @@ public class Controller {
     @FXML
     private void handleDragDrop(DragEvent event) {
         String object = event.getDragboard().getString();
-        interactor.createObject(object, event.getX(), event.getY());
+        try {
+            interactor.createObject(object, event.getX(), event.getY());
 
-        interactor.logger(object + " created");
-        event.setDropCompleted(true);
+            interactor.logger(object + " created");
+            event.setDropCompleted(true);
+        } catch (InvalidObjectTypeException e) {
+            interactor.logger(e.getMessage());
+        }
     }
 
     @FXML

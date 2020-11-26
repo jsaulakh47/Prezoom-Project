@@ -53,7 +53,7 @@ public class InteractionTest {
     }
 
     @Test
-    public void testCreateObject() {
+    public void testCreateObject() throws InvalidObjectTypeException {
         Interaction.addState();
         Objects object = Interaction.createObject(ObjectType.CIRCLE.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
