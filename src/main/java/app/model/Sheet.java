@@ -13,8 +13,8 @@ public class Sheet {
     private Map<Integer, ArrayList<Objects>> objects;
 
     private Sheet() {
-        this.states = new ArrayList<States>();
-        this.objects = new HashMap<Integer, ArrayList<Objects>>();
+        this.states = new ArrayList<>();
+        this.objects = new HashMap<>();
     }
 
     public static Sheet getInstance() {
@@ -29,7 +29,7 @@ public class Sheet {
         States state = new States();
 
         states.add(state);
-        objects.put(state.getId(), new ArrayList<Objects>());
+        objects.put(state.getId(), new ArrayList<>());
     }
 
     public List<States> getStates() {

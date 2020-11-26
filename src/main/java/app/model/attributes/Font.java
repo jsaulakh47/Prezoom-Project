@@ -1,13 +1,15 @@
 package app.model.attributes;
 
 public class Font extends Attributes {
-    
+
+    public static final String DEFAULT_DATA = "";
+
     public Font(String data) {
-        super("Font", data);
+        super(AttributeLabel.FONT.getLabel(), data);
         
     }
 
     public Font() {
-        this("");
+        this(DEFAULT_DATA);
     }
 }

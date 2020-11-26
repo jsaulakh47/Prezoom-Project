@@ -3,6 +3,7 @@ package gui.javafx;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.model.attributes.AttributeLabel;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class ShapeUtility {
         });
 
         fill.setStyle("-fx-color-label-visible: false ;");
-        addLable(pane, fill, "Fill color", position);
+        addLable(pane, fill, AttributeLabel.FILL_COLOR.getLabel(), position);
     }
 
     public static void addStrokeColor(GridPane pane, Shape shape, int position) {
@@ -43,7 +44,7 @@ public class ShapeUtility {
         });
 
         stroke.setStyle("-fx-color-label-visible:false;");
-        addLable(pane, stroke, "Stroke color", position);
+        addLable(pane, stroke, AttributeLabel.STROKE_COLOR.getLabel(), position);
     }
 
     public static void addStrokeWidth(GridPane pane, Shape shape, int position) {
@@ -52,7 +53,7 @@ public class ShapeUtility {
             shape.setStrokeWidth(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Stroke width", position);
+        addLable(pane, textField, AttributeLabel.STROKE_WIDTH.getLabel(), position);
     }
 
     public static void addRectangleX(GridPane pane, Rectangle shape, int position) {
@@ -61,7 +62,7 @@ public class ShapeUtility {
             shape.setX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "X position", position);
+        addLable(pane, textField, AttributeLabel.X_POSITION.getLabel(), position);
     }
 
     public static void addRectangleY(GridPane pane, Rectangle shape, int position) {
@@ -70,7 +71,7 @@ public class ShapeUtility {
             shape.setY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Y position", position);
+        addLable(pane, textField, AttributeLabel.Y_POSITION.getLabel(), position);
     }
 
     public static void addRectangleWidth(GridPane pane, Rectangle shape, int position) {
@@ -79,7 +80,7 @@ public class ShapeUtility {
             shape.setWidth(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Width", position);
+        addLable(pane, textField, AttributeLabel.WIDTH.getLabel(), position);
     }
 
     public static void addRectangleHeight(GridPane pane, Rectangle shape, int position) {
@@ -88,7 +89,7 @@ public class ShapeUtility {
             shape.setHeight(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Height", position);
+        addLable(pane, textField, AttributeLabel.HEIGHT.getLabel(), position);
     }
 
     public static void addCircleX(GridPane pane, Circle shape, int position) {
@@ -97,7 +98,7 @@ public class ShapeUtility {
             shape.setCenterX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "X position", position);
+        addLable(pane, textField, AttributeLabel.X_POSITION.getLabel(), position);
     }
 
     public static void addCircleY(GridPane pane, Circle shape, int position) {
@@ -106,7 +107,7 @@ public class ShapeUtility {
             shape.setCenterY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Y position", position);
+        addLable(pane, textField, AttributeLabel.Y_POSITION.getLabel(), position);
     }
 
     public static void addCircleRadius(GridPane pane, Circle shape, int position) {
@@ -115,7 +116,7 @@ public class ShapeUtility {
             shape.setRadius(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Radius", position);
+        addLable(pane, textField, AttributeLabel.RADIUS.getLabel(), position);
     }
 
     public static void addImageX(GridPane pane, ImageView shape, int position) {
@@ -124,7 +125,7 @@ public class ShapeUtility {
             shape.setX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "X position", position);
+        addLable(pane, textField, AttributeLabel.X_POSITION.getLabel(), position);
     }
 
     public static void addImageY(GridPane pane, ImageView shape, int position) {
@@ -133,7 +134,7 @@ public class ShapeUtility {
             shape.setY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Y position", position);
+        addLable(pane, textField, AttributeLabel.Y_POSITION.getLabel(), position);
     }
 
     public static void addImageWidth(GridPane pane, ImageView shape, int position) {
@@ -142,7 +143,7 @@ public class ShapeUtility {
             shape.setFitWidth(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Width", position);
+        addLable(pane, textField, AttributeLabel.WIDTH.getLabel(), position);
     }
 
     public static void addImageHeight(GridPane pane, ImageView shape, int position) {
@@ -151,7 +152,7 @@ public class ShapeUtility {
             shape.setFitHeight(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Height", position);
+        addLable(pane, textField, AttributeLabel.HEIGHT.getLabel(), position);
     }
 
     public static void addTextX(GridPane pane, Text shape, int position) {
@@ -160,7 +161,7 @@ public class ShapeUtility {
             shape.setX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "X position", position);
+        addLable(pane, textField, AttributeLabel.X_POSITION.getLabel(), position);
     }
 
     public static void addTextY(GridPane pane, Text shape, int position) {
@@ -169,7 +170,7 @@ public class ShapeUtility {
             shape.setY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Y position", position);
+        addLable(pane, textField, AttributeLabel.Y_POSITION.getLabel(), position);
     }
 
     public static void addTextText(GridPane pane, Text shape, int position) {
@@ -178,7 +179,7 @@ public class ShapeUtility {
             shape.setText(textField.getText());
         });
 
-        addLable(pane, textField, "Text", position);
+        addLable(pane, textField, AttributeLabel.TEXT.getLabel(), position);
     }
 
     public static void addLineStartX(GridPane pane, Line shape, int position) {
@@ -187,7 +188,7 @@ public class ShapeUtility {
             shape.setStartX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "X position", position);
+        addLable(pane, textField, AttributeLabel.X_POSITION.getLabel(), position);
     }
 
     public static void addLineStartY(GridPane pane, Line shape, int position) {
@@ -196,7 +197,7 @@ public class ShapeUtility {
             shape.setStartY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "Y position", position);
+        addLable(pane, textField, AttributeLabel.Y_POSITION.getLabel(), position);
     }
 
     public static void addLineEndX(GridPane pane, Line shape, int position) {
@@ -205,7 +206,7 @@ public class ShapeUtility {
             shape.setEndX(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "End X", position);
+        addLable(pane, textField, AttributeLabel.END_X.getLabel(), position);
     }
 
     public static void addLineEndY(GridPane pane, Line shape, int position) {
@@ -214,15 +215,15 @@ public class ShapeUtility {
             shape.setEndY(Double.parseDouble(textField.getText()));
         });
 
-        addLable(pane, textField, "End Y", position);
+        addLable(pane, textField, AttributeLabel.END_Y.getLabel(), position);
     }
 
     public static Map<String, String> getRectangleProperties(Rectangle node) {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getX(), node.getY());
-        attributes.put("Width", String.valueOf(node.getWidth()));
-        attributes.put("Height", String.valueOf(node.getHeight()));
+        attributes.put(AttributeLabel.WIDTH.getLabel(), String.valueOf(node.getWidth()));
+        attributes.put(AttributeLabel.HEIGHT.getLabel(), String.valueOf(node.getHeight()));
         strokeFill(attributes, node);
 
         return attributes;
@@ -232,7 +233,7 @@ public class ShapeUtility {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getCenterX(), node.getCenterY());
-        attributes.put("Radius", String.valueOf(node.getRadius()));
+        attributes.put(AttributeLabel.RADIUS.getLabel(), String.valueOf(node.getRadius()));
         strokeFill(attributes, node);
 
         return attributes;
@@ -242,8 +243,8 @@ public class ShapeUtility {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getX(), node.getY());
-        attributes.put("Width", String.valueOf(node.getFitWidth()));
-        attributes.put("Height", String.valueOf(node.getFitHeight()));
+        attributes.put(AttributeLabel.WIDTH.getLabel(), String.valueOf(node.getFitWidth()));
+        attributes.put(AttributeLabel.HEIGHT.getLabel(), String.valueOf(node.getFitHeight()));
 
         return attributes;
     }
@@ -252,8 +253,8 @@ public class ShapeUtility {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getStartX(), node.getStartY());
-        attributes.put("End X", String.valueOf(node.getEndX()));
-        attributes.put("End Y", String.valueOf(node.getEndY()));
+        attributes.put(AttributeLabel.END_X.getLabel(), String.valueOf(node.getEndX()));
+        attributes.put(AttributeLabel.END_Y.getLabel(), String.valueOf(node.getEndY()));
         strokeFill(attributes, node);
 
         return attributes;
@@ -263,7 +264,7 @@ public class ShapeUtility {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getX(), node.getY());
-        attributes.put("Text", String.valueOf(node.getText()));
+        attributes.put(AttributeLabel.TEXT.getLabel(), String.valueOf(node.getText()));
         ShapeUtility.strokeFill(attributes, node);
 
         return attributes;
@@ -273,24 +274,24 @@ public class ShapeUtility {
         Map<String, String> attributes = new HashMap<String, String>();
 
         ShapeUtility.postion(attributes, node.getScene().getX(), node.getScene().getY());
-        attributes.put("Width", String.valueOf(node.getWidth()));
-        attributes.put("Height", String.valueOf(node.getHeight()));
-        attributes.put("Text", ((TextArea) node.getChildren().get(0)).getText());
+        attributes.put(AttributeLabel.WIDTH.getLabel(), String.valueOf(node.getWidth()));
+        attributes.put(AttributeLabel.HEIGHT.getLabel(), String.valueOf(node.getHeight()));
+        attributes.put(AttributeLabel.TEXT.getLabel(), ((TextArea) node.getChildren().get(0)).getText());
         
         return attributes;
     }
 
     public static Map<String, String> strokeFill(Map<String, String> attributes, Shape node) {
-        attributes.put("Fill color", String.valueOf(node.getFill()));
-        attributes.put("Stroke color", String.valueOf(node.getStroke()));
-        attributes.put("Stroke width", String.valueOf(node.getStrokeWidth()));
+        attributes.put(AttributeLabel.FILL_COLOR.getLabel(), String.valueOf(node.getFill()));
+        attributes.put(AttributeLabel.STROKE_COLOR.getLabel(), String.valueOf(node.getStroke()));
+        attributes.put(AttributeLabel.STROKE_WIDTH.getLabel(), String.valueOf(node.getStrokeWidth()));
 
         return attributes;
     }
 
     public static Map<String, String> postion(Map<String, String> attributes, double X, double Y) {
-        attributes.put("X position", String.valueOf(X));
-        attributes.put("Y position", String.valueOf(Y));
+        attributes.put(AttributeLabel.X_POSITION.getLabel(), String.valueOf(X));
+        attributes.put(AttributeLabel.Y_POSITION.getLabel(), String.valueOf(Y));
 
         return attributes;
     }

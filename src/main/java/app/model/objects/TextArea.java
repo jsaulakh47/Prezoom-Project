@@ -8,26 +8,30 @@ import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.StrokeWidth;
 
-public class TextArea extends Objects
-{
-	public TextArea(String x, String y, String text, String width , String height) {
-		super(x, y, "TextArea");
-		addAttribute(new Text(text));
-		addAttribute(new Width(width));	
-		addAttribute(new Height(height));
-		addAttribute(new StrokeWidth());
-		addAttribute(new FillColor());
-		addAttribute(new StrokeColor());
-	}
+public class TextArea extends Objects {
 
-	public TextArea(String x, String y) {
-		this(x, y, "Alfa" , "100" , "100" );
-	}
+    public static final String DEFAULT_TEXT = "Alfa";
+    public static final String DEFAULT_WIDTH = "100";
+    public static final String DEFAULT_HEIGHT = "100";
+
+    public TextArea(String x, String y, String text, String width, String height) {
+        super(x, y, ObjectType.TEXT_AREA.getType());
+        addAttribute(new Text(text));
+        addAttribute(new Width(width));
+        addAttribute(new Height(height));
+        addAttribute(new StrokeWidth());
+        addAttribute(new FillColor());
+        addAttribute(new StrokeColor());
+    }
+
+    public TextArea(String x, String y) {
+        this(x, y, DEFAULT_TEXT, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
 
     @Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
-	}
+    public void draw() {
+        // TODO Auto-generated method stub
+
+    }
 }
 

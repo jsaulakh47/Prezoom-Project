@@ -1,6 +1,5 @@
 package app.model.attributes;
 
-import app.model.objects.ObjectFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +19,7 @@ public class AttributesTest {
 
     @Test
     public void testGetData() {
-        assertEquals("Attributes data not set properly.", attributes.get(), "50");
+        assertEquals("Attributes data not set properly.", attributes.getData(), "50");
     }
 
     @Test
