@@ -19,11 +19,10 @@ public class Interaction {
     public static final String TEXT_AREA = "TextArea";
 
     public static void addState() {
-        Sheet.getInstance().addState();
     }
 
     public static List<States> getStates() {
-        return Sheet.getInstance().getStates();
+        return null;
     }
 
     public static Objects createObject(String type, int stateId, String x, String y) {
@@ -43,16 +42,15 @@ public class Interaction {
         } else {
             object = factory.makeRectangle(x, y);
         }
-
-        Sheet.getInstance().addObject(stateId, (Objects) object);
-        return (Objects) object;
+        
+        return null;
     }
 
     public static void saveObject(int stateId, int objectId, Map<String, String> attr) {
-        Sheet.getInstance().updateObject(stateId, objectId, attr);
+        
     }
 
     public static List<Objects> loadState(int stateId) {
-        return Sheet.getInstance().loadState(stateId);
+        return null;
     }
 }

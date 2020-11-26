@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -26,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Interactor {
+    private HBox bar;
     public int state;
     private int current;
     private Label status;
@@ -33,12 +35,13 @@ public class Interactor {
     private Pane pane;
     private GridPane changes;
 
-    public Interactor(Label status, GridPane changes, Pane pane) {
+    public Interactor(Label status, GridPane changes, Pane pane, HBox bar) {
         this.changes = changes;
         this.status = status;
         this.pane = pane;
         this.current = 0;
         this.state = 0;
+        this.bar = bar;
     }
 
     public void createObject(String type, double x, double y) {
@@ -294,75 +297,6 @@ public class Interactor {
         });
     }
     
-    public void addStateButton(Pane parent)
-    { 
-        ++state;
-        current = state;
-        Interaction.addState();
-        Button node = new Button();
-        node.setStyle("-fx-background-color:#f5f5f5");
-        node.setStyle("-fx-font-size:9");
-
-        if (parent.getChildren().size() == 0) {
-            node.setText("1");
-        } else {
-            String id = String.valueOf(parent.getChildren().size() + 1);
-            node.setText(String.valueOf(id));
-        }
-       
-        node.getProperties().put("id", String.valueOf(state));
-        parent.getChildren().add(node);
-        
-        ContextMenu menu = new ContextMenu();
-        MenuItem delete = new MenuItem("Delete");
-
-        delete.setOnAction((ActionEvent e) -> {
-            parent.getChildren().remove(node);
-        });
-
-        menu.getItems().add(delete);
-
-        node.setOnMousePressed(e -> {
-            if (e.getButton() == MouseButton.SECONDARY) {
-                logger("Right click detected");
-                menu.show(node, e.getScreenX(), e.getScreenY());
-            }
-        });
-
-        if (pane.getChildren().size() > 0) {
-            for (Node child : pane.getChildren()) {
-                saveObject(child);
-            }
-        }
-
-        pane.getChildren().clear();
-        changes.getChildren().clear();
-
-        node.setOnAction(e -> {
-            if (pane.getChildren().size() > 0) {
-                for (Node child : pane.getChildren()) {
-                    saveObject(child);
-                }
-            }
-
-            pane.getChildren().clear();
-            changes.getChildren().clear();
-
-            current = Integer.parseInt(node.getProperties().get("id").toString());
-            List<Objects> shapes = Interaction.loadState(current);
-
-            if (shapes.size() > 0) {
-                for (Objects shape : shapes) {
-                    double x = Double.parseDouble(shape.getAttributes().get("X position"));
-                    double y = Double.parseDouble(shape.getAttributes().get("Y position"));
-                    Node object = creator(shape.getType(), shape, x, y);
-                    pane.getChildren().add(object);
-                }
-            }
-            logger("Sheet " + node.getText() + " loaded");
-        });
-    }
-
     public void saveObject(Node object) {
         int objectId = Integer.parseInt(object.getProperties().get("object_id").toString());
         int stateId = Integer.parseInt(object.getProperties().get("state_id").toString());

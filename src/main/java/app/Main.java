@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Starting GUI...");
-        gui.javafx.Main.main(args);
+        gui.javafx.Entry.main(args);
     }
 
     private static Properties readProperties() 

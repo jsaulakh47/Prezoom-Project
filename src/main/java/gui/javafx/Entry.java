@@ -9,17 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Entry extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        URL url = new File("src/main/java/gui/javafx/main.fxml").toURI().toURL();
+    public void start(Stage primaryStage) throws Exception {
+        URL url = new File("src/main/java/gui/javafx/fxml/edit_mode.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle(app.Main.getTitle());
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
