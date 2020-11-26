@@ -11,7 +11,7 @@ public class Line extends Objects {
     public static final int DEFAULT_OFFSET = 100;
 
     public Line(String x, String y, String end_x, String end_y) {
-        super(x, y, "Line");
+        super(x, y, ObjectType.LINE.getType());
         addAttribute(new EndX(end_x));
         addAttribute(new EndY(end_y));
         addAttribute(new StrokeWidth());

@@ -12,7 +12,7 @@ public class Rectangle extends Objects {
     public static final String DEFAULT_HEIGHT = "80";
 
     public Rectangle(String x, String y, String width, String height) {
-        super(x, y, "Rectangle");
+        super(x, y, ObjectType.RECTANGLE.getType());
         addAttribute(new Width(width));
         addAttribute(new Height(height));
         addAttribute(new StrokeWidth());

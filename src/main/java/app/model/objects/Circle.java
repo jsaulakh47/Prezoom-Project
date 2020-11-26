@@ -10,7 +10,7 @@ public class Circle extends Objects {
     public static final String DEFAULT_RADIUS = "50";
 
     public Circle(String x, String y, String radius) {
-        super(x, y, "Circle");
+        super(x, y, ObjectType.CIRCLE.getType());
         addAttribute(new Radius(radius));
         addAttribute(new StrokeWidth());
         addAttribute(new FillColor());

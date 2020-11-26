@@ -12,7 +12,7 @@ public class PlainText extends Objects {
     public static final String DEFAULT_FONTSIZE = "10";
 
     public PlainText(String x, String y, String text, String fontsize) {
-        super(x, y, "Text");
+        super(x, y, ObjectType.PLAIN_TEXT.getType());
         addAttribute(new Text(text));
         addAttribute(new FontSize(fontsize));
         addAttribute(new StrokeWidth());

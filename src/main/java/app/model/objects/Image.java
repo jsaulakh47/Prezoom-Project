@@ -11,7 +11,7 @@ public class Image extends Objects {
     public static final String DEFAULT_HEIGHT = "100";
 
     public Image(String x, String y, String source, String width, String height) {
-        super(x, y, "Image");
+        super(x, y, ObjectType.IMAGE.getType());
         addAttribute(new Source(source));
         addAttribute(new Width(width));
         addAttribute(new Height(height));

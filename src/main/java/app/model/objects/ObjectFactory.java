@@ -28,5 +28,4 @@ public class ObjectFactory implements ObjectFactoryI {
     public ObjectsI makeImage(String x, String y) {
         return new Image(x, y);
     }
-
 }

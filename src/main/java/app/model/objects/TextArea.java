@@ -15,7 +15,7 @@ public class TextArea extends Objects {
     public static final String DEFAULT_HEIGHT = "100";
 
     public TextArea(String x, String y, String text, String width, String height) {
-        super(x, y, "TextArea");
+        super(x, y, ObjectType.TEXT_AREA.getType());
         addAttribute(new Text(text));
         addAttribute(new Width(width));
         addAttribute(new Height(height));
