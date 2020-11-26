@@ -1,6 +1,7 @@
 package app.model.objects;
 
 import app.model.attributes.Width;
+import app.interfaces.DrawingAdapterI;
 import app.model.attributes.Height;
 import app.model.attributes.Source;
 
@@ -22,7 +23,7 @@ public class Image extends Objects {
     }
 
     @Override
-    public void draw() {
+    public void draw(DrawingAdapterI drawingAdapter) {
         // TODO Auto-generated method stub
 
     }

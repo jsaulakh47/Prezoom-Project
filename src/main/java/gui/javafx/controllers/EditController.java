@@ -6,11 +6,9 @@ import java.io.File;
 import java.net.URL;
 
 import app.model.Sheet;
+import app.model.objects.ObjectType;
 import gui.javafx.views.EditView;
 import javafx.event.ActionEvent;
-import app.api.InvalidObjectTypeException;
-import app.model.attributes.TextArea;
-import app.model.objects.ObjectType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -23,7 +21,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -258,6 +255,10 @@ public class EditController implements PropertyChangeListener {
                 if (e.getButton() == MouseButton.SECONDARY) {
                     menu.show(node, e.getScreenX(), e.getScreenY());
                 }
+            });
+
+            node.setOnAction(e -> {
+                this.model.setCurrentState(index);
             });
         }
     }

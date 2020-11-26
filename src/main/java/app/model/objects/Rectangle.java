@@ -2,6 +2,11 @@ package app.model.objects;
 
 import app.model.attributes.Width;
 import app.model.attributes.Height;
+
+import java.util.Map;
+
+import app.interfaces.DrawingAdapterI;
+import app.model.attributes.AttributeLabel;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.StrokeWidth;
@@ -25,8 +30,15 @@ public class Rectangle extends Objects {
     }
 
     @Override
-    public void draw() {
-        // TODO Auto-generated method stub;
+    public void draw(DrawingAdapterI drawingAdapter) {
+        Map<String, String> attributes = this.getAttributes();
+        double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
+        double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
+
+        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
+        double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+
+        drawingAdapter.drawRectangle(x, y, width, height);
     }
 }
 

@@ -1,5 +1,6 @@
 package app.model.objects;
 
+import app.interfaces.DrawingAdapterI;
 import app.model.attributes.EndX;
 import app.model.attributes.EndY;
 import app.model.attributes.FillColor;
@@ -24,7 +25,7 @@ public class Line extends Objects {
     }
 
     @Override
-    public void draw() {
+    public void draw(DrawingAdapterI drawingAdapter) {
         // TODO Auto-generated method stub
 
     }

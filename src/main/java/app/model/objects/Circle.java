@@ -1,6 +1,11 @@
 package app.model.objects;
 
 import app.model.attributes.Radius;
+
+import java.util.Map;
+
+import app.interfaces.DrawingAdapterI;
+import app.model.attributes.AttributeLabel;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.StrokeWidth;
@@ -22,9 +27,13 @@ public class Circle extends Objects {
     }
 
     @Override
-    public void draw() {
-        // TODO Auto-generated method stub
+    public void draw(DrawingAdapterI drawingAdapter) {
+        Map<String, String> attributes = this.getAttributes();
+        double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
+        double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
+        double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
+        drawingAdapter.drawCircle(x, y, radius);;
     }
 }
 

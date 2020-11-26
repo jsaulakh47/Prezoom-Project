@@ -7,17 +7,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import app.exceptions.InvalidObjectTypeException;
+import app.interfaces.DrawingAdapterI;
+import app.interfaces.ObjectFactoryI;
+import app.interfaces.ObjectsI;
+import app.model.objects.ObjectFactory;
+import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 
 public class Sheet {
+    private int CurrentState;
     private List<States> states;
     private PropertyChangeSupport observable;
     private Map<Integer, ArrayList<Objects>> objects;
 
+    private static final double WIDTH = 1080.0;
+    private static final double HEIGHT = 720.0;
+
     public Sheet() {
-        this.states = new ArrayList<States>();
+        this.CurrentState = 0;
+        this.objects = new HashMap<>();
+        this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
-        this.objects = new HashMap<Integer, ArrayList<Objects>>();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -28,8 +39,24 @@ public class Sheet {
         observable.removePropertyChangeListener(pcl);
     }
 
+    public double getHeight() {
+        return HEIGHT;
+    }
+
+    public double getWidth() {
+        return WIDTH;
+    }
+
     private int getSheetSize() {
         return this.states.size();
+    }
+
+    public void setCurrentState(int index) {
+        this.CurrentState = index;
+    }
+
+    public int getCurrentState() {
+        return this.CurrentState;
     }
 
     public void addState() {
@@ -75,8 +102,32 @@ public class Sheet {
         return objects.get(stateId);
     }
 
-    public void addObject(int stateId, Objects object) {
-        objects.get(stateId).add(object);
+    public void addObject(String type, double xPosition, double yPosition) throws InvalidObjectTypeException {
+        States state = states.get(this.getCurrentState());
+
+        ObjectsI object;
+        ObjectFactoryI factory = new ObjectFactory();
+
+        String x = String.valueOf(xPosition);
+        String y = String.valueOf(yPosition);
+
+        if (ObjectType.CIRCLE.getType().equals(type)) {
+            object = factory.makeCircle(x, y);
+        } else if (ObjectType.IMAGE.getType().equals(type)) {
+            object = factory.makeImage(x, y);
+        } else if (ObjectType.LINE.getType().equals(type)) {
+            object = factory.makeLine(x, y);
+        } else if (ObjectType.PLAIN_TEXT.getType().equals(type)) {
+            object = factory.makePlainText(x, y);
+        } else if (ObjectType.TEXT_AREA.getType().equals(type)) {
+            object = factory.makeTextArea(x, y);
+        } else if (ObjectType.RECTANGLE.getType().equals(type)) {
+            object = factory.makeRectangle(x, y);
+        } else {
+            throw new InvalidObjectTypeException(type);
+        }
+
+        objects.get(state.getId()).add((Objects) object);
     }
 
     public void updateObject(int stateId, int objectId, Map<String, String> attr) {
@@ -88,4 +139,11 @@ public class Sheet {
             }
         }
     }
+
+    public void draw(DrawingAdapterI drawingAdapter ) {
+        States state = states.get(this.getCurrentState());
+        for (Objects object : objects.get(state.getId())) {
+            object.draw(drawingAdapter);
+        }
+	}
 }
