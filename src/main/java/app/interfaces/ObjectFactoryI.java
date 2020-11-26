@@ -7,7 +7,7 @@ public interface ObjectFactoryI {
 
     ObjectsI makeRectangle(String x, String y);
 
-    ObjectsI makeText(String x, String y);
+    ObjectsI makePlainText(String x, String y);
 
     ObjectsI makeTextArea(String x, String y);
 

@@ -43,7 +43,7 @@ public class ObjectsFactoryTest {
 
     @Test
     public void testMakeText() {
-        ObjectsI plainTextObject = objectFactory.makeText("10", "10");
+        ObjectsI plainTextObject = objectFactory.makePlainText("10", "10");
         assertTrue("Object factory did not create PlainText.", plainTextObject instanceof PlainText);
     }
 

@@ -55,27 +55,27 @@ public class InteractionTest {
     @Test
     public void testCreateObject() {
         Interaction.addState();
-        Objects object = Interaction.createObject("Circle", 1, "1", "1");
+        Objects object = Interaction.createObject(ObjectType.CIRCLE.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
                 object instanceof Circle);
 
-        object = Interaction.createObject("Line", 1, "1", "1");
+        object = Interaction.createObject(ObjectType.LINE.getType(), 1, "1", "1");
         assertTrue("Interaction did not create Line object.",
                 object instanceof Line);
 
-        object = Interaction.createObject("Image", 1, "1", "1");
+        object = Interaction.createObject(ObjectType.IMAGE.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
                 object instanceof Image);
 
-        object = Interaction.createObject("Text", 1, "1", "1");
+        object = Interaction.createObject(ObjectType.PLAIN_TEXT.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
                 object instanceof PlainText);
 
-        object = Interaction.createObject("TextArea", 1, "1", "1");
+        object = Interaction.createObject(ObjectType.TEXT_AREA.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
                 object instanceof TextArea);
 
-        object = Interaction.createObject("Rectangle", 1, "1", "1");
+        object = Interaction.createObject(ObjectType.RECTANGLE.getType(), 1, "1", "1");
         assertTrue("Interaction did not create circle object.",
                 object instanceof Rectangle);
     }

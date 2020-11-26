@@ -17,7 +17,7 @@ public class ObjectFactory implements ObjectFactoryI {
         return new Rectangle(x, y);
     }
 
-    public ObjectsI makeText(String x, String y) {
+    public ObjectsI makePlainText(String x, String y) {
         return new PlainText(x, y);
     }
 

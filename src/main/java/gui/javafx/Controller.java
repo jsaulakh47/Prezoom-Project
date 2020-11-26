@@ -3,6 +3,7 @@ package gui.javafx;
 import java.io.File;
 
 import app.model.attributes.TextArea;
+import app.model.objects.ObjectType;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -105,12 +106,12 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
-        rectangle.getProperties().put("name", "Rectangle");
-        content.getProperties().put("name", "TextArea");
-        circle.getProperties().put("name", "Circle");
-        image.getProperties().put("name", "Image");
-        text.getProperties().put("name", "Text");
-        line.getProperties().put("name", "Line");
+        rectangle.getProperties().put("name", ObjectType.RECTANGLE.getType());
+        content.getProperties().put("name", ObjectType.TEXT_AREA.getType());
+        circle.getProperties().put("name", ObjectType.CIRCLE.getType());
+        image.getProperties().put("name", ObjectType.IMAGE.getType());
+        text.getProperties().put("name", ObjectType.PLAIN_TEXT.getType());
+        line.getProperties().put("name", ObjectType.LINE.getType());
         
         interactor.addStateButton(bar);
     }

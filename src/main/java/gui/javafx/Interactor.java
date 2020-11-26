@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import app.api.Interaction;
+import app.model.attributes.AttributeLabel;
+import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
@@ -60,15 +62,15 @@ public class Interactor {
 
     public Node creator (String type, Objects attr, double x, double y) {
         Node node;
-        if ("Circle".equals(type)) {
+        if (ObjectType.CIRCLE.getType().equals(type)) {
             node = createCircle(attr.getAttributes(), x, y);
-        } else if ("Image".equals(type)) {
+        } else if (ObjectType.IMAGE.getType().equals(type)) {
             node = createImage(attr.getAttributes(), x, y);
-        } else if ("Line".equals(type)) {
+        } else if (ObjectType.LINE.getType().equals(type)) {
             node = createLine(attr.getAttributes(), x, y);
-        } else if ("Text".equals(type)) {
+        } else if (ObjectType.PLAIN_TEXT.getType().equals(type)) {
             node = createText(attr.getAttributes(), x, y);
-        } else if ("TextArea".equals(type)) {
+        } else if (ObjectType.TEXT_AREA.getType().equals(type)) {
             node = createTextArea(attr.getAttributes(), x, y);
         } else {
             node = createRectangle(attr.getAttributes(), x, y);
@@ -84,11 +86,11 @@ public class Interactor {
         Rectangle rectangle = new Rectangle();
         rectangle.setX(X);
         rectangle.setY(Y);
-        rectangle.setWidth(Double.parseDouble(attr.get("Width")));
-        rectangle.setHeight(Double.parseDouble(attr.get("Height")));
+        rectangle.setWidth(Double.parseDouble(attr.get(AttributeLabel.WIDTH.getLabel())));
+        rectangle.setHeight(Double.parseDouble(attr.get(AttributeLabel.HEIGHT.getLabel())));
 
-        rectangle.setFill(Color.web(attr.get("Fill color")));
-        rectangle.setStroke(Color.web(attr.get("Stroke color")));
+        rectangle.setFill(Color.web(attr.get(AttributeLabel.FILL_COLOR.getLabel())));
+        rectangle.setStroke(Color.web(attr.get(AttributeLabel.STROKE_COLOR.getLabel())));
     
         rectangle.setOnMouseDragged(e -> {
             rectangle.setX(e.getX() - rectangle.getWidth() / 2);
@@ -111,7 +113,7 @@ public class Interactor {
             }
         });
 
-        rectangle.getProperties().put("name", "Rectangle");
+        rectangle.getProperties().put("name", ObjectType.RECTANGLE.getType());
         return (Node) rectangle;
     }
 
@@ -120,10 +122,10 @@ public class Interactor {
         Circle circle = new Circle();
         circle.setCenterX(X);
         circle.setCenterY(Y);
-        circle.setRadius(Double.parseDouble(attr.get("Radius")));
+        circle.setRadius(Double.parseDouble(attr.get(AttributeLabel.RADIUS.getLabel())));
 
-        circle.setFill(Color.web(attr.get("Fill color")));
-        circle.setStroke(Color.web(attr.get("Stroke color")));
+        circle.setFill(Color.web(attr.get(AttributeLabel.FILL_COLOR.getLabel())));
+        circle.setStroke(Color.web(attr.get(AttributeLabel.STROKE_COLOR.getLabel())));
 
         circle.setOnMouseDragged(e -> {
             circle.setCenterX(e.getX());
@@ -145,7 +147,7 @@ public class Interactor {
             }
         });
 
-        circle.getProperties().put("name", "Circle");
+        circle.getProperties().put("name", ObjectType.CIRCLE.getType());
         return (Node) circle;
     }
 
@@ -153,8 +155,8 @@ public class Interactor {
         Image file = new Image((new File(attr.get("Source"))).toURI().toString());
 
         ImageView image = new ImageView();
-        image.setFitHeight(Double.parseDouble(attr.get("Height")));
-        image.setFitWidth(Double.parseDouble(attr.get("Width")));
+        image.setFitHeight(Double.parseDouble(attr.get(AttributeLabel.HEIGHT.getLabel())));
+        image.setFitWidth(Double.parseDouble(attr.get(AttributeLabel.WIDTH.getLabel())));
         image.setImage(file);
         image.setX(X);
         image.setY(Y);
@@ -177,7 +179,7 @@ public class Interactor {
             }
         });
 
-        image.getProperties().put("name", "Image");
+        image.getProperties().put("name", ObjectType.IMAGE.getType());
         return (Node) image;
     }
 
@@ -187,8 +189,8 @@ public class Interactor {
         line.setStartY(Y);
         line.setEndX(Double.parseDouble(attr.get("End X")));
         line.setEndY(Double.parseDouble(attr.get("End Y")));
-        line.setFill(Color.web(attr.get("Fill color")));
-        line.setStroke(Color.web(attr.get("Stroke color")));
+        line.setFill(Color.web(attr.get(AttributeLabel.FILL_COLOR.getLabel())));
+        line.setStroke(Color.web(attr.get(AttributeLabel.STROKE_COLOR.getLabel())));
 
         line.setOnMouseDragged(e -> {
             line.setTranslateX(e.getX() - Math.abs((line.getEndX() - line.getStartX()) / 2));
@@ -211,7 +213,7 @@ public class Interactor {
             }
         });
         
-        line.getProperties().put("name", "Line");
+        line.getProperties().put("name", ObjectType.LINE.getType());
         return (Node) line;
     }
 
@@ -220,8 +222,8 @@ public class Interactor {
         text.setX(X);
         text.setY(Y);
         text.setText(attr.get("Text"));
-        text.setFill(Color.web(attr.get("Fill color")));
-        text.setStroke(Color.web(attr.get("Stroke color")));
+        text.setFill(Color.web(attr.get(AttributeLabel.FILL_COLOR.getLabel())));
+        text.setStroke(Color.web(attr.get(AttributeLabel.STROKE_COLOR.getLabel())));
 
         text.setOnMouseDragged(e -> {
             text.setX(e.getX());
@@ -243,7 +245,7 @@ public class Interactor {
             }
         });
 
-        text.getProperties().put("name", "Text");
+        text.getProperties().put("name", ObjectType.PLAIN_TEXT.getType());
         return (Node) text;
     }
 
@@ -260,7 +262,7 @@ public class Interactor {
 
         });
 
-        pane.getProperties().put("name", "TextArea");
+        pane.getProperties().put("name", ObjectType.TEXT_AREA.getType());
         return pane;
     }
 
@@ -353,8 +355,8 @@ public class Interactor {
 
             if (shapes.size() > 0) {
                 for (Objects shape : shapes) {
-                    double x = Double.parseDouble(shape.getAttributes().get("X position"));
-                    double y = Double.parseDouble(shape.getAttributes().get("Y position"));
+                    double x = Double.parseDouble(shape.getAttributes().get(AttributeLabel.X_POSITION.getLabel()));
+                    double y = Double.parseDouble(shape.getAttributes().get(AttributeLabel.Y_POSITION.getLabel()));
                     Node object = creator(shape.getType(), shape, x, y);
                     pane.getChildren().add(object);
                 }
@@ -369,15 +371,15 @@ public class Interactor {
         String type = object.getProperties().get("name").toString();
         Map<String, String> attr;
 
-        if ("Circle".equals(type)) {
+        if (ObjectType.CIRCLE.getType().equals(type)) {
             attr = ShapeUtility.getCircleProperties((Circle) object);
-        } else if ("Image".equals(type)) {
+        } else if (ObjectType.IMAGE.getType().equals(type)) {
             attr = ShapeUtility.getImageProperties((ImageView) object);
-        } else if ("Line".equals(type)) {
+        } else if (ObjectType.LINE.getType().equals(type)) {
             attr = ShapeUtility.getLineProperties((Line) object);
-        } else if ("Text".equals(type)) {
+        } else if (ObjectType.PLAIN_TEXT.getType().equals(type)) {
             attr = ShapeUtility.getTextProperties((Text) object);
-        } else if ("TextArea".equals(type)) {
+        } else if (ObjectType.TEXT_AREA.getType().equals(type)) {
             attr = ShapeUtility.getTextAreaProperties((Pane) object);
         } else {
             attr = ShapeUtility.getRectangleProperties((Rectangle) object);
