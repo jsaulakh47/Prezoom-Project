@@ -49,7 +49,7 @@ public abstract class  Objects implements ObjectsI {
         Map<String, String> map = new HashMap<String, String>(); 
 
         for (Attributes attribute : attributes) {
-            map.put(attribute.getLabel(),attribute.get());
+            map.put(attribute.getLabel(),attribute.getData());
         }
 
         return map;

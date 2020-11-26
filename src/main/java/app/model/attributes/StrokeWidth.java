@@ -1,11 +1,14 @@
 package app.model.attributes;
 
 public class StrokeWidth extends Attributes {
+
+    public static final String DEFAULT_DATA = "1";
+
     public StrokeWidth(String data) {
         super("Stroke width", data);
     }
 
     public StrokeWidth() {
-        this("1");
+        this(DEFAULT_DATA);
     }
 }

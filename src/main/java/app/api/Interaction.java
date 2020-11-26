@@ -38,7 +38,7 @@ public class Interaction {
             object = factory.makeLine(x, y);
         } else if (TEXT.equals(type)) {
             object = factory.makeText(x, y);
-        }  else if (TEXT_AREA.equals(type)) {
+        } else if (TEXT_AREA.equals(type)) {
             object = factory.makeTextArea(x, y);
         } else {
             object = factory.makeRectangle(x, y);
