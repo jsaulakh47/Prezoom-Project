@@ -17,6 +17,7 @@ import app.model.objects.Objects;
 import app.utility.PropertyName;
 
 public class Sheet {
+    private String status;
     private int currentObjectId;
     private int currentStateIndex;
 
@@ -53,6 +54,14 @@ public class Sheet {
 
     public int getSheetSize() {
         return states.size();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setCurrentStateIndex(int index) {

@@ -380,6 +380,10 @@ public class EditController implements PropertyChangeListener {
             updateStates((int) event.getNewValue());
         } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
             showAttributes((int) event.getNewValue());
+        } else if (PropertyName.OBJECTID.getName().equals(event.getPropertyName())) {
+            if ((int) event.getNewValue() == 0) {
+                changes.getChildren().clear();
+            }
         }
     }
 }
