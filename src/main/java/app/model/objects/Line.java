@@ -28,8 +28,7 @@ public class Line extends Objects {
     }
 
     @Override
-    public Boolean locatedAt(double x, double y) {
-        // TODO Auto-generated method stub
+    public boolean locatedAt(double x, double y) {
         Map<String, String> attributes = this.getAttributes();
         double start_x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
         double start_y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
