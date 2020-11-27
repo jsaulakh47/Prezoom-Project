@@ -27,7 +27,7 @@ public class Circle extends Objects {
     }
 
     @Override
-    public Boolean locatedAt(double x, double y) {
+    public boolean locatedAt(double x, double y) {
         Map<String, String> attributes = this.getAttributes();
         double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
         double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));

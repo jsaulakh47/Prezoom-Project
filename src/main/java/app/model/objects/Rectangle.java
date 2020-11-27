@@ -30,7 +30,7 @@ public class Rectangle extends Objects {
     }
 
     @Override
-    public Boolean locatedAt(double x, double y) {
+    public boolean locatedAt(double x, double y) {
         Map<String, String> attributes = this.getAttributes();
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
         double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
