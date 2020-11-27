@@ -29,6 +29,7 @@ public class Sheet {
     private static final double HEIGHT = 720.0;
 
     public Sheet() {
+        this.status = "";
         this.objects = new HashMap<>();
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);

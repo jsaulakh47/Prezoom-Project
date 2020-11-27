@@ -2,10 +2,13 @@ package gui.javafx.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import app.exceptions.InvalidObjectTypeException;
 import app.interfaces.DrawingAdapterI;
 import app.model.Sheet;
+import app.model.attributes.AttributeLabel;
 import gui.javafx.DrawingAdapter;
 import gui.javafx.Transform;
 import javafx.geometry.Point2D;
@@ -42,6 +45,7 @@ public class EditView extends Canvas implements PropertyChangeListener {
             }
             
             e.setDropCompleted(true);
+            model.setStatus("");
             draw();
         });
         
@@ -49,13 +53,25 @@ public class EditView extends Canvas implements PropertyChangeListener {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
             Point2D p = transform.viewToWorld(e.getX(), e.getY());
             model.selectObjectAt(p.getX(), p.getY());
+            if (model.getCurrentObjectId() != 0) {
+                model.setStatus("selection");
+            }
             draw();
         });
 
         this.setOnMouseDragged(e -> {
-            System.out.println(e.getX() + " " + e.getY());
+            if (model.getStatus().equals("selection")) {
+                System.out.println(e.getX() + " " + e.getY());
+                Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
+                Point2D p = transform.viewToWorld(e.getX(), e.getY());
+
+                Map<String, String> attr = new HashMap<>();
+                attr.put(AttributeLabel.X_POSITION.getLabel(), String.valueOf(p.getX()));
+                attr.put(AttributeLabel.Y_POSITION.getLabel(), String.valueOf(p.getY()));
+                model.updateObject(model.getCurrentObjectId(), attr);
+                update();
+            }
             //     elasticEndLocation = new Point2D(ev.getX(), ev.getY());
-            //     if (dragNode != null) {
             //         if (dragNode.isSelected()) {
             //             for (Node n:  graph.selectedNodes()) {
             //                 n.setLocation(n.getLocation().getX() + ev.getX() - dragPoint.getX(),
