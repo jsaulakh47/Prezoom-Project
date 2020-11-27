@@ -1,5 +1,4 @@
 package gui.javafx.controllers;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -43,6 +42,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * 
+ *  This is Editcontroller class which controlls the view and observes the model.
+ */
 
 public class EditController implements PropertyChangeListener {
     private Sheet model;
@@ -108,7 +114,10 @@ public class EditController implements PropertyChangeListener {
 
     @FXML
     private Pane content;
-    
+
+    /**
+    * This sub-routine is used to update the view.  
+    */    
     public void initialize() {
         this.model = new Sheet();
         this.view = new EditView(model);
@@ -128,6 +137,9 @@ public class EditController implements PropertyChangeListener {
         rectangle.getProperties().put("name", ObjectType.RECTANGLE.getType());
     }
 
+    /**
+    * This sub-routine handle the saving of sheet. 
+     */
     @FXML
     public void handleSaveClick() {
         // interactor.logger("Saving file");
@@ -144,6 +156,10 @@ public class EditController implements PropertyChangeListener {
         }
     }
 
+
+    /**
+    * This sub-routine handle the loading of sheet from the desktop. 
+    */
     @FXML
     public void handleLoadClick() {
         // interactor.logger("Loading file");
@@ -160,6 +176,9 @@ public class EditController implements PropertyChangeListener {
         }
     }
 
+    /**
+    * This sub-routine is used to switch to presentation mode. 
+    */
     @FXML
     public void handlePresentClick() throws Exception {
         Stage stage = new Stage();
@@ -173,6 +192,9 @@ public class EditController implements PropertyChangeListener {
         stage.show();
     }
 
+    /**
+    * This sub-routine is used to preview. 
+    */
     @FXML
     private void handlePreviewClick() {
         // interactor.logger("Preview!!!");
@@ -183,27 +205,42 @@ public class EditController implements PropertyChangeListener {
         // interactor.logger("Settings!!!");
     }
 
+     /**
+    * This sub-routine handle . 
+    */
     @FXML
     private void handleTransitionsClick() {
         // interactor.logger("Transitions!!!");
     }
 
+    /**
+    * This sub-routine is offeres the multiple modes of interpolation to user . 
+    */
     @FXML
     public void handleInterpolationsClick() {
         // interactor.logger("Interpolations!!!");
     }
 
+    /**
+    * This sub-routine handle the camara. 
+    */
     @FXML
     private void handleCameraClick() {
         // interactor.logger("Camera!!!");
     }
 
+    /**
+    * This sub-routine is used to add the state. 
+    */
     @FXML
     private void handleAddClick() {
         model.addState(null);
         view.update();
     }
 
+    /**
+    * This sub-routine hadles the drag event. 
+    */
     @FXML
     private void handleDragDetected(MouseEvent event) {
         Node node = (Node) event.getSource();
@@ -222,17 +259,27 @@ public class EditController implements PropertyChangeListener {
         dragboard.setContent(cc);
         event.consume();
     }
-    
+
+    /**
+     * This sub-routine is used to change the cursor when cursor on any object. 
+    */
     @FXML
     private void handleMouseEntered(MouseEvent event) {
         ((Node) event.getSource()).setCursor(Cursor.OPEN_HAND);
     }
 
+    /**
+    * This sub-routine is used to exit from the change. 
+    */
     @FXML
     private void handleMouseExited(MouseEvent event) {
         ((Node) event.getSource()).setCursor(Cursor.DEFAULT);
     }
 
+    /**
+    * This sub-routine is used to update the view. 
+    * @param size. 
+    */
     public void updateStates(int size) {
         bar.getChildren().clear();
         int activeState = model.getCurrentStateIndex();
@@ -280,6 +327,10 @@ public class EditController implements PropertyChangeListener {
         }
     }
 
+    /**
+    * This sub-routine is used to show Attributes of the clicked object. 
+    * @param id. 
+    */
     public void showAttributes(int id) {
         
         var wrapper = new Object(){
@@ -336,6 +387,10 @@ public class EditController implements PropertyChangeListener {
         }
     }
 
+    /**
+    * This sub-routine is allow a user to change the color of an existing object. 
+    * @param size,value,position. 
+    */
     public void addColor(String key, String value, int position) {
         Map<String, String> attr = new HashMap<>();
         ColorPicker color = new ColorPicker(Color.web(value));
@@ -352,6 +407,12 @@ public class EditController implements PropertyChangeListener {
         changes.add(color, 1, position, 1, 1);
     }
 
+    /**
+    * This sub-routine is allow user to displaying and changing of attribute. 
+    * @param key : return the key.
+    * @param value : return the value.
+    * @param position : return the position.
+    */
     public void addText(String key, String value, int position) {
         Map<String, String> attr = new HashMap<>();
         TextField textField = new TextField(value);
@@ -368,6 +429,10 @@ public class EditController implements PropertyChangeListener {
         changes.add(textField, 1, position, 1, 1);
     }
 
+    /**
+     * This Sub-routine handle.
+     * @param :event
+     */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (PropertyName.STATES.getName().equals(event.getPropertyName())) {
