@@ -1,7 +1,8 @@
 package app.model.transitions;
+
 import app.interfaces.TransitionI;
 
-public class CameraTrigger implements TransitionI {
+public class StateTrigger implements TransitionI {
 
     @Override
     public Trigger trigger(Trigger keyed,Trigger timed) {
@@ -13,5 +14,5 @@ public class CameraTrigger implements TransitionI {
     {
         return "null";
     }
-    
-}
+} 
+
