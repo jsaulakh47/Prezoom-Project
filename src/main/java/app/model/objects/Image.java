@@ -25,7 +25,7 @@ public class Image extends Objects {
     @Override
     public boolean locatedAt(double x, double y) {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
     @Override
