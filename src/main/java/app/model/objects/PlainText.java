@@ -26,6 +26,12 @@ public class PlainText extends Objects {
     }
 
     @Override
+    public Boolean locatedAt(double x, double y) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public void draw(DrawingAdapterI drawingAdapter) {
         // TODO Auto-generated method stub
 

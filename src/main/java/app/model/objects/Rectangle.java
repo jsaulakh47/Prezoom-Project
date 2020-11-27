@@ -30,6 +30,12 @@ public class Rectangle extends Objects {
     }
 
     @Override
+    public Boolean locatedAt(double x, double y) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public void draw(DrawingAdapterI drawingAdapter) {
         Map<String, String> attributes = this.getAttributes();
         double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
@@ -37,6 +43,10 @@ public class Rectangle extends Objects {
 
         double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+        
+        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
+        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
+        drawingAdapter.SetFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
 
         drawingAdapter.drawRectangle(x, y, width, height);
     }

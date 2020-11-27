@@ -27,13 +27,29 @@ public class Circle extends Objects {
     }
 
     @Override
+    public Boolean locatedAt(double x, double y) {
+        Map<String, String> attributes = this.getAttributes();
+        double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
+        double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
+        double yPos = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
+
+        double d = (x - xPos) * (x - xPos) + (y - yPos) * (y - yPos);
+        return d <= (radius * radius) ? true : false;
+    }
+
+    @Override
     public void draw(DrawingAdapterI drawingAdapter) {
         Map<String, String> attributes = this.getAttributes();
         double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
         double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
         double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
-        drawingAdapter.drawCircle(x, y, radius);;
+        
+        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
+        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
+        drawingAdapter.SetFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
+
+        drawingAdapter.drawCircle(x, y, radius);
     }
 }
 

@@ -11,75 +11,62 @@ public class DrawingAdapter implements DrawingAdapterI{
 	private final double width;
     private final double height;
 
-    private Color strokeColor;
-    private Color textColor;
-    private Color fillColor;
-
 	public DrawingAdapter(GraphicsContext gc, Transform transform, double width, double height) {
 		this.gc = gc ;
-		this.transform = transform ;
 		this.width = width ;
 		this.height = height ;
-		
-		gc.clearRect(0, 0, width, height);
+		this.transform = transform ;
+
 		gc.setFill(Color.WHITE);
-		gc.setStroke(Color.BLACK);
+		gc.setStroke(Color.LIGHTBLUE);
+        gc.clearRect(0, 0, width, height);
+
 		gc.fillRect(0, 0, width, height);
-		gc.strokeRect(0, 0, width, height);
+        gc.strokeRect(0, 0, width, height);
 	}
 
     @Override
     public void SetStrokeColor(String color) {
-        this.strokeColor = Color.web(color);
+        this.gc.setStroke(Color.web(color));
     }
 
     @Override
     public void SetFillColor(String color) {
-        this.fillColor = Color.web(color);
+        this.gc.setFill(Color.web(color));
     }
 
     @Override
     public void SetTextColor(String color) {
-        this.textColor = Color.web(color);
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void SetTextFont(String font) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void SetLineWidth(double color) {
-        // TODO Auto-generated method stub
-
+    public void SetLineWidth(double width) {
+        this.gc.setLineWidth(width);
     }
 
     @Override
     public void drawRectangle(double x, double y, double width, double height) {
-
+        Point2D p = transform.worldToView(x, y);
+        gc.fillRect(p.getX(), p.getY(), width, height);
     }
 
     @Override
     public void drawCircle(double x, double y, double radius) {
-		Point2D p0 = transform.worldToView(x - radius, y -radius);
-        Point2D p1 = transform.worldToView(x + radius, y + radius);
-
-        double i = p0.getX();
-        double j = p0.getY();
-		double w = p1.getX()-x, h = p1.getY()-y ;
-		// grCxt.setFill( Color.RED) ;
-		// grCxt.fillOval((int)x, (int)y, (int)w+1, (int)h+1) ;
+        Point2D p = transform.worldToView(x, y);
         
-        // gc.setFill(Color.WHITESMOKE);
-        //      gc.fillRect(rect.getX(),      
-        //                  rect.getY(), 
-        //                  rect.getWidth(), 
-        //                  rect.getHeight());
-        //      gc.setFill(Color.GREEN);
-        //      gc.setStroke(Color.BLUE);
-        //      return gc;
+        double i = (int) p.getX() - radius;
+        double j = (int) p.getY() - radius;
+        double w = (int) 2 * radius;
+        double h = (int) 2 * radius;
 
+        gc.strokeOval(i, j, w, h);
+		gc.fillOval(i, j, w, h);
     }
 
     @Override
@@ -96,6 +83,18 @@ public class DrawingAdapter implements DrawingAdapterI{
 
     @Override
     public void drawTextArea() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void getTransform() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void transform() {
         // TODO Auto-generated method stub
 
     }

@@ -16,7 +16,8 @@ import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 
 public class Sheet {
-    private int CurrentState;
+    private int CurrentStateIndex;
+
     private List<States> states;
     private PropertyChangeSupport observable;
     private Map<Integer, ArrayList<Objects>> objects;
@@ -24,11 +25,18 @@ public class Sheet {
     private static final double WIDTH = 1080.0;
     private static final double HEIGHT = 720.0;
 
-    public Sheet() {
-        this.CurrentState = 0;
+    public Sheet(PropertyChangeListener pcl) {
         this.objects = new HashMap<>();
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
+
+        this.observable.addPropertyChangeListener(pcl);        
+        States state = new States();
+        states.add(state);
+
+        setCurrentStateIndex(getSheetSize() - 1);
+        objects.put(state.getId(), new ArrayList<>());
+        observable.firePropertyChange("states", 0, 1);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -51,12 +59,26 @@ public class Sheet {
         return this.states.size();
     }
 
-    public void setCurrentState(int index) {
-        this.CurrentState = index;
+    public void setCurrentStateIndex(int index) {
+        this.CurrentStateIndex = index;
     }
 
-    public int getCurrentState() {
-        return this.CurrentState;
+    public States getCurrentState() {
+        return states.get(getCurrentStateIndex());
+    }
+
+
+    public int getCurrentStateId() {
+        return  getCurrentState().getId();
+    }
+
+    public int getCurrentStateIndex() {
+        return this.CurrentStateIndex;
+    }
+
+    public int getCurrentStateObjectSize() {
+        States state = states.get(getCurrentStateIndex());
+        return objects.get(state.getId()).size();
     }
 
     public void addState() {
@@ -67,6 +89,7 @@ public class Sheet {
 
         states.add(state);
         objects.put(state.getId(), new ArrayList<>());
+        this.setCurrentStateIndex(this.getSheetSize() - 1);
     }
 
     public void replicateState(int index) {
@@ -76,7 +99,7 @@ public class Sheet {
         States state = new States();
 
         states.add(state);
-        objects.put(state.getId(), objects.get(states.get(index).getId()));
+        objects.put(state.getId(), objects.get(getStates().get(index).getId()));
     }
 
     public void removeState(int index) {
@@ -103,8 +126,6 @@ public class Sheet {
     }
 
     public void addObject(String type, double xPosition, double yPosition) throws InvalidObjectTypeException {
-        States state = states.get(this.getCurrentState());
-
         ObjectsI object;
         ObjectFactoryI factory = new ObjectFactory();
 
@@ -127,7 +148,7 @@ public class Sheet {
             throw new InvalidObjectTypeException(type);
         }
 
-        objects.get(state.getId()).add((Objects) object);
+        objects.get(getCurrentStateId()).add((Objects) object);
     }
 
     public void updateObject(int stateId, int objectId, Map<String, String> attr) {
@@ -140,9 +161,8 @@ public class Sheet {
         }
     }
 
-    public void draw(DrawingAdapterI drawingAdapter ) {
-        States state = states.get(this.getCurrentState());
-        for (Objects object : objects.get(state.getId())) {
+    public void draw(DrawingAdapterI drawingAdapter) {
+        for (Objects object : objects.get(getCurrentStateId())) {
             object.draw(drawingAdapter);
         }
 	}

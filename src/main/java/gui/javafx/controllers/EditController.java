@@ -7,6 +7,7 @@ import java.net.URL;
 
 import app.model.Sheet;
 import app.model.objects.ObjectType;
+import app.utility.PropertyName;
 import gui.javafx.views.EditView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -101,14 +102,14 @@ public class EditController implements PropertyChangeListener {
     private Pane content;
     
     public void initialize() {
-        this.model = new Sheet();
+        this.model = new Sheet(this);
         this.view = new EditView(model);
-        this.model.addPropertyChangeListener(this);
 
-        this.model.addState();
         pane.getChildren().clear();
         pane.getChildren().add(this.view);
-
+        this.view.widthProperty().bind(pane.widthProperty());
+        this.view.heightProperty().bind(pane.heightProperty());
+        
         line.getProperties().put("name", ObjectType.LINE.getType());
         image.getProperties().put("name", ObjectType.IMAGE.getType());
         circle.getProperties().put("name", ObjectType.CIRCLE.getType());
@@ -223,43 +224,45 @@ public class EditController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        bar.getChildren().clear();
-        for (int i = 0; i < (int) event.getNewValue(); i++) {
-            String text = String.valueOf(i + 1);
+        if (PropertyName.STATES.getName().equals(event.getPropertyName())) {
+            bar.getChildren().clear();
+            for (int i = 0; i < (int) event.getNewValue(); i++) {
+                String text = String.valueOf(i + 1);
 
-            Button node = new Button();
-            node.setStyle("-fx-background-color:#f5f5f5");
-            node.setStyle("-fx-font-size:9");
-            node.setText(text);
-       
-            node.getProperties().put("id", String.valueOf(i));
-            bar.getChildren().add(node);
+                Button node = new Button();
+                node.setStyle("-fx-background-color:#f5f5f5");
+                node.setStyle("-fx-font-size:9");
+                node.setText(text);
         
-            ContextMenu menu = new ContextMenu();
-            MenuItem delete = new MenuItem("Delete");
-            MenuItem replicate = new MenuItem("Replicate");
+                node.getProperties().put("id", String.valueOf(i));
+                bar.getChildren().add(node);
+            
+                ContextMenu menu = new ContextMenu();
+                MenuItem delete = new MenuItem("Delete");
+                MenuItem replicate = new MenuItem("Replicate");
 
-            final int index = i;
-            replicate.setOnAction((ActionEvent e) -> {
-                this.model.replicateState(index);
-            });
+                final int index = i;
+                replicate.setOnAction((ActionEvent e) -> {
+                    this.model.replicateState(index);
+                });
 
-            delete.setOnAction((ActionEvent e) -> {
-                this.model.removeState(index);
-            });
+                delete.setOnAction((ActionEvent e) -> {
+                    this.model.removeState(index);
+                });
 
-            menu.getItems().add(replicate);
-            menu.getItems().add(delete);
+                menu.getItems().add(replicate);
+                menu.getItems().add(delete);
 
-            node.setOnMousePressed(e -> {
-                if (e.getButton() == MouseButton.SECONDARY) {
-                    menu.show(node, e.getScreenX(), e.getScreenY());
-                }
-            });
+                node.setOnMousePressed(e -> {
+                    if (e.getButton() == MouseButton.SECONDARY) {
+                        menu.show(node, e.getScreenX(), e.getScreenY());
+                    }
+                });
 
-            node.setOnAction(e -> {
-                this.model.setCurrentState(index);
-            });
+                node.setOnAction(e -> {
+                    this.model.setCurrentStateIndex(index);
+                });
+            }
         }
     }
 }

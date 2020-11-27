@@ -7,5 +7,7 @@ public interface ObjectsI {
 
     void setAttribute(String key, String value);
 
+    Boolean locatedAt(double x, double y);
+
     void draw(DrawingAdapterI drawingAdapter);
 }
