@@ -31,8 +31,13 @@ public class Rectangle extends Objects {
 
     @Override
     public Boolean locatedAt(double x, double y) {
-        // TODO Auto-generated method stub
-        return null;
+        Map<String, String> attributes = this.getAttributes();
+        double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
+        double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
+        double yPos = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
+
+        return (x >= xPos && x <= (xPos + width) && y >= yPos && y <= (yPos + height)) ? true : false;
     }
 
     @Override
@@ -41,12 +46,12 @@ public class Rectangle extends Objects {
         double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
         double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
-        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
         
-        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
-        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
         drawingAdapter.SetFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
+        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
+        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
 
         drawingAdapter.drawRectangle(x, y, width, height);
     }

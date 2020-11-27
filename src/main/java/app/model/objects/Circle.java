@@ -33,8 +33,7 @@ public class Circle extends Objects {
         double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
         double yPos = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
-        double d = (x - xPos) * (x - xPos) + (y - yPos) * (y - yPos);
-        return d <= (radius * radius) ? true : false;
+        return (x - xPos) * (x - xPos) + (y - yPos) * (y - yPos) <= (radius * radius) ? true : false;
     }
 
     @Override

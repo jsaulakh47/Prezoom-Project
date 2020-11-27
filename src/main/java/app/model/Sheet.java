@@ -16,7 +16,8 @@ import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 
 public class Sheet {
-    private int CurrentStateIndex;
+    private int currentObjectId;
+    private int currentStateIndex;
 
     private List<States> states;
     private PropertyChangeSupport observable;
@@ -25,18 +26,12 @@ public class Sheet {
     private static final double WIDTH = 1080.0;
     private static final double HEIGHT = 720.0;
 
-    public Sheet(PropertyChangeListener pcl) {
+    public Sheet() {
         this.objects = new HashMap<>();
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
 
-        this.observable.addPropertyChangeListener(pcl);        
-        States state = new States();
-        states.add(state);
-
-        setCurrentStateIndex(getSheetSize() - 1);
-        objects.put(state.getId(), new ArrayList<>());
-        observable.firePropertyChange("states", 0, 1);
+        addState(null);       
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -55,12 +50,16 @@ public class Sheet {
         return WIDTH;
     }
 
-    private int getSheetSize() {
-        return this.states.size();
+    public int getSheetSize() {
+        return states.size();
     }
 
     public void setCurrentStateIndex(int index) {
-        this.CurrentStateIndex = index;
+        currentStateIndex = index;
+    }
+
+    public void setCurrentObjectId(int id) {
+        currentObjectId = id;
     }
 
     public States getCurrentState() {
@@ -73,7 +72,7 @@ public class Sheet {
     }
 
     public int getCurrentStateIndex() {
-        return this.CurrentStateIndex;
+        return currentStateIndex;
     }
 
     public int getCurrentStateObjectSize() {
@@ -81,40 +80,43 @@ public class Sheet {
         return objects.get(state.getId()).size();
     }
 
-    public void addState() {
-        int size = this.getSheetSize();
-        observable.firePropertyChange("states", size, size + 1);
-        
+    public int getCurrentObjectId() {
+        return currentObjectId;
+    }
+
+    public void addState(ArrayList<Objects> objects) {
+        int size = getSheetSize(); 
         States state = new States();
 
         states.add(state);
-        objects.put(state.getId(), new ArrayList<>());
-        this.setCurrentStateIndex(this.getSheetSize() - 1);
+        if (objects == null) {
+            this.objects.put(state.getId(), new ArrayList<>());
+        } else {
+            this.objects.put(state.getId(), objects);
+        }
+
+        setCurrentStateIndex(getSheetSize() - 1);
+        observable.firePropertyChange("states", size, getSheetSize());
     }
 
     public void replicateState(int index) {
-        int size = this.getSheetSize();
-        observable.firePropertyChange("states", size, size + 1);
-        
-        States state = new States();
-
-        states.add(state);
-        objects.put(state.getId(), objects.get(getStates().get(index).getId()));
+        addState(objects.get(getStates().get(index).getId()));
     }
 
     public void removeState(int index) {
-        int size = this.getSheetSize();
-        int newSize = size == 1 ? size : size - 1; 
-        observable.firePropertyChange("states", size, newSize);
-        
+        int size = getSheetSize();
         States state = states.get(index);
         
         states.remove(index);
         objects.remove(state.getId());
 
-        if (this.getSheetSize() == 0) {
-            this.addState();
+        if (size == 1) {
+            addState(null);
+        } else {
+            setCurrentStateIndex(index == 0 ? 0 : index - 1);
         }
+
+        observable.firePropertyChange("states", size, getSheetSize());
     }
 
     public List<States> getStates() {
@@ -151,14 +153,37 @@ public class Sheet {
         objects.get(getCurrentStateId()).add((Objects) object);
     }
 
-    public void updateObject(int stateId, int objectId, Map<String, String> attr) {
-        for (Objects object : objects.get(stateId)) {
-            if (object.getId() == objectId) {
+    public void updateObject(int id, Map<String, String> attr) {
+        for (Objects object : objects.get(getCurrentStateId())) {
+            if (object.getId() == id) {
                 for (Map.Entry<String, String> entry : attr.entrySet()) {
                     object.setAttribute(entry.getKey(), entry.getValue());
                 }
             }
         }
+    }
+
+    public void selectObjectAt(double x, double y) {
+        int id = 0;
+        for (Objects object : objects.get(getCurrentStateId())) {
+            if (object.locatedAt(x, y)) {
+                id = object.getId();
+                break;
+            }
+        }
+
+        observable.firePropertyChange("attributes", 0, id);
+    }
+
+    public Map<String, String> getObjectAttributes(int id) {
+        for (Objects object : objects.get(getCurrentStateId())) {
+            if (object.getId() == id) {
+                setCurrentObjectId(id);
+                return object.getAttributes();
+            }
+        }
+        
+        return null;
     }
 
     public void draw(DrawingAdapterI drawingAdapter) {

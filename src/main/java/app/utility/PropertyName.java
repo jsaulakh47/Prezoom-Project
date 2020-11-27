@@ -2,7 +2,8 @@ package app.utility;
 
 public enum PropertyName {
     STATES("states"),
-    OBJECTS("objects");
+    OBJECTS("objects"),
+    ATTRIBUTES("attributes");
 
     private String name;
 

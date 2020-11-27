@@ -11,17 +11,17 @@ import gui.javafx.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 
 public class EditView extends Canvas implements PropertyChangeListener {
     private final Sheet model;
+    private Transform transform;
 
     public EditView(Sheet model) {
+        this.model = model;
         widthProperty().addListener(e -> draw());
         heightProperty().addListener(e -> draw());
-
-        this.model = model;
-        // this.model.addPropertyChangeListener(this);
 
         this.setOnDragOver(e -> {
             if (e.getDragboard().hasString()) {
@@ -46,37 +46,63 @@ public class EditView extends Canvas implements PropertyChangeListener {
         });
         
         this.setOnMousePressed(e -> {
-            // Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
-            // Point2D point = transform.viewToWorld(e.getX(), e.getY());
-            // Node     aNode = graph.nodeAt(ev.getX(), ev.getY());
-            //     if (ev.getClickCount() == 2) {
-            //         if (aNode == null) {
-            //             // We missed a node, now try for an edge midpoint
-            //             Edge anEdge = graph.edgeAt(ev.getX(), ev.getY());
-            //             if (anEdge == null)
-            //                 graph.addNode(new Node(ev.getX(), ev.getY()));
-            //             else
-            //                 anEdge.toggleSelected();
+            Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
+            Point2D p = transform.viewToWorld(e.getX(), e.getY());
+            model.selectObjectAt(p.getX(), p.getY());
+            draw();
+        });
+
+        this.setOnMouseDragged(e -> {
+            //     elasticEndLocation = new Point2D(ev.getX(), ev.getY());
+            //     if (dragNode != null) {
+            //         if (dragNode.isSelected()) {
+            //             for (Node n:  graph.selectedNodes()) {
+            //                 n.setLocation(n.getLocation().getX() + ev.getX() - dragPoint.getX(),
+            //                               n.getLocation().getY() + ev.getY() - dragPoint.getY());
+            //             }
+            //             dragPoint = new Point2D(ev.getX(), ev.getY());
             //         }
-            //         else
-            //             aNode.toggleSelected();
-            //         // Update the view, by redrawing the Graph
-            //         update();
             //     }
-            //     else {
-            //         if (aNode != null) {
-            //             dragNode = aNode; 	// If we pressed on a node, store it
-            //             dragEdge = null;
+            //     if (dragEdge != null) {
+            //         if (dragEdge.isSelected()) {
+            //             dragEdge.getStartNode().setLocation(
+            //                     dragEdge.getStartNode().getLocation().getX() + ev.getX() - dragPoint.getX(),
+            //                     dragEdge.getStartNode().getLocation().getY() + ev.getY() - dragPoint.getY());
+            //             dragEdge.getEndNode().setLocation(
+            //                     dragEdge.getEndNode().getLocation().getX() + ev.getX() - dragPoint.getX(),
+            //                     dragEdge.getEndNode().getLocation().getY() + ev.getY() - dragPoint.getY());
+            //             dragPoint = new Point2D(ev.getX(), ev.getY());
             //         }
-            //         else
-            //             dragEdge = graph.edgeAt(ev.getX(), ev.getY());
-            //         dragPoint = new Point2D(ev.getX(), ev.getY());
             //     }
+            //     update(); 	// We have changed the model, so now update
             // }
+        });
+
+        this.requestFocus(); // Needed to handle key events
+
+        this.setOnKeyReleased(e -> {
+            if (e.getCode() == KeyCode.DELETE) {
+                // Delete all selected Edges
+                // for (Edge e:  graph.selectedEdges())
+                //     graph.deleteEdge(e);
+                // // Delete all selected Nodes
+                // for (Node n:  graph.selectedNodes())
+                //     graph.deleteNode(n);
+                // Update the view, by redrawing the Graph
+                update();
+            }
         });
 
         draw();
     }
+
+    public Transform getTransform() {
+		return transform;
+	}
+
+    public void update() {
+		draw() ;
+	}
 
     private void draw() {
         double width = getWidth();
@@ -85,11 +111,12 @@ public class EditView extends Canvas implements PropertyChangeListener {
 
         Transform transform = new Transform(width, height, model.getWidth(), model.getHeight());	        	
         DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, width, height);
+        this.transform = transform;
         model.draw(drawingAdapter);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        draw();
+        update();
     }
 }

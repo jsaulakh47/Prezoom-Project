@@ -4,22 +4,29 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import app.model.Sheet;
+import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
 import app.utility.PropertyName;
+import gui.javafx.Transform;
 import gui.javafx.views.EditView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -29,6 +36,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -102,13 +110,15 @@ public class EditController implements PropertyChangeListener {
     private Pane content;
     
     public void initialize() {
-        this.model = new Sheet(this);
+        this.model = new Sheet();
         this.view = new EditView(model);
+        updateStates(model.getSheetSize());
+        model.addPropertyChangeListener(this);
 
         pane.getChildren().clear();
-        pane.getChildren().add(this.view);
-        this.view.widthProperty().bind(pane.widthProperty());
-        this.view.heightProperty().bind(pane.heightProperty());
+        pane.getChildren().add(view);
+        view.widthProperty().bind(pane.widthProperty());
+        view.heightProperty().bind(pane.heightProperty());
         
         line.getProperties().put("name", ObjectType.LINE.getType());
         image.getProperties().put("name", ObjectType.IMAGE.getType());
@@ -190,7 +200,8 @@ public class EditController implements PropertyChangeListener {
 
     @FXML
     private void handleAddClick() {
-        this.model.addState();
+        model.addState(null);
+        view.update();
     }
 
     @FXML
@@ -222,47 +233,147 @@ public class EditController implements PropertyChangeListener {
         ((Node) event.getSource()).setCursor(Cursor.DEFAULT);
     }
 
+    public void updateStates(int size) {
+        bar.getChildren().clear();
+        int activeState = model.getCurrentStateIndex();
+        
+        for (int i = 0; i < size; i++) {
+            Button node = new Button(String.valueOf(i + 1));
+
+            final int index = i;
+            if (index == activeState) {
+                node.requestFocus();
+                node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
+            } else {
+                node.setStyle("-fx-font-size:9");
+            }
+
+            bar.getChildren().add(node);
+            ContextMenu menu = new ContextMenu();
+            MenuItem delete = new MenuItem("Delete");
+            MenuItem replicate = new MenuItem("Replicate");
+
+            replicate.setOnAction((ActionEvent e) -> {
+                model.replicateState(index);
+            });
+
+            delete.setOnAction((ActionEvent e) -> {
+                model.removeState(index);
+                updateStates(model.getSheetSize());
+            });
+
+            menu.getItems().add(replicate);
+            menu.getItems().add(delete);
+
+            node.setOnMousePressed(e -> {
+                if (e.getButton() == MouseButton.SECONDARY) {
+                    menu.show(node, e.getScreenX(), e.getScreenY());
+                }
+            });
+
+            node.setOnAction(e -> {
+                model.setCurrentStateIndex(index);
+                updateStates(model.getSheetSize());
+            });
+            
+            view.update();
+        }
+    }
+
+    public void showAttributes(int id) {
+        
+        var wrapper = new Object(){
+            double i;
+            double j;
+            String iKey; 
+            String jKey;      
+        };
+
+        int position = 0;
+        changes.getChildren().clear();
+        Transform transform = view.getTransform();
+        Map<String, String> attr = model.getObjectAttributes(id);
+
+        attr.computeIfPresent(AttributeLabel.X_POSITION.getLabel(), (k, v) -> {
+            wrapper.i = Double.parseDouble(v);
+            wrapper.iKey = k;
+            return null;
+        });
+
+        attr.computeIfPresent(AttributeLabel.Y_POSITION.getLabel(), (k, v) -> {
+            wrapper.j = Double.parseDouble(v);
+            wrapper.jKey = k;
+            return null;
+        });
+        
+        
+        Point2D p = transform.viewToWorld(wrapper.i, wrapper.j);
+        if (attr.containsKey(AttributeLabel.STROKE_COLOR.getLabel())) {
+            String key = AttributeLabel.STROKE_COLOR.getLabel();
+            addColor(key, attr.get(key), position);
+            attr.remove(key);
+            position++;
+        } if (attr.containsKey(AttributeLabel.FILL_COLOR.getLabel())) {
+            String key = AttributeLabel.FILL_COLOR.getLabel();
+            addColor(key, attr.get(key), position);
+            attr.remove(key);
+            position++;
+        }         
+        
+        addText(wrapper.iKey, String.valueOf(p.getX()), position++);
+        addText(wrapper.jKey, String.valueOf(p.getY()), position++);
+
+        if (attr.containsKey(AttributeLabel.Y_POSITION.getLabel())) {
+            String key = AttributeLabel.Y_POSITION.getLabel();
+            addText(key, attr.get(key), position);
+            attr.remove(key);
+            position++;
+        }
+        
+        for (Map.Entry<String, String> entry : attr.entrySet()) {
+            addText(entry.getKey(), entry.getValue(), position);
+            position++;
+        }
+    }
+
+    public void addColor(String key, String value, int position) {
+        Map<String, String> attr = new HashMap<>();
+        ColorPicker color = new ColorPicker(Color.web(value));
+        color.setStyle("-fx-color-label-visible:false;");
+        color.setOnAction(e -> {
+            attr.put(key, color.getValue().toString());
+
+            model.updateObject(model.getCurrentObjectId(), attr);
+            
+            view.update();
+        });
+
+        changes.add(new Label(key), 0, position, 1, 1);
+        changes.add(color, 1, position, 1, 1);
+    }
+
+    public void addText(String key, String value, int position) {
+        Map<String, String> attr = new HashMap<>();
+        TextField textField = new TextField(value);
+        textField.setStyle("-fx-color-label-visible:false;");
+        textField.textProperty().addListener((e, old, text) -> {
+            textField.setText(" ".trim().equals(text.trim()) ? "0" : text.trim());
+            attr.put(key, textField.getText());
+
+            model.updateObject(model.getCurrentObjectId(), attr);            
+            view.update();
+        });
+
+        changes.add(new Label(key), 0, position, 1, 1);
+        changes.add(textField, 1, position, 1, 1);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (PropertyName.STATES.getName().equals(event.getPropertyName())) {
-            bar.getChildren().clear();
-            for (int i = 0; i < (int) event.getNewValue(); i++) {
-                String text = String.valueOf(i + 1);
-
-                Button node = new Button();
-                node.setStyle("-fx-background-color:#f5f5f5");
-                node.setStyle("-fx-font-size:9");
-                node.setText(text);
-        
-                node.getProperties().put("id", String.valueOf(i));
-                bar.getChildren().add(node);
-            
-                ContextMenu menu = new ContextMenu();
-                MenuItem delete = new MenuItem("Delete");
-                MenuItem replicate = new MenuItem("Replicate");
-
-                final int index = i;
-                replicate.setOnAction((ActionEvent e) -> {
-                    this.model.replicateState(index);
-                });
-
-                delete.setOnAction((ActionEvent e) -> {
-                    this.model.removeState(index);
-                });
-
-                menu.getItems().add(replicate);
-                menu.getItems().add(delete);
-
-                node.setOnMousePressed(e -> {
-                    if (e.getButton() == MouseButton.SECONDARY) {
-                        menu.show(node, e.getScreenX(), e.getScreenY());
-                    }
-                });
-
-                node.setOnAction(e -> {
-                    this.model.setCurrentStateIndex(index);
-                });
-            }
+            updateStates((int) event.getNewValue());
+        } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
+            showAttributes((int) event.getNewValue());
         }
     }
 }
