@@ -1,6 +1,8 @@
 package app.interfaces;
+import app.utility.Trigger;
+
 
 public interface TransitionI {
-    public Trigger trigger(Trigger keyed,Trigger timed);
+    public Trigger trigger(Trigger type);
     public String getData();
 }
