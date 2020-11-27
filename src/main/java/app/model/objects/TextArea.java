@@ -29,7 +29,7 @@ public class TextArea extends Objects {
     }
 
     @Override
-    public Boolean locatedAt(double x, double y) {
+    public boolean locatedAt(double x, double y) {
         // TODO Auto-generated method stub
         return null;
     }
