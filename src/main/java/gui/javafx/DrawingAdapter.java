@@ -54,6 +54,7 @@ public class DrawingAdapter implements DrawingAdapterI{
     public void drawRectangle(double x, double y, double width, double height) {
         Point2D p = transform.worldToView(x, y);
         gc.fillRect(p.getX(), p.getY(), width, height);
+        gc.strokeRect(p.getX(), p.getY(), width, height);
     }
 
     @Override
@@ -72,7 +73,10 @@ public class DrawingAdapter implements DrawingAdapterI{
     @Override
     public void drawLine(double start_x, double start_y, double end_x, double end_y) {
         // TODO Auto-generated method stub
+        Point2D p = transform.worldToView(start_x, start_y);
+        Point2D q = transform.worldToView(end_x, end_y);
 
+        gc.strokeLine(p.getX(), p.getY(), q.getX(), q.getY());
     }
 
     @Override
