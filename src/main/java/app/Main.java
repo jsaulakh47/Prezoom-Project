@@ -1,7 +1,6 @@
 package app;
 
 import java.io.BufferedReader;
-// import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,7 +11,7 @@ import java.util.Properties;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Starting GUI...");
-        gui.javafx.Main.main(args);
+        gui.javafx.Entry.main(args);
     }
 
     private static Properties readProperties() 

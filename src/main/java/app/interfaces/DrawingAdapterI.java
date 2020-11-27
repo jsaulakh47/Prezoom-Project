@@ -13,11 +13,11 @@ public interface DrawingAdapterI {
 
     void SetTextFont(String font);
 
-    void SetLineWidth(double color);
+    void SetLineWidth(double width);
 
-    // void getTransform ();
-    // void transform ();
-    // void resetDrawingParameters();
+    void getTransform();
+
+    void transform();
 
     void drawRectangle(double x, double y, double width, double height);
 

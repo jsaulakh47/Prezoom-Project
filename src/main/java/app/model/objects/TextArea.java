@@ -1,9 +1,9 @@
 package app.model.objects;
 
-
 import app.model.attributes.Text;
 import app.model.attributes.Width;
 import app.model.attributes.Height;
+import app.interfaces.DrawingAdapterI;
 import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.StrokeWidth;
@@ -29,9 +29,14 @@ public class TextArea extends Objects {
     }
 
     @Override
-    public void draw() {
+    public Boolean locatedAt(double x, double y) {
         // TODO Auto-generated method stub
+        return null;
+    }
 
+    @Override
+    public void draw(DrawingAdapterI drawingAdapter) {
+        // TODO Auto-generated method stub
     }
 }
 

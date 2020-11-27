@@ -24,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.javafx.Controller">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.javafx.controllers.EditController">
   <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -67,7 +67,7 @@
                   <Circle fx:id="circle" fill="WHITE" onDragDetected="#handleDragDetected" onMouseEntered="#handleMouseEntered" onMouseExited="#handleMouseExited" radius="22.0" stroke="#1b195b" strokeType="INSIDE" GridPane.columnIndex="1" />
                   <ImageView fx:id="image" fitHeight="43.0" fitWidth="51.0" onDragDetected="#handleDragDetected" onMouseEntered="#handleMouseEntered" onMouseExited="#handleMouseExited" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                      <image>
-                        <Image url="@../../../resources/img-icon.png" />
+                        <Image url="@../../../../resources/img-icon.png" />
                      </image>
                   </ImageView>
                   <Text fx:id="text" fill="#1b195b" onDragDetected="#handleDragDetected" onMousePressed="#handleMouseEntered" onMouseReleased="#handleMouseExited" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.rowIndex="2" />
@@ -103,22 +103,22 @@
                </content></ScrollPane>
             <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="215.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="253.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="674.4827585220337" AnchorPane.topAnchor="260.0">
                <image>
-                  <Image url="@../../../resources/back_not.png" />
+                  <Image url="@../../../../resources/back_not.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="15.0" fitWidth="30.0" layoutX="859.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="253.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
                <image>
-                  <Image url="@../../../resources/forward_not.png" />
+                  <Image url="@../../../../resources/forward_not.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="15.0" fitWidth="70.0" layoutX="510.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="15.0">
                <image>
-                  <Image url="@../../../resources/redo_not.png" />
+                  <Image url="@../../../../resources/redo_not.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="15.0" fitWidth="70.0" layoutX="550.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="15.0">
                <image>
-                  <Image url="@../../../resources/undo_not.png" />
+                  <Image url="@../../../../resources/undo_not.png" />
                </image>
             </ImageView>
             <ButtonBar buttonMinWidth="60.0" layoutX="200.0" layoutY="488.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="220.0">
@@ -151,17 +151,17 @@
                   <HBox fx:id="bar" />
                   <ImageView fx:id="addButton" fitHeight="17.0" fitWidth="20.0" onMouseClicked="#handleAddClick" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../resources/add.png" />
+                        <Image url="@../../../../resources/add.png" />
                      </image>
                   </ImageView>
                </children></HBox>
             <ImageView fx:id="presentButton" fitHeight="52.0" fitWidth="78.0" layoutX="766.0" layoutY="503.0" onMouseClicked="#handlePresentClick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
                <image>
-                  <Image url="@../../../resources/present-icon.png" />
+                  <Image url="@../../../../resources/present-icon.png" />
                </image>
             </ImageView>
             <Button fx:id="previewButton" disable="true" layoutX="738.0" layoutY="498.0" mnemonicParsing="false" onAction="#handlePreviewClick" text="Preview" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="100.0" />
-            <Pane fx:id="canvasPane" onDragDropped="#handleDragDrop" onDragOver="#handleDragOver" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
+            <Pane fx:id="pane" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0" />
          </children>
       </AnchorPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
