@@ -53,6 +53,7 @@ public class EditView extends Canvas implements PropertyChangeListener {
         });
 
         this.setOnMouseDragged(e -> {
+            System.out.println(e.getX() + " " + e.getY());
             //     elasticEndLocation = new Point2D(ev.getX(), ev.getY());
             //     if (dragNode != null) {
             //         if (dragNode.isSelected()) {
