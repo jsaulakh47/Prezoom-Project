@@ -289,8 +289,8 @@ public class EditController implements PropertyChangeListener {
 
             final int index = i;
             if (index == activeState) {
-                node.requestFocus();
                 node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
+                node.requestFocus();
             } else {
                 node.setStyle("-fx-font-size:9");
             }
@@ -324,6 +324,7 @@ public class EditController implements PropertyChangeListener {
             });
             
             view.update();
+            changes.getChildren().clear();
         }
     }
 
@@ -340,11 +341,16 @@ public class EditController implements PropertyChangeListener {
             String jKey;      
         };
 
-        int position = 0;
+        int position = 1;
+        Label label = new Label("Transitions");
+        label.setStyle("-fx-font-weight:bold; -fx-font-size:15");
+
         changes.getChildren().clear();
         Transform transform = view.getTransform();
         Map<String, String> attr = model.getObjectAttributes(id);
 
+        changes.add(label, 0, position++, 2, 1);
+        changes.add(new Label(), 0, position++, 2, 1);
         attr.computeIfPresent(AttributeLabel.X_POSITION.getLabel(), (k, v) -> {
             wrapper.i = Double.parseDouble(v);
             wrapper.iKey = k;
@@ -439,6 +445,10 @@ public class EditController implements PropertyChangeListener {
             updateStates((int) event.getNewValue());
         } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
             showAttributes((int) event.getNewValue());
+        } else if (PropertyName.OBJECTID.getName().equals(event.getPropertyName())) {
+            if ((int) event.getNewValue() == 0) {
+                changes.getChildren().clear();
+            }
         }
     }
 }

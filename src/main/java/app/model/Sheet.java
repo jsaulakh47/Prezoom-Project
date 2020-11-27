@@ -14,8 +14,10 @@ import app.interfaces.ObjectsI;
 import app.model.objects.ObjectFactory;
 import app.model.objects.ObjectType;
 import app.model.objects.Objects;
+import app.utility.PropertyName;
 
 public class Sheet {
+    private String status;
     private int currentObjectId;
     private int currentStateIndex;
 
@@ -27,6 +29,7 @@ public class Sheet {
     private static final double HEIGHT = 720.0;
 
     public Sheet() {
+        this.status = "";
         this.objects = new HashMap<>();
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
@@ -54,11 +57,20 @@ public class Sheet {
         return states.size();
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setCurrentStateIndex(int index) {
         currentStateIndex = index;
     }
 
     public void setCurrentObjectId(int id) {
+        observable.firePropertyChange(PropertyName.OBJECTID.getName(), currentObjectId, id);
         currentObjectId = id;
     }
 
@@ -84,19 +96,28 @@ public class Sheet {
         return currentObjectId;
     }
 
-    public void addState(ArrayList<Objects> objects) {
+    public void addState(ArrayList<Objects> data) {
         int size = getSheetSize(); 
         States state = new States();
 
         states.add(state);
-        if (objects == null) {
-            this.objects.put(state.getId(), new ArrayList<>());
-        } else {
-            this.objects.put(state.getId(), objects);
+        setCurrentStateIndex(getSheetSize() - 1);
+        objects.put(state.getId(), new ArrayList<>());
+        
+        if (data != null) {
+            for (int i = 0; i < data.size(); i ++) {
+                Objects object = data.get(i);
+                try {
+                    addObject(object.getType(), 0, 0);
+                } catch (InvalidObjectTypeException ex) {
+                    System.out.println(ex);
+                }
+    
+                updateObject(getCurrentObjectId(), object.getAttributes());
+            }
         }
 
-        setCurrentStateIndex(getSheetSize() - 1);
-        observable.firePropertyChange("states", size, getSheetSize());
+        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
     public void replicateState(int index) {
@@ -116,7 +137,7 @@ public class Sheet {
             setCurrentStateIndex(index == 0 ? 0 : index - 1);
         }
 
-        observable.firePropertyChange("states", size, getSheetSize());
+        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
     public List<States> getStates() {
@@ -150,6 +171,7 @@ public class Sheet {
             throw new InvalidObjectTypeException(type);
         }
 
+        setCurrentObjectId(((Objects) object).getId());
         objects.get(getCurrentStateId()).add((Objects) object);
     }
 
@@ -165,14 +187,19 @@ public class Sheet {
 
     public void selectObjectAt(double x, double y) {
         int id = 0;
+        setCurrentObjectId(0);
+        boolean found = false;
         for (Objects object : objects.get(getCurrentStateId())) {
             if (object.locatedAt(x, y)) {
                 id = object.getId();
+                found = true;
                 break;
             }
-        }
+        } if (found) {
+            setCurrentObjectId(id);
+        } 
 
-        observable.firePropertyChange("attributes", 0, id);
+        observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), 0, id);
     }
 
     public Map<String, String> getObjectAttributes(int id) {
@@ -183,6 +210,7 @@ public class Sheet {
             }
         }
         
+        setCurrentObjectId(0);
         return null;
     }
 

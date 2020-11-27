@@ -1,6 +1,6 @@
 package app.utility;
 
-enum Trigger 
+public enum Trigger 
 {
     KEYED,
     TIMED;  
