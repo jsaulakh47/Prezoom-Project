@@ -10,6 +10,7 @@ import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
 import app.utility.PropertyName;
+import gui.javafx.Entry;
 import gui.javafx.Transform;
 import gui.javafx.views.EditView;
 import javafx.event.ActionEvent;
@@ -119,8 +120,8 @@ public class EditController implements PropertyChangeListener {
     * This sub-routine is used to update the view.  
     */    
     public void initialize() {
-        this.model = new Sheet();
-        this.view = new EditView(model);
+        this.model = Entry.model;
+        this.view = new EditView();
         updateStates(model.getSheetSize());
         model.addPropertyChangeListener(this);
 
@@ -182,13 +183,16 @@ public class EditController implements PropertyChangeListener {
     @FXML
     public void handlePresentClick() throws Exception {
         Stage stage = new Stage();
-
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = new File("src/main/java/gui/javafx/fxml/presentation_mode.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
-        Scene scene = new Scene(root);
 
+        Parent root = fxmlLoader.load(url);
+        Scene scene = new Scene(root);
+        scene.setCursor(Cursor.NONE);
         stage.setScene(scene);
-        stage.setFullScreen(true);
+
+        // stage.setFullScreen(true);
+        stage.setMaximized(true);
         stage.show();
     }
 

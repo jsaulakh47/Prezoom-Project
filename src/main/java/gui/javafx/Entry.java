@@ -3,6 +3,7 @@ package gui.javafx;
 import java.io.File;
 import java.net.URL;
 
+import app.model.Sheet;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Entry extends Application {
+    public static Sheet model = new Sheet();
 
     @Override
     public void start(Stage primaryStage) throws Exception {

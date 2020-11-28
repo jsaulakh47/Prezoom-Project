@@ -3,41 +3,47 @@ package gui.javafx.views;
 import app.interfaces.DrawingAdapterI;
 import app.model.Sheet;
 import gui.javafx.DrawingAdapter;
+import gui.javafx.Entry;
 import gui.javafx.Transform;
+import gui.javafx.controllers.PresentationController;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 public class PresentationView extends Canvas {
     private final Sheet model;
+    private final PresentationController controller;
 
-    public PresentationView(Sheet model) {
-        this.model = model;
+    public PresentationView(PresentationController controller) {
+        this.model = Entry.model;
+        this.controller = controller;
+        model.setCurrentStateIndex(0);
         widthProperty().addListener(e -> draw());
         heightProperty().addListener(e -> draw());
 
         this.setOnMousePressed(e -> {
-            Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
-            Point2D p = transform.viewToWorld(e.getX(), e.getY());
-            model.selectObjectAt(p.getX(), p.getY());
-            if (model.getCurrentObjectId() != 0) {
-                model.setStatus("selection");
+            if (e.getButton() == MouseButton.PRIMARY) {
+                controller.getNext();
+            } else if (e.getButton() == MouseButton.SECONDARY) {
+                controller.getPrevious();
             }
+            
             draw();
         });
 
+        this.requestFocus();
+        this.setFocusTraversable(true);
+
         this.setOnKeyReleased(e -> {
-            if (e.getCode() == KeyCode.DELETE) {
-                // Delete all selected Edges
-                // for (Edge e:  graph.selectedEdges())
-                //     graph.deleteEdge(e);
-                // // Delete all selected Nodes
-                // for (Node n:  graph.selectedNodes())
-                //     graph.deleteNode(n);
-                // Update the view, by redrawing the Graph
-                update();
+            if (e.getCode() == KeyCode.RIGHT || e.getCode() ==KeyCode.UP) {
+                controller.getNext();
+            } else if (e.getCode() == KeyCode.LEFT || e.getCode() == KeyCode.DOWN) {
+                controller.getPrevious();
             }
+
+            draw();
         });
 
         draw();

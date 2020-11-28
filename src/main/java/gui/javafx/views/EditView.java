@@ -10,6 +10,7 @@ import app.interfaces.DrawingAdapterI;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import gui.javafx.DrawingAdapter;
+import gui.javafx.Entry;
 import gui.javafx.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -21,8 +22,8 @@ public class EditView extends Canvas implements PropertyChangeListener {
     private final Sheet model;
     private Transform transform;
 
-    public EditView(Sheet model) {
-        this.model = model;
+    public EditView() {
+        this.model = Entry.model;
         widthProperty().addListener(e -> draw());
         heightProperty().addListener(e -> draw());
 
