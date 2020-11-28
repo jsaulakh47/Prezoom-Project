@@ -1,5 +1,12 @@
 package app.model.attributes;
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ *
+ * Class : AttributeLabel Enum
+ * This enum is used to store labels for all the attributes in the application.
+ */
 public enum AttributeLabel {
     END_X("End X"),
     FILL_COLOR("Fill color"),
