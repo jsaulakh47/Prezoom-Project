@@ -1,6 +1,7 @@
 package app.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public class States {
 
     private Trigger trigger;
 
+    private String triggerValue;
+
     public States() {
         this.id = count++;
         this.objects = new ArrayList<>();
@@ -33,8 +36,8 @@ public class States {
         return id;
     }
 
-    public void setTrigger() {
-
+    public void setTrigger(Trigger trigger) {
+        this.trigger = trigger;
     }
 
     public void setCurrentObjectIndex(int index) {
@@ -43,6 +46,10 @@ public class States {
 
     public Objects getCurrentObject() {
         return objects.get(currentObjectIndex);
+    }
+
+    public Trigger getTrigger() {
+        return trigger;
     }
 
     public int getCurrentObjectId() {
@@ -63,6 +70,10 @@ public class States {
 
     public List<Objects> getAllObjects() {
         return objects;
+    }
+
+    public Map<String, String> getCameraAttributes() {
+        return objects.get(0).getAttributes();
     }
 
     public void addObject(String type, double xPosition, double yPosition) throws InvalidObjectTypeException {

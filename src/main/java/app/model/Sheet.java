@@ -89,7 +89,11 @@ public class Sheet {
     }
 
     public int getCurrentStateSize() {
-        return states.get(currentStateIndex).getStateSize();
+        return getCurrentState().getStateSize();
+    }
+
+    public Map<String, String> getCurrentCameraAttributes() {
+        return getCurrentState().getCameraAttributes();
     }
 
     public List<States> getStates() {

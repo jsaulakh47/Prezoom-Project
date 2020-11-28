@@ -10,10 +10,13 @@ import app.exceptions.InvalidObjectTypeException;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
+import app.utility.Keys;
 import app.utility.PropertyName;
+import app.utility.Trigger;
 import gui.javafx.Entry;
 import gui.javafx.Transform;
 import gui.javafx.views.EditView;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -207,7 +211,11 @@ public class EditController implements PropertyChangeListener {
 
     @FXML
     private void handleSettingsClick() {
-        // interactor.logger("Settings!!!");
+        setSideLabel("Settings");
+        ComboBox trigger = new ComboBox(FXCollections.observableArrayList(Trigger.values()));
+
+        addLabel(trigger, "Trigger Type", 3);
+        setSideAttributes(model.getCurrentCameraAttributes(), 4);
     }
 
      /**
@@ -342,6 +350,15 @@ public class EditController implements PropertyChangeListener {
     * @param id. 
     */
     public void showAttributes() {
+        Map<String, String> attr = model.getObjectAttributes();
+        setSideLabel("Transitions");
+        setSideAttributes(attr, 3);
+    }
+
+    
+    public void setSideAttributes(Map<String, String> attr, int position) {
+        Transform transform = new Transform(view.getWidth(), view.getHeight(), model.getWidth(), model.getHeight());
+
         var wrapper = new Object(){
             double i;
             double j;
@@ -349,16 +366,6 @@ public class EditController implements PropertyChangeListener {
             String jKey;      
         };
 
-        int position = 1;
-        Label label = new Label("Transitions");
-        label.setStyle("-fx-font-weight:bold; -fx-font-size:15");
-
-        changes.getChildren().clear();
-        Transform transform = view.getTransform();
-        Map<String, String> attr = model.getObjectAttributes();
-
-        changes.add(label, 0, position++, 2, 1);
-        changes.add(new Label(), 0, position++, 2, 1);
         attr.computeIfPresent(AttributeLabel.X_POSITION.getLabel(), (k, v) -> {
             wrapper.i = Double.parseDouble(v);
             wrapper.iKey = k;
@@ -401,6 +408,15 @@ public class EditController implements PropertyChangeListener {
         }
     }
 
+    public void setSideLabel(String text) {
+        changes.getChildren().clear();
+        Label label = new Label(text);
+        label.setStyle("-fx-font-weight:bold; -fx-font-size:15");
+
+        changes.add(label, 0, 1, 2, 1);
+        changes.add(new Label(), 0, 2, 2, 1);
+    }
+
     /**
     * This sub-routine is allow a user to change the color of an existing object. 
     * @param size,value,position. 
@@ -415,8 +431,7 @@ public class EditController implements PropertyChangeListener {
             view.update();
         });
 
-        changes.add(new Label(key), 0, position, 1, 1);
-        changes.add(color, 1, position, 1, 1);
+        addLabel(color, key, position);
     }
 
     /**
@@ -436,8 +451,12 @@ public class EditController implements PropertyChangeListener {
             view.update();
         });
 
+        addLabel(textField, key, position);
+    }
+
+    public void addLabel(Node node, String key, int position) {
         changes.add(new Label(key), 0, position, 1, 1);
-        changes.add(textField, 1, position, 1, 1);
+        changes.add(node, 1, position, 1, 1);
     }
 
     /**
@@ -449,12 +468,9 @@ public class EditController implements PropertyChangeListener {
         if (PropertyName.STATES.getName().equals(event.getPropertyName())) {
             updateStates((int) event.getNewValue());
         } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
+            changes.getChildren().clear();
             if ((boolean) event.getNewValue()) {
                 showAttributes();
-            }
-        } else if (PropertyName.OBJECTID.getName().equals(event.getPropertyName())) {
-            if ((int) event.getNewValue() == 0) {
-                changes.getChildren().clear();
             }
         }
     }
