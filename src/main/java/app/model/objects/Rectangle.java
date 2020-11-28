@@ -13,8 +13,8 @@ import app.model.attributes.StrokeWidth;
 
 public class Rectangle extends Objects {
 
-    public static final String DEFAULT_WIDTH = "100";
-    public static final String DEFAULT_HEIGHT = "80";
+    public static final String DEFAULT_WIDTH = "200";
+    public static final String DEFAULT_HEIGHT = "160";
 
     public Rectangle(String x, String y, String width, String height) {
         super(x, y, ObjectType.RECTANGLE.getType());
@@ -31,27 +31,28 @@ public class Rectangle extends Objects {
 
     @Override
     public boolean locatedAt(double x, double y) {
+        double xPos = getX();
+        double yPos = getY();
+        
         Map<String, String> attributes = this.getAttributes();
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
         double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
-        double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
-        double yPos = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
         return (x >= xPos && x <= (xPos + width) && y >= yPos && y <= (yPos + height)) ? true : false;
     }
 
     @Override
     public void draw(DrawingAdapterI drawingAdapter) {
+        double x = getX();
+        double y = getY();
+        
         Map<String, String> attributes = this.getAttributes();
-        double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
-        double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
-
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
         double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
         
-        drawingAdapter.SetFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
-        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
-        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
+        drawingAdapter.setFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
+        drawingAdapter.setStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
+        drawingAdapter.setLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
 
         drawingAdapter.drawRectangle(x, y, width, height);
     }

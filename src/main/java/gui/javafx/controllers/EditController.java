@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.exceptions.InvalidObjectTypeException;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
@@ -238,7 +239,7 @@ public class EditController implements PropertyChangeListener {
     */
     @FXML
     private void handleAddClick() {
-        model.addState(null);
+        model.addState();
         view.update();
     }
 
@@ -305,7 +306,11 @@ public class EditController implements PropertyChangeListener {
             MenuItem replicate = new MenuItem("Replicate");
 
             replicate.setOnAction((ActionEvent e) -> {
-                model.replicateState(index);
+                try {                
+                    model.replicateState(index);
+                } catch (InvalidObjectTypeException exception) {
+                    exception.printStackTrace();
+                }
             });
 
             delete.setOnAction((ActionEvent e) -> {
@@ -336,8 +341,7 @@ public class EditController implements PropertyChangeListener {
     * This sub-routine is used to show Attributes of the clicked object. 
     * @param id. 
     */
-    public void showAttributes(int id) {
-        
+    public void showAttributes() {
         var wrapper = new Object(){
             double i;
             double j;
@@ -351,7 +355,7 @@ public class EditController implements PropertyChangeListener {
 
         changes.getChildren().clear();
         Transform transform = view.getTransform();
-        Map<String, String> attr = model.getObjectAttributes(id);
+        Map<String, String> attr = model.getObjectAttributes();
 
         changes.add(label, 0, position++, 2, 1);
         changes.add(new Label(), 0, position++, 2, 1);
@@ -407,9 +411,7 @@ public class EditController implements PropertyChangeListener {
         color.setStyle("-fx-color-label-visible:false;");
         color.setOnAction(e -> {
             attr.put(key, color.getValue().toString());
-
-            model.updateObject(model.getCurrentObjectId(), attr);
-            
+            model.updateObject(attr);            
             view.update();
         });
 
@@ -430,8 +432,7 @@ public class EditController implements PropertyChangeListener {
         textField.textProperty().addListener((e, old, text) -> {
             textField.setText(" ".trim().equals(text.trim()) ? "0" : text.trim());
             attr.put(key, textField.getText());
-
-            model.updateObject(model.getCurrentObjectId(), attr);            
+            model.updateObject(attr);            
             view.update();
         });
 
@@ -448,7 +449,9 @@ public class EditController implements PropertyChangeListener {
         if (PropertyName.STATES.getName().equals(event.getPropertyName())) {
             updateStates((int) event.getNewValue());
         } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
-            showAttributes((int) event.getNewValue());
+            if ((boolean) event.getNewValue()) {
+                showAttributes();
+            }
         } else if (PropertyName.OBJECTID.getName().equals(event.getPropertyName())) {
             if ((int) event.getNewValue() == 0) {
                 changes.getChildren().clear();

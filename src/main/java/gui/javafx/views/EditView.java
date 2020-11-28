@@ -54,22 +54,23 @@ public class EditView extends Canvas implements PropertyChangeListener {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
             Point2D p = transform.viewToWorld(e.getX(), e.getY());
             model.selectObjectAt(p.getX(), p.getY());
-            if (model.getCurrentObjectId() != 0) {
+            if (model.hasSelectedObject()) {
+                model.setHasSelectedObject(false);
                 model.setStatus("selection");
             }
+
             draw();
         });
 
         this.setOnMouseDragged(e -> {
             if (model.getStatus().equals("selection")) {
-                System.out.println(e.getX() + " " + e.getY());
                 Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
                 Point2D p = transform.viewToWorld(e.getX(), e.getY());
 
                 Map<String, String> attr = new HashMap<>();
                 attr.put(AttributeLabel.X_POSITION.getLabel(), String.valueOf(p.getX()));
                 attr.put(AttributeLabel.Y_POSITION.getLabel(), String.valueOf(p.getY()));
-                model.updateObject(model.getCurrentObjectId(), attr);
+                model.updateObject(attr);
                 update();
             }
             //     elasticEndLocation = new Point2D(ev.getX(), ev.getY());

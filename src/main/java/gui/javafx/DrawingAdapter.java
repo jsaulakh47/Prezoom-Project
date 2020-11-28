@@ -4,6 +4,7 @@ import app.interfaces.DrawingAdapterI;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class DrawingAdapter implements DrawingAdapterI{
 	private final GraphicsContext gc;
@@ -26,53 +27,81 @@ public class DrawingAdapter implements DrawingAdapterI{
 	}
 
     @Override
-    public void SetStrokeColor(String color) {
+    public void setStrokeColor(String color) {
         this.gc.setStroke(Color.web(color));
     }
 
     @Override
-    public void SetFillColor(String color) {
+    public void setFillColor(String color) {
         this.gc.setFill(Color.web(color));
     }
 
     @Override
-    public void SetTextColor(String color) {
-        // TODO Auto-generated method stub
+    public void setFont(String font) {
+        this.gc.setFont(Font.font(font));
     }
 
     @Override
-    public void SetTextFont(String font) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void SetLineWidth(double width) {
+    public void setLineWidth(double width) {
         this.gc.setLineWidth(width);
     }
 
     @Override
+    public void getTransform() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void transform() {
+        // TODO Auto-generated method stub
+
+    }
+
+	@Override
+	public void drawCamera(double x, double y, double width, double height) {
+        Point2D p = transform.worldToView(x, y);
+        Point2D q = transform.worldToView(x + width, y + height);
+
+        double i = p.getX();
+        double j = p.getY();
+        double w = Math.abs(p.getX() - q.getX());
+        double h = Math.abs(p.getY() - q.getY());
+
+        gc.strokeRect(i, j, w, h);
+	}
+
+    @Override
     public void drawRectangle(double x, double y, double width, double height) {
         Point2D p = transform.worldToView(x, y);
-        gc.fillRect(p.getX(), p.getY(), width, height);
-        gc.strokeRect(p.getX(), p.getY(), width, height);
+        Point2D q = transform.worldToView(x + width, y + height);
+
+        double i = p.getX();
+        double j = p.getY();
+        double w = Math.abs(p.getX() - q.getX());
+        double h = Math.abs(p.getY() - q.getY());
+        
+        gc.fillRect(i, j, w, h);
+        gc.strokeRect(i, j, w, h);
     }
 
     @Override
     public void drawCircle(double x, double y, double radius) {
         Point2D p = transform.worldToView(x, y);
-        
-        double i = (int) p.getX() - radius;
-        double j = (int) p.getY() - radius;
-        double w = (int) 2 * radius;
-        double h = (int) 2 * radius;
+        Point2D q = transform.worldToView(x - radius, y);
 
-        gc.strokeOval(i, j, w, h);
-		gc.fillOval(i, j, w, h);
+        double r = Math.abs(p.getX() - q.getX());
+
+        double i = p.getX() - r;
+        double j = p.getY() - r;
+        double k = 2 * r;
+
+		gc.fillOval(i, j, k, k);
+        gc.strokeOval(i, j, k, k);
     }
 
     @Override
     public void drawLine(double start_x, double start_y, double end_x, double end_y) {
-        // TODO Auto-generated method stub
         Point2D p = transform.worldToView(start_x, start_y);
         Point2D q = transform.worldToView(end_x, end_y);
 
@@ -91,16 +120,9 @@ public class DrawingAdapter implements DrawingAdapterI{
 
     }
 
-    @Override
-    public void getTransform() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void transform() {
-        // TODO Auto-generated method stub
-
-    }
-    
+	@Override
+	public void drawImage() {
+		// TODO Auto-generated method stub
+		
+	}    
 }

@@ -3,12 +3,13 @@ package gui.javafx;
 import javafx.geometry.Point2D;
 
 public class Transform {
-	private double scale;
 	private double viewWidth;
 	private double viewHeight;
 	private double worldWidth;
 	private double worldHeight;
 
+	private double xScale;
+	private double yScale;
 	private double xOffset;
 	private double yOffset;
 
@@ -20,22 +21,26 @@ public class Transform {
 		this.worldWidth = worldWidth;
 		this.worldHeight = worldHeight;
 
-		this.scale = Math.min((viewWidth / (worldWidth + OFFSET)), (viewHeight / (worldHeight + OFFSET)));
+		double width = viewWidth / (worldWidth + OFFSET);
+		double height = viewHeight / (worldHeight + OFFSET);
 
-		this.xOffset = (viewWidth - (scale * worldWidth)) / 2;
-		this.yOffset = (viewHeight - (scale * worldHeight)) / 2;
+		this.xScale = Math.max(width, height);
+		this.yScale = Math.min(width, height);
+
+		this.xOffset = (viewWidth - (xScale * worldWidth)) / 2;
+		this.yOffset = (viewHeight - (yScale * worldHeight)) / 2;
 	}
 	
 	public Point2D worldToView(double i, double j) { 
-		double x = i * scale + xOffset;
-		double y = j * scale + yOffset;
+		double x = i * xScale + xOffset;
+		double y = j * yScale + yOffset;
 
 		return new Point2D(x, y);
 	}
 	
 	public Point2D viewToWorld(double i, double j) {
-		double x = (i - xOffset) / scale;
-		double y = (j - yOffset) / scale;
+		double x = (i - xOffset) / xScale;
+		double y = (j - yOffset) / yScale;
 		
 		return new Point2D(x, y);
 	}

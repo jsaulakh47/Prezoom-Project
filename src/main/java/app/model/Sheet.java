@@ -18,23 +18,22 @@ import app.utility.PropertyName;
 
 public class Sheet {
     private String status;
-    private int currentObjectId;
     private int currentStateIndex;
+    private boolean selectedObject;
 
     private List<States> states;
     private PropertyChangeSupport observable;
-    private Map<Integer, ArrayList<Objects>> objects;
 
     private static final double WIDTH = 1080.0;
     private static final double HEIGHT = 720.0;
 
     public Sheet() {
         this.status = "";
-        this.objects = new HashMap<>();
+        this.selectedObject = false;
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
 
-        addState(null);       
+        addState();       
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -45,6 +44,22 @@ public class Sheet {
         observable.removePropertyChangeListener(pcl);
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setCurrentStateIndex(int index) {
+        this.currentStateIndex = index;
+    }
+
+    public void setHasSelectedObject(boolean selected) {
+        this.selectedObject = selected;
+    }
+
+    public boolean hasSelectedObject() {
+        return selectedObject;
+    }
+
     public double getHeight() {
         return HEIGHT;
     }
@@ -53,31 +68,17 @@ public class Sheet {
         return WIDTH;
     }
 
-    public int getSheetSize() {
-        return states.size();
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setCurrentStateIndex(int index) {
-        currentStateIndex = index;
-    }
-
-    public void setCurrentObjectId(int id) {
-        observable.firePropertyChange(PropertyName.OBJECTID.getName(), currentObjectId, id);
-        currentObjectId = id;
+    public int getSheetSize() {
+        return states.size();
     }
 
     public States getCurrentState() {
-        return states.get(getCurrentStateIndex());
+        return states.get(currentStateIndex);
     }
-
 
     public int getCurrentStateId() {
         return  getCurrentState().getId();
@@ -87,52 +88,42 @@ public class Sheet {
         return currentStateIndex;
     }
 
-    public int getCurrentStateObjectSize() {
-        States state = states.get(getCurrentStateIndex());
-        return objects.get(state.getId()).size();
+    public int getCurrentStateSize() {
+        return states.get(currentStateIndex).getStateSize();
     }
 
-    public int getCurrentObjectId() {
-        return currentObjectId;
+    public List<States> getStates() {
+        return states;
     }
 
-    public void addState(ArrayList<Objects> data) {
+    public void addState() {
         int size = getSheetSize(); 
         States state = new States();
 
         states.add(state);
         setCurrentStateIndex(getSheetSize() - 1);
-        objects.put(state.getId(), new ArrayList<>());
-        
-        if (data != null) {
-            for (int i = 0; i < data.size(); i ++) {
-                Objects object = data.get(i);
-                try {
-                    addObject(object.getType(), 0, 0);
-                } catch (InvalidObjectTypeException ex) {
-                    System.out.println(ex);
-                }
-    
-                updateObject(getCurrentObjectId(), object.getAttributes());
-            }
-        }
-
         observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
-    public void replicateState(int index) {
-        addState(objects.get(getStates().get(index).getId()));
+    public void replicateState(int index) throws InvalidObjectTypeException {
+        int size = getSheetSize(); 
+        States state = new States();
+        for (Objects object : states.get(index).getObjects()) {
+            state.addObject(object.getType(), object.getX(), object.getY());
+            state.updateObject(object.getAttributes());
+        }
+
+        states.add(state);
+        setCurrentStateIndex(getSheetSize() - 1);
+        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
     public void removeState(int index) {
         int size = getSheetSize();
-        States state = states.get(index);
-        
         states.remove(index);
-        objects.remove(state.getId());
 
         if (size == 1) {
-            addState(null);
+            addState();
         } else {
             setCurrentStateIndex(index == 0 ? 0 : index - 1);
         }
@@ -140,82 +131,30 @@ public class Sheet {
         observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
-    public List<States> getStates() {
-        return states;
-    }
-
-    public List<Objects> loadState(int stateId) {
-        return objects.get(stateId);
-    }
-
     public void addObject(String type, double xPosition, double yPosition) throws InvalidObjectTypeException {
-        ObjectsI object;
-        ObjectFactoryI factory = new ObjectFactory();
-
-        String x = String.valueOf(xPosition);
-        String y = String.valueOf(yPosition);
-
-        if (ObjectType.CIRCLE.getType().equals(type)) {
-            object = factory.makeCircle(x, y);
-        } else if (ObjectType.IMAGE.getType().equals(type)) {
-            object = factory.makeImage(x, y);
-        } else if (ObjectType.LINE.getType().equals(type)) {
-            object = factory.makeLine(x, y);
-        } else if (ObjectType.PLAIN_TEXT.getType().equals(type)) {
-            object = factory.makePlainText(x, y);
-        } else if (ObjectType.TEXT_AREA.getType().equals(type)) {
-            object = factory.makeTextArea(x, y);
-        } else if (ObjectType.RECTANGLE.getType().equals(type)) {
-            object = factory.makeRectangle(x, y);
-        } else {
-            throw new InvalidObjectTypeException(type);
-        }
-
-        setCurrentObjectId(((Objects) object).getId());
-        objects.get(getCurrentStateId()).add((Objects) object);
+        States state = getCurrentState();
+        state.addObject(type, xPosition, yPosition);
     }
 
-    public void updateObject(int id, Map<String, String> attr) {
-        for (Objects object : objects.get(getCurrentStateId())) {
-            if (object.getId() == id) {
-                for (Map.Entry<String, String> entry : attr.entrySet()) {
-                    object.setAttribute(entry.getKey(), entry.getValue());
-                }
-            }
-        }
+    public void updateObject(Map<String, String> attr) {
+        States state = getCurrentState();
+        state.updateObject(attr);
+    }
+
+    public Map<String, String> getObjectAttributes() {
+        return states.get(currentStateIndex).getObjectAttributes();
     }
 
     public void selectObjectAt(double x, double y) {
-        int id = 0;
-        setCurrentObjectId(0);
-        boolean found = false;
-        for (Objects object : objects.get(getCurrentStateId())) {
-            if (object.locatedAt(x, y)) {
-                id = object.getId();
-                found = true;
-                break;
-            }
-        } if (found) {
-            setCurrentObjectId(id);
-        } 
+        States state = getCurrentState();
+        boolean selected = state.selectObject(x, y);
 
-        observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), 0, id);
-    }
-
-    public Map<String, String> getObjectAttributes(int id) {
-        for (Objects object : objects.get(getCurrentStateId())) {
-            if (object.getId() == id) {
-                setCurrentObjectId(id);
-                return object.getAttributes();
-            }
-        }
-        
-        setCurrentObjectId(0);
-        return null;
+        setHasSelectedObject(selected);
+        observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), null, selected);
     }
 
     public void draw(DrawingAdapterI drawingAdapter) {
-        for (Objects object : objects.get(getCurrentStateId())) {
+        for (Objects object : states.get(currentStateIndex).getAllObjects()) {
             object.draw(drawingAdapter);
         }
 	}

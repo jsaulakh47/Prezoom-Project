@@ -5,20 +5,20 @@ package app.interfaces;
  */
 
 public interface DrawingAdapterI {
-    void SetStrokeColor(String color);
+    void setStrokeColor(String color);
 
-    void SetFillColor(String color);
+    void setFillColor(String color);
 
-    void SetTextColor(String color);
+    void setFont(String font);
 
-    void SetTextFont(String font);
-
-    void SetLineWidth(double width);
+    void setLineWidth(double width);
 
     void getTransform();
 
     void transform();
 
+    void drawCamera(double x, double y, double width, double height);
+    
     void drawRectangle(double x, double y, double width, double height);
 
     void drawCircle(double x, double y, double radius);
@@ -29,5 +29,5 @@ public interface DrawingAdapterI {
 
     void drawTextArea();
 
-    // void drawImage();
+    void drawImage();
 }
