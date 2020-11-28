@@ -109,14 +109,23 @@ public class DrawingAdapter implements DrawingAdapterI{
     }
 
     @Override
-    public void drawText(double x, double y, double text) {
+    public void drawText( String text, double x, double y, double width) {
         // TODO Auto-generated method stub
+        Point2D p = transform.worldToView(x, y);
+        gc.strokeText(text, p.getX(), p.getY(), width);
+
+
+
 
     }
 
     @Override
-    public void drawTextArea() {
+    public void drawTextArea(double x, double y, String text, double width, double height) {
         // TODO Auto-generated method stub
+        Point2D p = transform.worldToView(x, y);
+        //gc.strokeRect(p.getX(), p.getY(), width, height);
+        gc.strokeText(text, p.getX(), p.getY(), width);
+
 
     }
 

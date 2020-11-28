@@ -25,9 +25,9 @@ public interface DrawingAdapterI {
 
     void drawLine(double start_x, double start_y, double end_x, double end_y);
 
-    void drawText(double x, double y, double text);
+    void drawText(String text, double x, double y, double width);
 
-    void drawTextArea();
+    void drawTextArea(double x, double y, String text, double width, double height);
 
     void drawImage();
 }
