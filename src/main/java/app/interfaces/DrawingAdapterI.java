@@ -27,7 +27,7 @@ public interface DrawingAdapterI {
 
     void drawText(String text, double x, double y, double width);
 
-    void drawTextArea(double x, double y, String text, double width, double height);
+    void drawTextArea(String text, double x, double y, double width, double height);
 
-    void drawImage();
+    void drawImage(String url, double x, double y, double width, double height);
 }

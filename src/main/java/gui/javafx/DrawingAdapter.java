@@ -3,6 +3,7 @@ package gui.javafx;
 import app.interfaces.DrawingAdapterI;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -94,10 +95,10 @@ public class DrawingAdapter implements DrawingAdapterI{
 
         double i = p.getX() - r;
         double j = p.getY() - r;
-        double k = 2 * r;
+        double d = 2 * r;
 
-		gc.fillOval(i, j, k, k);
-        gc.strokeOval(i, j, k, k);
+		gc.fillOval(i, j, d, d);
+        gc.strokeOval(i, j, d, d);
     }
 
     @Override
@@ -105,33 +106,52 @@ public class DrawingAdapter implements DrawingAdapterI{
         Point2D p = transform.worldToView(start_x, start_y);
         Point2D q = transform.worldToView(end_x, end_y);
 
-        gc.strokeLine(p.getX(), p.getY(), q.getX(), q.getY());
+        double i = p.getX();
+        double j = p.getY();
+        double a = q.getX();
+        double b = q.getX();
+
+        gc.strokeLine(i, j, a, b);
     }
 
     @Override
-    public void drawText( String text, double x, double y, double width) {
-        // TODO Auto-generated method stub
+    public void drawText(String text, double x, double y, double width) {
         Point2D p = transform.worldToView(x, y);
-        gc.strokeText(text, p.getX(), p.getY(), width);
+        Point2D q = transform.worldToView(x + width, y);
 
+        double i = p.getX();
+        double j = p.getY();
+        double w = Math.abs(p.getX() - q.getX());
 
-
-
+        gc.fillText(text, i, j, w);
+        gc.strokeText(text, i, j, w);
     }
 
     @Override
-    public void drawTextArea(double x, double y, String text, double width, double height) {
-        // TODO Auto-generated method stub
+    public void drawTextArea(String text, double x, double y, double width, double height) {
         Point2D p = transform.worldToView(x, y);
-        //gc.strokeRect(p.getX(), p.getY(), width, height);
-        gc.strokeText(text, p.getX(), p.getY(), width);
+        Point2D q = transform.worldToView(x + width, y + height);
 
-
+        double i = p.getX();
+        double j = p.getY();
+        double w = Math.abs(p.getX() - q.getX());
+        double h = Math.abs(p.getY() - q.getY());
+        
+        gc.strokeRect(i, j, w, h);
+        gc.fillText(text, i, j, w);
+        gc.strokeText(text, i, j, w);
     }
 
 	@Override
-	public void drawImage() {
-		// TODO Auto-generated method stub
-		
+	public void drawImage(String url, double x, double y, double width, double height) {
+        Point2D p = transform.worldToView(x, y);
+        Point2D q = transform.worldToView(x + width, y + height);
+
+        double i = p.getX();
+        double j = p.getY();
+        double w = Math.abs(p.getX() - q.getX());
+        double h = Math.abs(p.getY() - q.getY());
+        
+        gc.drawImage(new Image(url), i, j, w, h);
 	}    
 }

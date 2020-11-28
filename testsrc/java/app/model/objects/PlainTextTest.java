@@ -22,7 +22,7 @@ public class PlainTextTest {
         Map<String, String> attributes = plainText.getAttributes();
 
         assertEquals("PlainText does not have proper number of attributes.",
-                attributes.size(), 7);
+                attributes.size(), 8);
         assertEquals("X position attribute not set properly.",
                 attributes.get("X position"), "10");
         assertEquals("Y position attribute not set properly.",
