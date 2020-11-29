@@ -1,15 +1,19 @@
 package app.model.objects;
 
 import app.model.attributes.Width;
+
+import java.util.Map;
+
 import app.interfaces.DrawingAdapterI;
+import app.model.attributes.AttributeLabel;
 import app.model.attributes.Height;
 import app.model.attributes.Source;
 
 public class Image extends Objects {
 
-    public static final String DEFAULT_SOURCE = "src/main/resources/alfa.png";
+    public static final String DEFAULT_SOURCE = "/alfa.png";
     public static final String DEFAULT_WIDTH = "100";
-    public static final String DEFAULT_HEIGHT = "100";
+    public static final String DEFAULT_HEIGHT = "80";
 
     public Image(String x, String y, String source, String width, String height) {
         super(x, y, ObjectType.IMAGE.getType());
@@ -24,14 +28,27 @@ public class Image extends Objects {
 
     @Override
     public boolean locatedAt(double x, double y) {
-        // TODO Auto-generated method stub
-        return false;
+        double xPos = getX();
+        double yPos = getY();
+        
+        Map<String, String> attributes = this.getAttributes();
+        double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
+
+        return (x >= xPos && x <= (xPos + width) && y >= yPos && y <= (yPos + height)) ? true : false;
     }
 
     @Override
     public void draw(DrawingAdapterI drawingAdapter) {
-        // TODO Auto-generated method stub
+        double x = getX();
+        double y = getY();
+        
+        Map<String, String> attributes = this.getAttributes();
+        String url = attributes.get(AttributeLabel.SOURCE.getLabel());
+        double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
+        double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
 
+        drawingAdapter.drawImage(url, x, y, width, height);
     }
 }
 

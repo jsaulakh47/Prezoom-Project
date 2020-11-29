@@ -123,11 +123,6 @@
             </ImageView>
             <ButtonBar buttonMinWidth="60.0" layoutX="200.0" layoutY="488.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="220.0">
               <buttons>
-                  <Button fx:id="cameraButton" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCameraClick" text="Camera">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
                   <Button fx:id="interpolationsButton" disable="true" layoutX="430.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleInterpolationsClick" text="Interpolations">
                      <font>
                         <Font size="10.0" />

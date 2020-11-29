@@ -8,6 +8,7 @@ import java.util.HashMap;
 import app.interfaces.ObjectsI;
 import app.model.attributes.XPosition;
 import app.model.attributes.YPosition;
+import app.model.attributes.AttributeLabel;
 import app.model.attributes.Attributes;
 
 public abstract class Objects implements ObjectsI {
@@ -26,6 +27,14 @@ public abstract class Objects implements ObjectsI {
 
     public int getId() {
         return id;
+    }
+
+    public double getX() {
+        return Double.parseDouble(getAttributes().get(AttributeLabel.X_POSITION.getLabel()));
+    }
+
+    public double getY() {
+        return Double.parseDouble(getAttributes().get(AttributeLabel.Y_POSITION.getLabel()));
     }
 
     public String getType() {
