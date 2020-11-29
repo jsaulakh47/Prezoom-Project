@@ -13,10 +13,19 @@ public class Height extends Attributes {
 
     public static final String DEFAULT_DATA = "100";
 
+     /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Height;
+     * @param data
+     */
+
     public Height(String data) {
         super(AttributeLabel.HEIGHT.getLabel(), data);
         
     }
+
+     /**
+     * default constructor with data value for height = 100;
+     */
 
     public Height() {
         this(DEFAULT_DATA);

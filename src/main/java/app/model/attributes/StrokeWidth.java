@@ -13,9 +13,18 @@ public class StrokeWidth extends Attributes {
 
     public static final String DEFAULT_DATA = "1";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for stroke width;
+     * @param data
+     */
+
     public StrokeWidth(String data) {
         super(AttributeLabel.STROKE_WIDTH.getLabel(), data);
     }
+
+    /**
+     * default constructor with data value of stroke width is 1;
+     */
 
     public StrokeWidth() {
         this(DEFAULT_DATA);

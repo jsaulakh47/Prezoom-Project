@@ -13,10 +13,19 @@ public class FontSize extends Attributes {
 
     public static final String DEFAULT_DATA = "12";
 
+     /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Font Size;
+     * @param data
+     */
+
     public FontSize(String data) {
         super(AttributeLabel.FONT_SIZE.getLabel(), data);
         
     }
+
+     /**
+     * default constructor with data value for font size = 12;
+     */
 
     public FontSize() {
         this(DEFAULT_DATA);
