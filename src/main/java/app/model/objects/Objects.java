@@ -15,7 +15,9 @@ public abstract class Objects implements ObjectsI {
     private List<Attributes> attributes;
     private static int count = 1;
     private String type;
+    private int linkId;
     private int id;
+    
 
     public Objects(String x, String y, String type) {
         attributes = new ArrayList<>();
@@ -25,8 +27,16 @@ public abstract class Objects implements ObjectsI {
         this.type = type;
     }
 
+    public void setLinkId(int id) {
+        this.linkId = id;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public int getLinkId() {
+        return linkId;
     }
 
     public double getX() {

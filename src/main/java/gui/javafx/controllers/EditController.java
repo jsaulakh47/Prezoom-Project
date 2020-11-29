@@ -1,7 +1,12 @@
 package gui.javafx.controllers;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +32,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -157,14 +163,22 @@ public class EditController implements PropertyChangeListener {
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Save Application File");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text", "*.alpha"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.alpha"));
 
-        File file = chooser.showSaveDialog(saveButton.getScene().getWindow());
-        if (file != null) {
-            // interactor.logger("File saved as: " + file.getPath());
-        } else {
-            // interactor.logger("Save cancelled");
-        }
+        File f = chooser.showSaveDialog(saveButton.getScene().getWindow());
+        if (f != null) {
+            try {
+                PrintWriter file = new PrintWriter(new FileWriter(f.getAbsolutePath()));
+                model.saveTo(file);
+                file.close();
+            }
+            catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error !");
+                alert.setHeaderText(null);
+                alert.setContentText("Error Saving Sheet To File !");
+                alert.showAndWait();
+            }}
     }
 
 
@@ -177,14 +191,23 @@ public class EditController implements PropertyChangeListener {
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Load Application File");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text", "*.alpha"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.alpha"));
 
-        File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
-        if (file != null) {
-            // interactor.logger("File loaded as: " + file.getPath());
-        } else {
-            // interactor.logger("Load cancelled");
-        }
+        File f = chooser.showOpenDialog(loadButton.getScene().getWindow());
+        if (f != null) {
+            try {
+                BufferedReader file = new BufferedReader(new FileReader(f.getAbsolutePath()));
+                model.loadFrom(file);
+                file.close();
+                view.update();
+            }
+            catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error !");
+                alert.setHeaderText(null);
+                alert.setContentText("Error Loading SheetFrom File !");
+                alert.showAndWait();
+            }}
     }
 
     /**
@@ -248,7 +271,7 @@ public class EditController implements PropertyChangeListener {
     }
 
     /**
-    * This sub-routine is offeres the multiple modes of interpolation to user . 
+    * This sub-routine offers the multiple modes of interpolation to user . 
     */
     @FXML
     public void handleInterpolationsClick() {
@@ -323,8 +346,8 @@ public class EditController implements PropertyChangeListener {
 
             final int index = i;
             if (index == activeState) {
-                node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
                 node.requestFocus();
+                node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
             } else {
                 node.setStyle("-fx-font-size:9");
             }
@@ -362,7 +385,6 @@ public class EditController implements PropertyChangeListener {
             });
             
             view.update();
-            changes.getChildren().clear();
         }
     }
 

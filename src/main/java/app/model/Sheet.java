@@ -2,6 +2,10 @@ package app.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.security.KeyStore.Entry.Attribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +49,7 @@ public class Sheet {
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
 
-        addState();       
+        addState();
     }
 
     /**
@@ -138,7 +142,7 @@ public class Sheet {
      */
 
     public int getCurrentStateId() {
-        return  getCurrentState().getId();
+        return getCurrentState().getId();
     }
 
     /**
@@ -183,7 +187,7 @@ public class Sheet {
      */
 
     public void addState() {
-        int size = getSheetSize(); 
+        int size = getSheetSize();
         States state = new States();
 
         states.add(state);
@@ -200,7 +204,7 @@ public class Sheet {
      */
 
     public void replicateState(int index) throws InvalidObjectTypeException {
-        int size = getSheetSize(); 
+        int size = getSheetSize();
         States state = new States();
         for (Objects object : states.get(index).getObjects()) {
             state.addObject(object.getType(), object.getX(), object.getY());
@@ -285,14 +289,44 @@ public class Sheet {
             object.draw(drawingAdapter);
         }
     }
-    
+
     /**
      * this sub-routines draw one objects at a time;
      * @param drawingAdapter
      * @param index
      */
-
     public void drawObject(DrawingAdapterI drawingAdapter, int index) {
         getCurrentState().getAllObjects().get(index).draw(drawingAdapter);
-	}
+    }
+
+    public void saveTo(PrintWriter p) {
+        p.println("states:" + getCurrentStateSize());
+        p.println("current state:" + getCurrentStateIndex());
+
+        for (States state : states) {
+            p.println("state:" + state.getId());
+            p.println("size:" + state.getStateSize());
+            p.println("trigger:" + state.getTrigger());
+            p.println("background:" + state.getBackgroundColor());
+
+            for (Objects object : state.getAllObjects()) {
+                p.println("object:" + object.getId());
+                p.println("link_id:" + object.getLinkId());
+                for (Map.Entry<String, String> attribute : object.getAttributes().entrySet()) {
+                    p.println(attribute.getKey() + ":" + attribute.getValue());
+                }
+            }
+        }
+    }
+
+    public void loadFrom(BufferedReader file) {
+        states.clear();
+        // for(String line = file.readLine(); line != null; line = file.readLine()) {
+        //     // String[] element = line.split(":");
+        //     // if (element[0].trim().equals("state")) {
+        //     //     int size = Integer.parseInt(element[1]);
+        //         // System.out.println(element);
+        //     // }
+        // }
+    }
 }
