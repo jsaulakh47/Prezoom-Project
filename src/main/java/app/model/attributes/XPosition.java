@@ -13,9 +13,18 @@ public class XPosition extends Attributes {
 
     public static final String DEFAULT_DATA = "50";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for XPosition;
+     * @param data
+     */
+
     public XPosition(String data) {
         super(AttributeLabel.X_POSITION.getLabel(), data);
     }
+
+     /**
+     * default constructor with data value is 50;
+     */
 
     public XPosition() {
         this(DEFAULT_DATA);

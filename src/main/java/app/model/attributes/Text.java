@@ -13,9 +13,21 @@ public class Text extends Attributes {
 
     public static final String DEFAULT_DATA = "Alfa";
 
+     /**
+     * constructor with one parameter that setup the attributes constructor with label and data for text;
+     * @param data
+     */
+
+
     public Text(String data) {
         super(AttributeLabel.TEXT.getLabel(), data);
     }
+
+      /**
+     * default constructor with data value of text is alfa;
+     */
+
+
 
     public Text() {
         this(DEFAULT_DATA);
