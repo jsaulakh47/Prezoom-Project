@@ -113,6 +113,10 @@ public class States {
         setCurrentObjectIndex(objects.size() - 1);
     }
 
+    public void addObject(Objects object) {
+        objects.add(object);
+    }
+
     public void updateObject(Map<String, String> attr) {
         Objects object = objects.get(currentObjectIndex);
         for (Map.Entry<String, String> entry : attr.entrySet()) {

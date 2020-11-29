@@ -14,17 +14,18 @@ import java.util.Map;
 import app.exceptions.InvalidObjectTypeException;
 import app.interfaces.DrawingAdapterI;
 import app.interfaces.ObjectFactoryI;
-import app.interfaces.ObjectsI;
+import app.model.attributes.Attributes;
 import app.model.objects.ObjectFactory;
 import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 import app.utility.PropertyName;
+import app.utility.Trigger;
 
 public class Sheet {
-    private String status;
     private int currentStateIndex;
     private boolean selectedObject;
 
+    private boolean notify;
     private List<States> states;
     private PropertyChangeSupport observable;
 
@@ -32,7 +33,7 @@ public class Sheet {
     private static final double HEIGHT = 720.0;
 
     public Sheet() {
-        this.status = "";
+        this.notify = true;
         this.selectedObject = false;
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
@@ -48,8 +49,8 @@ public class Sheet {
         observable.removePropertyChangeListener(pcl);
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNotify(boolean notify) {
+        this.notify = notify;
     }
 
     public void setCurrentStateIndex(int index) {
@@ -72,8 +73,8 @@ public class Sheet {
         return WIDTH;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean getNotify() {
+        return notify;
     }
 
     public int getSheetSize() {
@@ -110,7 +111,9 @@ public class Sheet {
 
         states.add(state);
         setCurrentStateIndex(getSheetSize() - 1);
-        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
+        if (getNotify()) {
+            observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
+        }
     }
 
     public void replicateState(int index) throws InvalidObjectTypeException {
@@ -123,7 +126,9 @@ public class Sheet {
 
         states.add(state);
         setCurrentStateIndex(getSheetSize() - 1);
-        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
+        if (getNotify()) {
+            observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
+        }
     }
 
     public void removeState(int index) {
@@ -134,9 +139,9 @@ public class Sheet {
             addState();
         } else {
             setCurrentStateIndex(index == 0 ? 0 : index - 1);
+        } if (getNotify()) {
+            observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
         }
-
-        observable.firePropertyChange(PropertyName.STATES.getName(), size, getSheetSize());
     }
 
     public void addObject(String type, double xPosition, double yPosition) throws InvalidObjectTypeException {
@@ -156,7 +161,9 @@ public class Sheet {
     public void selectObjectAt(double x, double y) {
         States state = getCurrentState();
         boolean selected = state.selectObject(x, y);
-        observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), null, selected);
+        if (getNotify()) {
+            observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), null, selected);
+        }
     }
 
     public void draw(DrawingAdapterI drawingAdapter) {
@@ -170,17 +177,15 @@ public class Sheet {
     }
 
     public void saveTo(PrintWriter p) {
-        p.println("states:" + getCurrentStateSize());
-        p.println("current state:" + getCurrentStateIndex());
+        p.println("current_state:" + getCurrentStateIndex());
 
         for (States state : states) {
             p.println("state:" + state.getId());
-            p.println("size:" + state.getStateSize());
             p.println("trigger:" + state.getTrigger());
             p.println("background:" + state.getBackgroundColor());
 
             for (Objects object : state.getAllObjects()) {
-                p.println("object:" + object.getId());
+                p.println("object:" + object.getType() + "|" + object.getX() + "|" + object.getY());
                 p.println("link_id:" + object.getLinkId());
                 for (Map.Entry<String, String> attribute : object.getAttributes().entrySet()) {
                     p.println(attribute.getKey() + ":" + attribute.getValue());
@@ -191,12 +196,56 @@ public class Sheet {
 
     public void loadFrom(BufferedReader file) {
         states.clear();
-        // for(String line = file.readLine(); line != null; line = file.readLine()) {
-        //     // String[] element = line.split(":");
-        //     // if (element[0].trim().equals("state")) {
-        //     //     int size = Integer.parseInt(element[1]);
-        //         // System.out.println(element);
-        //     // }
-        // }
+        setNotify(false);
+        boolean camera = false;
+
+        int current = 0;
+        States state = null;
+        Objects object = null;
+        Map<String, String> attributes = new HashMap<>();
+
+        try {
+            for (String line = file.readLine(); line != null; line = file.readLine()) {
+                String[] element = line.split(":");
+                if (element[0].trim().equals("current_state")) {
+                    current = Integer.parseInt(element[1]);
+                } else  if (element[0].trim().equals("state")) {
+                    addState();
+                    attributes.clear();
+                    state = getCurrentState();
+                } else if (element[0].trim().equals("trigger")) {
+                    state.setTrigger(Trigger.valueOf(element[1]));
+                } else if (element[0].trim().equals("background")) {
+                    state.setBackgroundColor(element[1]);
+                } else if (element[0].trim().equals("object")) {
+                    if (attributes.size() > 0) {
+                        if (camera == true) {
+                            state.setCurrentObjectIndex(0);
+                            updateObject(attributes);
+                            camera = false;
+                        } else {
+                            updateObject(attributes);
+                        }
+                        attributes.clear();
+                    }
+
+                    String[] obj = element[1].split("\\|"); 
+                    if (obj[0].trim().equals("Camera")) {
+                        camera = true;
+                    } else {
+                        state.addObject(obj[0], Double.parseDouble(obj[1]), Double.parseDouble(obj[1]));
+                        object = getCurrentState().getCurrentObject();
+                    }
+                } else if (element[0].trim().equals("link_id") && Integer.parseInt(element[1]) > 0) {
+                    object.setLinkId(Integer.parseInt(element[1]));
+                } else {
+                    attributes.put(element[0], element[1]);
+                }
+            }
+        } catch (NumberFormatException | IOException | InvalidObjectTypeException e) {
+            e.printStackTrace();
+        }
+
+        setCurrentStateIndex(current);
     }
 }
