@@ -10,9 +10,24 @@ import app.model.attributes.FillColor;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.StrokeWidth;
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * 
+ * Class: This class represents the Line object and sets the attributes required for the same. 
+ */
+
 public class Line extends Objects {
 
     public static final int DEFAULT_OFFSET = 100;
+
+    /**
+     * This constructor is used to add attributes and sets default value of the attributes of the Line object.
+     * @param x - It is x-coordinates on canvas.
+     * @param y - It is y-coordinates on canvas.
+     * @param end_x - It is x-coordinates of end of the line on canvas.
+     * @param end_y - It is y-coordinates of end of the line on canvas.
+     */
 
     public Line(String x, String y, String end_x, String end_y) {
         super(x, y, ObjectType.LINE.getType());
@@ -23,9 +38,22 @@ public class Line extends Objects {
         addAttribute(new StrokeColor());
     }
 
+    /**
+     * This constructor overloads the constructor.
+     * @param x - It is x-coordinates on canvas.
+     * @param y - It is y-coordinates on canvas.
+     */
+
     public Line(String x, String y) {
         this(x, y, String.valueOf(Double.parseDouble(x) + DEFAULT_OFFSET), String.valueOf(Double.parseDouble(y) + DEFAULT_OFFSET));
     }
+
+    /**
+     * This sub-routine is used to locate the object on the canvas.
+     * @param x - It is x-coordinates on canvas.
+     * @param y - It is y-coordinates on canvas. 
+     * @return boolean 
+     */
 
     @Override
     public boolean locatedAt(double x, double y) {
@@ -42,6 +70,12 @@ public class Line extends Objects {
         
         return i + j == k ? true : false;
     }
+
+    /**
+     * This sub-routine draws the Line using the drawingAdapter.
+     * 
+     * @param DrawingAdapterI drawingAdapter - object of DrawingAdapterI
+     */
 
     @Override
     public void draw(DrawingAdapterI drawingAdapter) {
