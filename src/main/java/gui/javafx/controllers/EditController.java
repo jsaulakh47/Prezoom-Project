@@ -150,10 +150,18 @@ public class EditController implements PropertyChangeListener {
 
         File file = chooser.showSaveDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            // interactor.logger("File saved as: " + file.getPath());
-        } else {
-            // interactor.logger("Save cancelled");
-        }
+            try {
+                PrintWriter file = new PrintWriter(new FileWriter(f.getAbsolutePath()));
+                Sheet.saveTo(file);
+                file.close();
+            }
+            catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error !");
+                alert.setHeaderText(null);
+                alert.setContentText("Error Saving Sheet To File !");
+                alert.showAndWait();
+            }}
     }
 
 
@@ -170,10 +178,19 @@ public class EditController implements PropertyChangeListener {
 
         File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
         if (file != null) {
-            // interactor.logger("File loaded as: " + file.getPath());
-        } else {
-            // interactor.logger("Load cancelled");
-        }
+            try {
+                BufferedReader file = new BufferedReader(new FileReader(f.getAbsolutePath()));
+                graph = Graph.loadFrom(file);
+                file.close();
+                update();
+            }
+            catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error !");
+                alert.setHeaderText(null);
+                alert.setContentText("Error Loading Graph From File !");
+                alert.showAndWait();
+            }}
     }
 
     /**
@@ -289,8 +306,8 @@ public class EditController implements PropertyChangeListener {
 
             final int index = i;
             if (index == activeState) {
-                node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
                 node.requestFocus();
+                node.setStyle("-fx-font-size:9; -fx-background-color: #add8e6");
             } else {
                 node.setStyle("-fx-font-size:9");
             }
@@ -324,7 +341,6 @@ public class EditController implements PropertyChangeListener {
             });
             
             view.update();
-            changes.getChildren().clear();
         }
     }
 
@@ -341,16 +357,11 @@ public class EditController implements PropertyChangeListener {
             String jKey;      
         };
 
-        int position = 1;
-        Label label = new Label("Transitions");
-        label.setStyle("-fx-font-weight:bold; -fx-font-size:15");
-
+        int position = 0;
         changes.getChildren().clear();
         Transform transform = view.getTransform();
         Map<String, String> attr = model.getObjectAttributes(id);
 
-        changes.add(label, 0, position++, 2, 1);
-        changes.add(new Label(), 0, position++, 2, 1);
         attr.computeIfPresent(AttributeLabel.X_POSITION.getLabel(), (k, v) -> {
             wrapper.i = Double.parseDouble(v);
             wrapper.iKey = k;
@@ -445,10 +456,6 @@ public class EditController implements PropertyChangeListener {
             updateStates((int) event.getNewValue());
         } else if (PropertyName.ATTRIBUTES.getName().equals(event.getPropertyName())) {
             showAttributes((int) event.getNewValue());
-        } else if (PropertyName.OBJECTID.getName().equals(event.getPropertyName())) {
-            if ((int) event.getNewValue() == 0) {
-                changes.getChildren().clear();
-            }
         }
     }
 }
