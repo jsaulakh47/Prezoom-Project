@@ -1,7 +1,12 @@
 package app.interfaces;
 
 /**
- * adapter interface for drawing objects on presentation mode
+* @author Team Alfa
+* @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+*
+* This is a DrawingAdapter Interface.
+ * It has declaration of setter methods for stroke Color, fill color, font and linewidhth. 
+ * It has declaration of transformation and drawing objects methods on presentation mode.
  */
 
 public interface DrawingAdapterI {
