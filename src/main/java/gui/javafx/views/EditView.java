@@ -59,7 +59,6 @@ public class EditView extends Canvas implements PropertyChangeListener {
 
         this.setOnMouseDragged(e -> {
             if (e.isShiftDown() && model.getCurrentStateSize() > 0) {
-                System.out.println(e.getX() + " , " + e.getY());
                 Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
                 Point2D p = transform.viewToWorld(e.getX(), e.getY());
 

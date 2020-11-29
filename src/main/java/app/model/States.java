@@ -205,7 +205,6 @@ public class States {
      * this sub-routines update the object's attributes;
      * @param attr
      */
-
     public void updateObject(Map<String, String> attr) {
         Objects object = objects.get(currentObjectIndex);
         for (Map.Entry<String, String> entry : attr.entrySet()) {

@@ -11,13 +11,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.platform.commons.util.StringUtils;
-
 import app.exceptions.InvalidObjectTypeException;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import app.model.objects.ObjectType;
-import app.utility.Keys;
 import app.utility.PropertyName;
 import app.utility.Trigger;
 import gui.javafx.Entry;
@@ -40,7 +37,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -187,7 +183,6 @@ public class EditController implements PropertyChangeListener {
     */
     @FXML
     public void handleLoadClick() {
-        // interactor.logger("Loading file");
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle("Load Application File");
@@ -199,7 +194,9 @@ public class EditController implements PropertyChangeListener {
                 BufferedReader file = new BufferedReader(new FileReader(f.getAbsolutePath()));
                 model.loadFrom(file);
                 file.close();
-                view.update();
+                if (model.getSheetSize() > 0) {
+                    view.update();
+                }
             }
             catch (Exception ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -207,7 +204,8 @@ public class EditController implements PropertyChangeListener {
                 alert.setHeaderText(null);
                 alert.setContentText("Error Loading SheetFrom File !");
                 alert.showAndWait();
-            }}
+            }
+        }
     }
 
     /**
@@ -521,24 +519,24 @@ public class EditController implements PropertyChangeListener {
         Map<String, String> attr = new HashMap<>();
         ImageView img = new ImageView(value);
         
-        // img.setOnMouseClicked(e -> {
-        //     FileChooser chooser = new FileChooser();
-        //     chooser.setTitle("Select image");
-        //     chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.*"));
+        img.setOnMouseClicked(e -> {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Select image");
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.*"));
 
-        //     File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
-        //     if (file != null) {
-        //         String val = file.toURI().toString();
-        //         img.setImage(new Image(val));
-        //         img.setPreserveRatio(true);
-        //         attr.put(key, val);
+            File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
+            if (file != null) {
+                String val = file.toURI().toString();
+                img.setImage(new Image(val));
+                img.setPreserveRatio(true);
+                attr.put(key, val);
 
-        //         model.updateObject(attr);            
-        //         view.update();
-        //     } else {
-        //         // interactor.logger("Load cancelled");
-        //     }
-        // });
+                model.updateObject(attr);            
+                view.update();
+            } else {
+                // interactor.logger("Load cancelled");
+            }
+        });
 
         addLabel(img, key, position);
     }
