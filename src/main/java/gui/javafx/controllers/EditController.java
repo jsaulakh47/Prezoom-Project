@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.platform.commons.util.StringUtils;
+
 import app.exceptions.InvalidObjectTypeException;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
@@ -32,9 +34,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -187,17 +192,17 @@ public class EditController implements PropertyChangeListener {
     */
     @FXML
     public void handlePresentClick() throws Exception {
+        model.setCurrentStateIndex(0);
         Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader();
+        
         URL url = new File("src/main/java/gui/javafx/fxml/presentation_mode.fxml").toURI().toURL();
-
-        Parent root = fxmlLoader.load(url);
+        Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         scene.setCursor(Cursor.NONE);
         stage.setScene(scene);
 
         // stage.setFullScreen(true);
-        stage.setMaximized(true);
+        // stage.setMaximized(true);
         stage.show();
     }
 
@@ -212,10 +217,26 @@ public class EditController implements PropertyChangeListener {
     @FXML
     private void handleSettingsClick() {
         setSideLabel("Settings");
-        ComboBox trigger = new ComboBox(FXCollections.observableArrayList(Trigger.values()));
+        ComboBox<Trigger> trigger = new ComboBox<>(FXCollections.observableArrayList(Trigger.values()));
+        trigger.setValue(model.getCurrentState().getTrigger());
+        trigger.setOnAction(e ->{
+            model.getCurrentState().setTrigger(trigger.getValue());
+        });
+
+        ColorPicker background = new ColorPicker();
+        background.setStyle("-fx-color-label-visible:false;");
+        background.setValue(Color.web(model.getCurrentState().getBackgroundColor()));
+
+        background.setOnAction(e -> {
+            model.getCurrentState().setBackgroundColor(background.getValue().toString());
+            view.update();
+        });
 
         addLabel(trigger, "Trigger Type", 3);
-        setSideAttributes(model.getCurrentCameraAttributes(), 4);
+        addLabel(background, "Background", 4);
+
+        addToSideLabel("Camera", 5);
+        setSideAttributes(model.getCurrentCameraAttributes(), 7);
     }
 
      /**
@@ -390,7 +411,12 @@ public class EditController implements PropertyChangeListener {
             addColor(key, attr.get(key), position);
             attr.remove(key);
             position++;
-        }         
+        } if (attr.containsKey(AttributeLabel.SOURCE.getLabel())) {
+            String key = AttributeLabel.SOURCE.getLabel();
+            addImage(key, attr.get(key), position);
+            attr.remove(key);
+            position++;
+        }       
         
         addText(wrapper.iKey, String.valueOf(p.getX()), position++);
         addText(wrapper.jKey, String.valueOf(p.getY()), position++);
@@ -415,6 +441,14 @@ public class EditController implements PropertyChangeListener {
 
         changes.add(label, 0, 1, 2, 1);
         changes.add(new Label(), 0, 2, 2, 1);
+    }
+
+    public void addToSideLabel(String text, int position) {
+        Label label = new Label(text);
+        label.setStyle("-fx-font-weight:bold; -fx-font-size:12");
+
+        changes.add(new Label(), 0, position++, 2, 1);
+        changes.add(label, 0, position, 2, 1);
     }
 
     /**
@@ -443,15 +477,48 @@ public class EditController implements PropertyChangeListener {
     public void addText(String key, String value, int position) {
         Map<String, String> attr = new HashMap<>();
         TextField textField = new TextField(value);
-        textField.setStyle("-fx-color-label-visible:false;");
+        if (value.matches("-?\\d+(\\.\\d+)?")) {
+            textField.addEventFilter(KeyEvent.ANY, e -> {
+                char ar[] = e.getCharacter().toCharArray();
+                char ch = ar[e.getCharacter().toCharArray().length - 1];
+                if (!(ch >= '0' && ch <= '9')) {
+                    e.consume();
+                }
+            });
+        }
         textField.textProperty().addListener((e, old, text) -> {
-            textField.setText(" ".trim().equals(text.trim()) ? "0" : text.trim());
             attr.put(key, textField.getText());
             model.updateObject(attr);            
             view.update();
         });
 
         addLabel(textField, key, position);
+    }
+
+    public void addImage(String key, String value, int position) {
+        Map<String, String> attr = new HashMap<>();
+        ImageView img = new ImageView(value);
+        
+        // img.setOnMouseClicked(e -> {
+        //     FileChooser chooser = new FileChooser();
+        //     chooser.setTitle("Select image");
+        //     chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.*"));
+
+        //     File file = chooser.showOpenDialog(saveButton.getScene().getWindow());
+        //     if (file != null) {
+        //         String val = file.toURI().toString();
+        //         img.setImage(new Image(val));
+        //         img.setPreserveRatio(true);
+        //         attr.put(key, val);
+
+        //         model.updateObject(attr);            
+        //         view.update();
+        //     } else {
+        //         // interactor.logger("Load cancelled");
+        //     }
+        // });
+
+        addLabel(img, key, position);
     }
 
     public void addLabel(Node node, String key, int position) {

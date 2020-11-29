@@ -17,6 +17,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
+import javafx.scene.paint.Color;
 
 public class EditView extends Canvas implements PropertyChangeListener {
     private final Sheet model;
@@ -35,17 +36,17 @@ public class EditView extends Canvas implements PropertyChangeListener {
 
         this.setOnDragDropped(e -> {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
-            Point2D point = transform.viewToWorld(e.getX(), e.getY());
+            Point2D p = transform.viewToWorld(e.getX(), e.getY());
             String type = e.getDragboard().getString();
 
             try {                
-                model.addObject(type, point.getX(), point.getY());
+                model.addObject(type, p.getX(), p.getY());
             } catch (InvalidObjectTypeException exception) {
                 exception.printStackTrace();
             }
             
             e.setDropCompleted(true);
-            model.setStatus("");
+            model.selectObjectAt(p.getX(), p.getY());
             draw();
         });
         
@@ -53,19 +54,12 @@ public class EditView extends Canvas implements PropertyChangeListener {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
             Point2D p = transform.viewToWorld(e.getX(), e.getY());
             model.selectObjectAt(p.getX(), p.getY());
-            System.out.println("prex");
-            if (model.hasSelectedObject()) {
-                System.out.println("xoxo");
-                model.setHasSelectedObject(false);
-                model.setStatus("selection");
-            }
-
             draw();
         });
 
         this.setOnMouseDragged(e -> {
-            System.out.println(e.getX() + " , " + e.getY());
-            if (model.getStatus().equals("selection")) {
+            if (e.isShiftDown() && model.getCurrentStateSize() > 0) {
+                System.out.println(e.getX() + " , " + e.getY());
                 Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
                 Point2D p = transform.viewToWorld(e.getX(), e.getY());
 
@@ -81,6 +75,7 @@ public class EditView extends Canvas implements PropertyChangeListener {
 
         this.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.DELETE) {
+                System.out.println("Delete");
                 // Delete all selected Edges
                 // for (Edge e:  graph.selectedEdges())
                 //     graph.deleteEdge(e);
@@ -100,12 +95,15 @@ public class EditView extends Canvas implements PropertyChangeListener {
 	}
 
     private void draw() {
+        int index = 0;
         double width = getWidth();
         double height = getHeight();
         GraphicsContext gc = getGraphicsContext2D();
-
+        gc.setFill(Color.web(model.getCurrentState().getBackgroundColor()));
         Transform transform = new Transform(width, height, model.getWidth(), model.getHeight());	        	
         DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, width, height);
+
+        model.drawObject(drawingAdapter, index);
         model.draw(drawingAdapter);
     }
 

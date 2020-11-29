@@ -19,7 +19,6 @@ public class DrawingAdapter implements DrawingAdapterI{
 		this.height = height ;
 		this.transform = transform ;
 
-		gc.setFill(Color.WHITE);
 		gc.setStroke(Color.LIGHTBLUE);
         gc.clearRect(0, 0, width, height);
 

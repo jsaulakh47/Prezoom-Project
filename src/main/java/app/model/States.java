@@ -8,6 +8,7 @@ import java.util.Map;
 import app.exceptions.InvalidObjectTypeException;
 import app.interfaces.ObjectFactoryI;
 import app.interfaces.ObjectsI;
+import app.model.attributes.FillColor;
 import app.model.objects.Camera;
 import app.model.objects.ObjectFactory;
 import app.model.objects.ObjectType;
@@ -23,13 +24,14 @@ public class States {
 
     private Trigger trigger;
 
-    private String triggerValue;
+    private FillColor backgroud;
 
     public States() {
-        this.id = count++;
+        this.backgroud = new FillColor("#FFFFFF");
+        this.trigger = Trigger.IMMEDIATE;
         this.objects = new ArrayList<>();
-
         objects.add(new Camera());
+        this.id = count++;
     }
 
     public int getId() {
@@ -38,6 +40,10 @@ public class States {
 
     public void setTrigger(Trigger trigger) {
         this.trigger = trigger;
+    }
+
+    public void setBackgroundColor(String data) {
+        this.backgroud.setData(data);
     }
 
     public void setCurrentObjectIndex(int index) {
@@ -52,6 +58,10 @@ public class States {
         return trigger;
     }
 
+    public String getBackgroundColor() {
+        return backgroud.getData();
+    }
+
     public int getCurrentObjectId() {
         return getCurrentObject().getId();
     }
@@ -61,7 +71,7 @@ public class States {
     }
 
     public int getStateSize() {
-        return objects.size();
+        return objects.size() - 1;
     }
 
     public List<Objects> getObjects() {

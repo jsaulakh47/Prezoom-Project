@@ -141,8 +141,8 @@ public class Sheet {
     }
 
     public void updateObject(Map<String, String> attr) {
-        States state = getCurrentState();
-        state.updateObject(attr);
+        getCurrentState().updateObject(attr);
+        setHasSelectedObject(true);
     }
 
     public Map<String, String> getObjectAttributes() {
@@ -152,14 +152,16 @@ public class Sheet {
     public void selectObjectAt(double x, double y) {
         States state = getCurrentState();
         boolean selected = state.selectObject(x, y);
-
-        setHasSelectedObject(selected);
         observable.firePropertyChange(PropertyName.ATTRIBUTES.getName(), null, selected);
     }
 
     public void draw(DrawingAdapterI drawingAdapter) {
-        for (Objects object : states.get(currentStateIndex).getAllObjects()) {
+        for (Objects object : getCurrentState().getObjects()) {
             object.draw(drawingAdapter);
         }
+	}
+
+    public void drawObject(DrawingAdapterI drawingAdapter, int index) {
+        getCurrentState().getAllObjects().get(index).draw(drawingAdapter);
 	}
 }
