@@ -25,7 +25,6 @@ import app.utility.PropertyName;
 
 public class Sheet {
 
-   
     private int currentStateIndex;
     private boolean selectedObject;
 
