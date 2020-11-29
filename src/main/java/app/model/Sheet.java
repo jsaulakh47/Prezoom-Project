@@ -25,7 +25,7 @@ import app.utility.PropertyName;
 
 public class Sheet {
 
-    
+   
     private int currentStateIndex;
     private boolean selectedObject;
 
@@ -41,7 +41,7 @@ public class Sheet {
      */
 
     public Sheet() {
-        this.status = "";
+    
         this.selectedObject = false;
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
@@ -134,7 +134,7 @@ public class Sheet {
     }
 
     /**
-     * this sub-routine return the  id of current state;
+     * this sub-routine return the id of current state;
      * @return Id;
      */
 
@@ -195,7 +195,7 @@ public class Sheet {
     /**
      * this sub-routine replicate the states and again store into the list;
      * it also notify the others observers; 
-     * throws exception when there is invalid object enter;
+     * throws exception when there is invalid object entered;
      * @param index
      * @throws InvalidObjectTypeException
      */
@@ -233,7 +233,7 @@ public class Sheet {
 
     /**
      * this sub-routine adds objects to the states;
-     * also throws the exception when invalid object is added;
+     * also throws the exception when invalid object is added into state;
      * @param type
      * @param xPosition
      * @param yPosition
