@@ -13,9 +13,20 @@ public class TextArea extends Attributes {
 
     public static final String DEFAULT_DATA = "Alfa";
 
+     /**
+     * constructor with one parameter that setup the attributes constructor with label and data for textarea;
+     * @param data
+     */
+
+
     public TextArea(String data) {
         super(AttributeLabel.TEXT_AREA.getLabel(), data);
     }
+
+    /**
+     * default constructor with data value of textarea is alfa;
+     */
+
 
     public TextArea() {
         this(DEFAULT_DATA);

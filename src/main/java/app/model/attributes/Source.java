@@ -14,10 +14,22 @@ public class Source extends Attributes {
 
     public static final String DEFAULT_DATA = "src/main/resources/alfa.png";
 
+    
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for source (Image);
+     * @param data
+     */
+
+
     public Source(String data) {
         super(AttributeLabel.SOURCE.getLabel(), data);
         
     }
+
+     /**
+     * default constructor with data value for souces (Image) = "src/main/resources/alfa.png";
+     */
+    
 
     public Source() {
         this(DEFAULT_DATA);

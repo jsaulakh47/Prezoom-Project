@@ -13,9 +13,19 @@ public class FillColor extends Attributes {
 
     public static final String DEFAULT_DATA = "#FF0000";
 
+   /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Fill color;
+     * @param data
+     */
+
     public FillColor(String data) {
         super(AttributeLabel.FILL_COLOR.getLabel(), data);
     }
+
+    
+     /**
+     * default constructor with data value of fill color is #FF0000;
+     */
 
     public FillColor() {
         this(DEFAULT_DATA);

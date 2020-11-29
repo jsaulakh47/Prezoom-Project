@@ -13,9 +13,19 @@ public class Radius extends Attributes {
 
     public static final String DEFAULT_DATA = "50";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Radius;
+     * @param data
+     */
+
     public Radius(String data) {
         super(AttributeLabel.RADIUS.getLabel(), data);
     }  
+
+     /**
+     * default constructor with data value for Radius = 50;
+     */
+    
     
     public Radius() {
         this(DEFAULT_DATA);

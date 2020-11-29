@@ -13,10 +13,19 @@ public class Length extends Attributes {
 
     public static final String DEFAULT_DATA = "100";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Length;
+     * @param data
+     */
+    
     public Length(String data) {
         super(AttributeLabel.LENGTH.getLabel(), data);
         
     }
+
+     /**
+     * default constructor with data value for length = 100;
+     */
     
     public Length() {
         this(DEFAULT_DATA);

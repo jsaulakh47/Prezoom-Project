@@ -13,10 +13,20 @@ public class Font extends Attributes {
 
     public static final String DEFAULT_DATA = "";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for Font;
+     * @param data
+     */
+
     public Font(String data) {
         super(AttributeLabel.FONT.getLabel(), data);
         
     }
+
+     /**
+     * default constructor with no data value for font;
+     */
+
 
     public Font() {
         this(DEFAULT_DATA);

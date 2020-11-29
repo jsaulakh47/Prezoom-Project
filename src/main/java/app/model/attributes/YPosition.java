@@ -13,9 +13,18 @@ public class YPosition extends Attributes {
 
     public static final String DEFAULT_DATA = "50";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for YPosition;
+     * @param data
+     */
+
     public YPosition(String data) {
         super(AttributeLabel.Y_POSITION.getLabel(), data);
     }
+
+     /**
+     * default constructor with data value is 50;
+     */
 
     public YPosition() {
         this(DEFAULT_DATA);

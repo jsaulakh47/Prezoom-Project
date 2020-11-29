@@ -13,9 +13,19 @@ public class Width extends Attributes {
 
     public static final String DEFAULT_DATA = "100";
 
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data for width;
+     * @param data
+     */
+    
+
     public Width(String data) {
         super(AttributeLabel.WIDTH.getLabel(), data);
     }
+
+      /**
+     * default constructor with data value for width = 100;
+     */
 
     public Width() {
         this(DEFAULT_DATA);

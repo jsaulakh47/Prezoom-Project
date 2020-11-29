@@ -13,9 +13,19 @@ public class EndY extends Attributes {
 
     public static final String DEFAULT_DATA = "100";
 
+    
+    /**
+     * constructor with one parameter that setup the attributes constructor with label and data;
+     * @param data
+     */
+
     public EndY(String data) {
         super(AttributeLabel.END_Y.getLabel(), data);
     }
+
+     /**
+     * default constructor with data value 100;
+     */
     
     public EndY() {
         this(DEFAULT_DATA);
