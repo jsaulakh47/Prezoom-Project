@@ -12,7 +12,7 @@ import app.model.attributes.StrokeWidth;
 
 public class Circle extends Objects {
 
-    public static final String DEFAULT_RADIUS = "50";
+    public static final String DEFAULT_RADIUS = "100";
 
     public Circle(String x, String y, String radius) {
         super(x, y, ObjectType.CIRCLE.getType());
@@ -28,25 +28,26 @@ public class Circle extends Objects {
 
     @Override
     public boolean locatedAt(double x, double y) {
+        double xPos = getX();
+        double yPos = getY();
+        
         Map<String, String> attributes = this.getAttributes();
         double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
-        double xPos = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
-        double yPos = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
 
         return (x - xPos) * (x - xPos) + (y - yPos) * (y - yPos) <= (radius * radius) ? true : false;
     }
 
     @Override
     public void draw(DrawingAdapterI drawingAdapter) {
-        Map<String, String> attributes = this.getAttributes();
-        double x = Double.parseDouble(attributes.get(AttributeLabel.X_POSITION.getLabel()));
-        double y = Double.parseDouble(attributes.get(AttributeLabel.Y_POSITION.getLabel()));
+        double x = getX();
+        double y = getY();
 
+        Map<String, String> attributes = this.getAttributes();
         double radius = Double.parseDouble(attributes.get(AttributeLabel.RADIUS.getLabel()));
         
-        drawingAdapter.SetLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
-        drawingAdapter.SetStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
-        drawingAdapter.SetFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
+        drawingAdapter.setLineWidth(Double.parseDouble(attributes.get(AttributeLabel.STROKE_WIDTH.getLabel())));
+        drawingAdapter.setStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
+        drawingAdapter.setFillColor(attributes.get(AttributeLabel.FILL_COLOR.getLabel()));
 
         drawingAdapter.drawCircle(x, y, radius);
     }

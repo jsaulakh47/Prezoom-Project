@@ -6,7 +6,8 @@ public enum ObjectType {
     LINE("Line"),
     PLAIN_TEXT("Text"),
     RECTANGLE("Rectangle"),
-    TEXT_AREA("TextArea");
+    TEXT_AREA("TextArea"),
+    CAMERA("Camera");
 
     private String type;
 

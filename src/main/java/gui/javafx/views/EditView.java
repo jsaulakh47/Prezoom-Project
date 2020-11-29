@@ -10,19 +10,20 @@ import app.interfaces.DrawingAdapterI;
 import app.model.Sheet;
 import app.model.attributes.AttributeLabel;
 import gui.javafx.DrawingAdapter;
+import gui.javafx.Entry;
 import gui.javafx.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
+import javafx.scene.paint.Color;
 
 public class EditView extends Canvas implements PropertyChangeListener {
     private final Sheet model;
-    private Transform transform;
 
-    public EditView(Sheet model) {
-        this.model = model;
+    public EditView() {
+        this.model = Entry.model;
         widthProperty().addListener(e -> draw());
         heightProperty().addListener(e -> draw());
 
@@ -35,17 +36,17 @@ public class EditView extends Canvas implements PropertyChangeListener {
 
         this.setOnDragDropped(e -> {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
-            Point2D point = transform.viewToWorld(e.getX(), e.getY());
+            Point2D p = transform.viewToWorld(e.getX(), e.getY());
             String type = e.getDragboard().getString();
 
             try {                
-                model.addObject(type, point.getX(), point.getY());
+                model.addObject(type, p.getX(), p.getY());
             } catch (InvalidObjectTypeException exception) {
                 exception.printStackTrace();
             }
             
             e.setDropCompleted(true);
-            model.setStatus("");
+            model.selectObjectAt(p.getX(), p.getY());
             draw();
         });
         
@@ -53,52 +54,28 @@ public class EditView extends Canvas implements PropertyChangeListener {
             Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
             Point2D p = transform.viewToWorld(e.getX(), e.getY());
             model.selectObjectAt(p.getX(), p.getY());
-            if (model.getCurrentObjectId() != 0) {
-                model.setStatus("selection");
-            }
             draw();
         });
 
         this.setOnMouseDragged(e -> {
-            if (model.getStatus().equals("selection")) {
-                System.out.println(e.getX() + " " + e.getY());
+            if (e.isShiftDown() && model.getCurrentStateSize() > 0) {
+                System.out.println(e.getX() + " , " + e.getY());
                 Transform transform = new Transform(getWidth(), getHeight(), model.getWidth(), model.getHeight());
                 Point2D p = transform.viewToWorld(e.getX(), e.getY());
 
                 Map<String, String> attr = new HashMap<>();
                 attr.put(AttributeLabel.X_POSITION.getLabel(), String.valueOf(p.getX()));
                 attr.put(AttributeLabel.Y_POSITION.getLabel(), String.valueOf(p.getY()));
-                model.updateObject(model.getCurrentObjectId(), attr);
+                model.updateObject(attr);
                 update();
             }
-            //     elasticEndLocation = new Point2D(ev.getX(), ev.getY());
-            //         if (dragNode.isSelected()) {
-            //             for (Node n:  graph.selectedNodes()) {
-            //                 n.setLocation(n.getLocation().getX() + ev.getX() - dragPoint.getX(),
-            //                               n.getLocation().getY() + ev.getY() - dragPoint.getY());
-            //             }
-            //             dragPoint = new Point2D(ev.getX(), ev.getY());
-            //         }
-            //     }
-            //     if (dragEdge != null) {
-            //         if (dragEdge.isSelected()) {
-            //             dragEdge.getStartNode().setLocation(
-            //                     dragEdge.getStartNode().getLocation().getX() + ev.getX() - dragPoint.getX(),
-            //                     dragEdge.getStartNode().getLocation().getY() + ev.getY() - dragPoint.getY());
-            //             dragEdge.getEndNode().setLocation(
-            //                     dragEdge.getEndNode().getLocation().getX() + ev.getX() - dragPoint.getX(),
-            //                     dragEdge.getEndNode().getLocation().getY() + ev.getY() - dragPoint.getY());
-            //             dragPoint = new Point2D(ev.getX(), ev.getY());
-            //         }
-            //     }
-            //     update(); 	// We have changed the model, so now update
-            // }
         });
 
         this.requestFocus(); // Needed to handle key events
 
         this.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.DELETE) {
+                System.out.println("Delete");
                 // Delete all selected Edges
                 // for (Edge e:  graph.selectedEdges())
                 //     graph.deleteEdge(e);
@@ -113,22 +90,20 @@ public class EditView extends Canvas implements PropertyChangeListener {
         draw();
     }
 
-    public Transform getTransform() {
-		return transform;
-	}
-
     public void update() {
 		draw() ;
 	}
 
     private void draw() {
+        int index = 0;
         double width = getWidth();
         double height = getHeight();
         GraphicsContext gc = getGraphicsContext2D();
-
+        gc.setFill(Color.web(model.getCurrentState().getBackgroundColor()));
         Transform transform = new Transform(width, height, model.getWidth(), model.getHeight());	        	
         DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, width, height);
-        this.transform = transform;
+
+        model.drawObject(drawingAdapter, index);
         model.draw(drawingAdapter);
     }
 

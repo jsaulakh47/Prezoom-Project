@@ -8,10 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import gui.javafx.Entry;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Starting GUI...");
-        gui.javafx.Entry.main(args);
+        Entry.main(args);
     }
 
     private static Properties readProperties() 
