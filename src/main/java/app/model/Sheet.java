@@ -28,12 +28,23 @@ import app.utility.Trigger;
  * this sheet class handles the states and it is also observable class that notify the editcontroller;
  */
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * Class : This class represents sheet.
+ * this sheet class handles the states and it is also observable class that notify the editcontroller;
+ */
+
 public class Sheet {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
    
 >>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
+=======
+
+>>>>>>> 72710d4f8ad14c1ea31a30524acacbf6d1acd26e
     private int currentStateIndex;
     private boolean selectedObject;
 
@@ -50,11 +61,7 @@ public class Sheet {
      */
 
     public Sheet() {
-<<<<<<< HEAD
         this.notify = true;
-=======
-    
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
         this.selectedObject = false;
         this.states = new ArrayList<>();
         this.observable = new PropertyChangeSupport(this);
@@ -70,32 +77,27 @@ public class Sheet {
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         observable.addPropertyChangeListener(pcl);
     }
-
-<<<<<<< HEAD
-=======
+    
     /**
      * this sub-routine allows to removes the observers to sheet class
      * @param pcl;
      */
- 
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         observable.removePropertyChangeListener(pcl);
     }
 
-<<<<<<< HEAD
+    /**
+     * this sub-routine sets the sheet to indeed send notifications
+     * @param notify;
+     */
     public void setNotify(boolean notify) {
         this.notify = notify;
     }
-=======
-    
 
     /**
      * this sub-routine sets the index of the current state;
      * @param index;
      */
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
-
     public void setCurrentStateIndex(int index) {
         this.currentStateIndex = index;
     }
@@ -131,15 +133,22 @@ public class Sheet {
      *  this sub-routine returns the width of the sheet;
      * @return width;
      */
-
     public double getWidth() {
         return WIDTH;
     }
 
+    /**
+     *  this sub-routine returns the notification status of the sheet;
+     * @return notify;
+     */
     public boolean getNotify() {
         return notify;
     }
-
+   
+    /**
+     * this sub-routine returns the size of the list that stores the states; 
+     * @return size;
+     */
     public int getSheetSize() {
         return states.size();
     }
@@ -313,6 +322,11 @@ public class Sheet {
         }
     }
 
+    /**
+     * this sub-routines draw one objects at a time;
+     * @param drawingAdapter
+     * @param index
+     */
     public void drawObject(DrawingAdapterI drawingAdapter, int index) {
         getCurrentState().getAllObjects().get(index).draw(drawingAdapter);
     }

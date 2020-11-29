@@ -201,17 +201,10 @@ public class States {
         setCurrentObjectIndex(objects.size() - 1);
     }
 
-<<<<<<< HEAD
-    public void addObject(Objects object) {
-        objects.add(object);
-    }
-=======
     /**
      * this sub-routines update the object's attributes;
      * @param attr
      */
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
-
     public void updateObject(Map<String, String> attr) {
         Objects object = objects.get(currentObjectIndex);
         for (Map.Entry<String, String> entry : attr.entrySet()) {
