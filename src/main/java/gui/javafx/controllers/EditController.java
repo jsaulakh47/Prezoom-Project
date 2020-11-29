@@ -269,7 +269,7 @@ public class EditController implements PropertyChangeListener {
     }
 
     /**
-    * This sub-routine is offeres the multiple modes of interpolation to user . 
+    * This sub-routine offers the multiple modes of interpolation to user . 
     */
     @FXML
     public void handleInterpolationsClick() {

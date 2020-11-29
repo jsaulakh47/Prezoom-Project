@@ -6,7 +6,7 @@ import app.interfaces.AttributesI;
  * @author Team Alfa
  * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
  *
- * Class : This class represent the parent Attribute class.
+ * Class : This class represents the parent Attribute class.
  * Any attribute present in the application has to extend this class.
  */
 
