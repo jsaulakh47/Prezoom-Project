@@ -7,7 +7,7 @@ public class Transform {
 	private double viewHeight;
 	private double worldWidth;
 	private double worldHeight;
-	private Affine transformation;
+	//private Affine transformation;
 
 	private double xScale;
 	private double yScale;
@@ -46,8 +46,9 @@ public class Transform {
 		return new Point2D(x, y);
 	}
 
-	public void setTransformation(Affine transform) {
+	/*public void setTransformation(Affine transform) {
+		
 		this.transformation = transform;
-	}
+	}*/
 	
 }
