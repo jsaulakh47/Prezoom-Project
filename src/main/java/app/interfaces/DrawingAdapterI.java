@@ -18,10 +18,6 @@ public interface DrawingAdapterI {
 
     void setLineWidth(double width);
 
-    void getTransform();
-
-    void transform();
-
     void drawCamera(double x, double y, double width, double height);
     
     void drawRectangle(double x, double y, double width, double height);

@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * Class : This class inharites the properties from the Drawingadapter interface that allows the drawing the object using model.
+ */
 public class DrawingAdapter implements DrawingAdapterI{
 	private final GraphicsContext gc;
 	private final Transform transform ;
