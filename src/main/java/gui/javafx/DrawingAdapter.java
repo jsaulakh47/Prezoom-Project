@@ -6,7 +6,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * Class : This class inharites the properties from the Drawingadapter interface that allows the drawing the object using model.
+ */
 public class DrawingAdapter implements DrawingAdapterI{
 	private final GraphicsContext gc;
 	private final Transform transform ;
@@ -50,6 +57,7 @@ public class DrawingAdapter implements DrawingAdapterI{
     @Override
     public void reset() {
 		gc.setFill(Color.WHITE);
+        gc.setTransform(new Affine());
 		gc.setStroke(Color.LIGHTBLUE);
         gc.clearRect(0, 0, width, height);
 
@@ -58,8 +66,9 @@ public class DrawingAdapter implements DrawingAdapterI{
     }
 
 	@Override
-	public void drawCamera(double x, double y, double width, double height) {
+	public void drawCamera(double x, double y, double width, double height, double rotation, double px, double py) {
         Point2D p = transform.worldToView(x, y);
+        Point2D pt = transform.worldToView(px, py);
         Point2D q = transform.worldToView(x + width, y + height);
 
         double i = p.getX();
@@ -67,6 +76,10 @@ public class DrawingAdapter implements DrawingAdapterI{
         double w = Math.abs(p.getX() - q.getX());
         double h = Math.abs(p.getY() - q.getY());
 
+        gc.setTransform(new Affine());
+        Rotate r = new Rotate(rotation, pt.getX(), pt.getY());
+
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         gc.strokeRect(i, j, w, h);
 	}
 

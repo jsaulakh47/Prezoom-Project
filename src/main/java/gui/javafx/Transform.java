@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.transform.Affine;
 
 public class Transform {
+	
 	private double viewWidth;
 	private double viewHeight;
 	private double worldWidth;

@@ -312,7 +312,7 @@ public class Sheet {
      */
 
     public void draw(DrawingAdapterI drawingAdapter) {
-        for (Objects object : getCurrentState().getObjects()) {
+        for (Objects object : getCurrentState().getAllObjects()) {
             object.draw(drawingAdapter);
         }
     }

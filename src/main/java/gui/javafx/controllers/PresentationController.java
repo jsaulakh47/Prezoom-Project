@@ -54,7 +54,7 @@ public class PresentationController {
         int index = model.getCurrentStateIndex();
 
         if (index < model.getSheetSize() - 1) {
-            // model.setCurrentStateIndex(++index);
+            model.setCurrentStateIndex(++index);
             try {
                 loadScene();
             } catch (Exception e) {
@@ -77,25 +77,25 @@ public class PresentationController {
     }
 
     public void loadScene() throws Exception {
-        // URL url = new File("src/main/java/gui/javafx/fxml/presentation_mode.fxml").toURI().toURL();
-        // Parent root = FXMLLoader.load(url);
-        // Scene scene = current.getScene();
+        URL url = new File("src/main/java/gui/javafx/fxml/presentation_mode.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+        Scene scene = current.getScene();
 
-        // root.translateYProperty().set(scene.getHeight());
-        // scene.setRoot(root);
+        root.translateYProperty().set(scene.getHeight());
+        scene.setRoot(root);
 
-        // Timeline tm = new Timeline();
+        Timeline tm = new Timeline();
 
-        // KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-        // KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        // tm.getKeyFrames().add(kf);
-        // tm.play();
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        tm.getKeyFrames().add(kf);
+        tm.play();
 
-        GraphicsContext gc = current.getGraphicsContext2D();
-        Transform transform = new Transform(current.getWidth(), current.getHeight(), model.getWidth(), model.getHeight());
+        // GraphicsContext gc = current.getGraphicsContext2D();
+        // Transform transform = new Transform(current.getWidth(), current.getHeight(), model.getWidth(), model.getHeight());
         
-        DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, current.getWidth(), current.getHeight());
-        Transitions transitions = new Transitions(model.getCurrentState(), model.getNextState());
-        transitions.run(drawingAdapter);
+        // DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, current.getWidth(), current.getHeight());
+        // Transitions transitions = new Transitions(model.getCurrentState(), model.getNextState());
+        // transitions.run(drawingAdapter);
     }
 }

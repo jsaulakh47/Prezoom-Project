@@ -93,8 +93,6 @@ public class PresentationView extends Canvas {
         gc.setFill(Color.web(model.getCurrentState().getBackgroundColor()));
 
         Transform transform = new Transform(width, height, model.getWidth(), model.getHeight());
-        // transform.setTransformation(new Affine(new Rotate(30, 0, 0)));        
-        
         DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, width, height);
         model.draw(drawingAdapter);
     }

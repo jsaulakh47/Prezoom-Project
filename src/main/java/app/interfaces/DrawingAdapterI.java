@@ -20,7 +20,7 @@ public interface DrawingAdapterI {
 
     void reset();
 
-    void drawCamera(double x, double y, double width, double height);
+    void drawCamera(double x, double y, double width, double height, double rotation, double px, double py);
     
     void drawRectangle(double x, double y, double width, double height);
 

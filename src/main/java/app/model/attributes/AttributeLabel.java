@@ -24,6 +24,9 @@ public enum AttributeLabel {
     WIDTH("Width"),
     X_POSITION("X position"),
     Y_POSITION("Y position"),
+    ROTATION("Rotation"),
+    POINT_X("Point X"),
+    POINT_Y("Point Y"),
     END_Y("End Y");
 
     private String label;
