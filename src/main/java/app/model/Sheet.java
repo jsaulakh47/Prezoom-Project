@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.KeyStore.Entry.Attribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +12,6 @@ import java.util.Map;
 
 import app.exceptions.InvalidObjectTypeException;
 import app.interfaces.DrawingAdapterI;
-import app.interfaces.ObjectFactoryI;
-import app.model.attributes.Attributes;
-import app.model.objects.ObjectFactory;
-import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 import app.utility.PropertyName;
 import app.utility.Trigger;
@@ -36,15 +31,6 @@ import app.utility.Trigger;
  */
 
 public class Sheet {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-   
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
-=======
-
->>>>>>> 72710d4f8ad14c1ea31a30524acacbf6d1acd26e
     private int currentStateIndex;
     private boolean selectedObject;
 
