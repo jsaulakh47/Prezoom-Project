@@ -46,6 +46,10 @@ public class Camera extends Objects{
         this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    /**
+     * default constructor with X and Y position set to 0 and 0 recspectively;
+     */
+
 
     
     public Camera() {
