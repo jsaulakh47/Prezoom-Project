@@ -10,8 +10,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * @author Team Alfa
+ * @declaration “This file was prepared by members of Team Alfa. It was completed by group members alone.”
+ * 
+ * Class: This class initiate whole software and creates the new sheet at the start of the software.
+ */
+
 public class Entry extends Application {
     public static Sheet model = new Sheet();
+
+    /**
+     * This sub-routine sets the primary environment at the start of the software.
+     * @param primaryStage
+     * @throws Exception
+     */
 
     @Override
     public void start(Stage primaryStage) throws Exception {
