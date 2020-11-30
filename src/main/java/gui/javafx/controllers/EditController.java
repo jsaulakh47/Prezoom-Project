@@ -234,7 +234,11 @@ public class EditController implements PropertyChangeListener {
     private void handlePreviewClick() {
         // interactor.logger("Preview!!!");
     }
-
+ 
+    
+    /**
+    * This sub-routine is handle the settings. 
+    */
     @FXML
     private void handleSettingsClick() {
         setSideLabel("Settings");
@@ -260,8 +264,8 @@ public class EditController implements PropertyChangeListener {
         setSideAttributes(model.getCurrentCameraAttributes(), 7);
     }
 
-     /**
-    * This sub-routine handle . 
+    /**
+    * This sub-routine handles the Transitions. 
     */
     @FXML
     private void handleTransitionsClick() {
@@ -294,7 +298,8 @@ public class EditController implements PropertyChangeListener {
     }
 
     /**
-    * This sub-routine hadles the drag event. 
+    * This sub-routine hadles the drag event
+    * @param :event :- drag detection   
     */
     @FXML
     private void handleDragDetected(MouseEvent event) {
@@ -317,6 +322,7 @@ public class EditController implements PropertyChangeListener {
 
     /**
      * This sub-routine is used to change the cursor when cursor on any object. 
+     * @param :event :- enter detection 
     */
     @FXML
     private void handleMouseEntered(MouseEvent event) {
@@ -325,6 +331,7 @@ public class EditController implements PropertyChangeListener {
 
     /**
     * This sub-routine is used to exit from the change. 
+    @param :event :- exit detection 
     */
     @FXML
     private void handleMouseExited(MouseEvent event) {
@@ -333,7 +340,7 @@ public class EditController implements PropertyChangeListener {
 
     /**
     * This sub-routine is used to update the view. 
-    * @param size. 
+    * @param size :-updated size of state. 
     */
     public void updateStates(int size) {
         bar.getChildren().clear();
@@ -388,7 +395,6 @@ public class EditController implements PropertyChangeListener {
 
     /**
     * This sub-routine is used to show Attributes of the clicked object. 
-    * @param id. 
     */
     public void showAttributes() {
         Map<String, String> attr = model.getObjectAttributes();
@@ -473,7 +479,9 @@ public class EditController implements PropertyChangeListener {
 
     /**
     * This sub-routine is allow a user to change the color of an existing object. 
-    * @param size,value,position. 
+    * @param key :it is attribute name.
+    * @param value : it is attribute vlue.
+    * @param position : it is attribute position.
     */
     public void addColor(String key, String value, int position) {
         Map<String, String> attr = new HashMap<>();
@@ -490,9 +498,9 @@ public class EditController implements PropertyChangeListener {
 
     /**
     * This sub-routine is allow user to displaying and changing of attribute. 
-    * @param key : return the key.
-    * @param value : return the value.
-    * @param position : return the position.
+    * @param key :it is attribute name.
+    * @param value : it is attribute vlue.
+    * @param position : it is attribute position.
     */
     public void addText(String key, String value, int position) {
         Map<String, String> attr = new HashMap<>();
@@ -541,13 +549,19 @@ public class EditController implements PropertyChangeListener {
         addLabel(img, key, position);
     }
 
+    /**
+     * This Sub-routine adds the label.
+     * @param :node :- shape
+     * @param :key :- name of the shape
+     * @param :position :- position of the shape
+     */
     public void addLabel(Node node, String key, int position) {
         changes.add(new Label(key), 0, position, 1, 1);
         changes.add(node, 1, position, 1, 1);
     }
 
     /**
-     * This Sub-routine handle.
+     * This Sub-routine handles changes from the sheet by observing it.
      * @param :event
      */
     @Override
