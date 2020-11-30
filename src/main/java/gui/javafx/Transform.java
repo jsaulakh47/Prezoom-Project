@@ -3,6 +3,7 @@ package gui.javafx;
 import javafx.geometry.Point2D;
 
 public class Transform {
+	
 	private double viewWidth;
 	private double viewHeight;
 	private double worldWidth;
