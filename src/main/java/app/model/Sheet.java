@@ -36,15 +36,6 @@ import app.utility.Trigger;
  */
 
 public class Sheet {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-   
->>>>>>> c58f90afcce11e5bb919e9637ee1ee27dd7baccb
-=======
-
->>>>>>> 72710d4f8ad14c1ea31a30524acacbf6d1acd26e
     private int currentStateIndex;
     private boolean selectedObject;
 
