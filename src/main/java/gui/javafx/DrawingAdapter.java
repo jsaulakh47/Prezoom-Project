@@ -17,7 +17,8 @@ public class DrawingAdapter implements DrawingAdapterI{
 		this.gc = gc ;
 		this.width = width ;
 		this.height = height ;
-		this.transform = transform ;
+        this.transform = transform;
+        this.gc.transform(transform.getTransformation());       
 
 		gc.setStroke(Color.LIGHTBLUE);
         gc.clearRect(0, 0, width, height);
@@ -47,15 +48,13 @@ public class DrawingAdapter implements DrawingAdapterI{
     }
 
     @Override
-    public void getTransform() {
-        // TODO Auto-generated method stub
+    public void reset() {
+		gc.setFill(Color.WHITE);
+		gc.setStroke(Color.LIGHTBLUE);
+        gc.clearRect(0, 0, width, height);
 
-    }
-
-    @Override
-    public void transform() {
-        // TODO Auto-generated method stub
-
+		gc.fillRect(0, 0, width, height);
+        gc.strokeRect(0, 0, width, height);
     }
 
 	@Override

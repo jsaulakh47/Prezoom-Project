@@ -18,9 +18,7 @@ public interface DrawingAdapterI {
 
     void setLineWidth(double width);
 
-    void getTransform();
-
-    void transform();
+    void reset();
 
     void drawCamera(double x, double y, double width, double height);
     

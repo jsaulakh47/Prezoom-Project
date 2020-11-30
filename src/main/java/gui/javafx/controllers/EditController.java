@@ -221,7 +221,7 @@ public class EditController implements PropertyChangeListener {
         Scene scene = new Scene(root);
         scene.setCursor(Cursor.NONE);
         stage.setScene(scene);
-
+        
         // stage.setFullScreen(true);
         // stage.setMaximized(true);
         stage.show();

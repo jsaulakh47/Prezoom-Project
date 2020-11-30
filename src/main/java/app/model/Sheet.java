@@ -148,6 +148,14 @@ public class Sheet {
         return states.get(currentStateIndex);
     }
 
+    public States getNextState() {
+        if (currentStateIndex < getSheetSize() - 1) {
+            return states.get(currentStateIndex);
+        }
+
+        return null;
+    }
+
     /**
      * this sub-routine return the id of current state;
      * @return Id;
@@ -223,6 +231,7 @@ public class Sheet {
         for (Objects object : states.get(index).getObjects()) {
             state.addObject(object.getType(), object.getX(), object.getY());
             state.updateObject(object.getAttributes());
+            object.setLinkId(state.getCurrentObjectId());
         }
 
         states.add(state);
