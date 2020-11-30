@@ -8,6 +8,8 @@ import java.sql.Time;
 
 import app.interfaces.DrawingAdapterI;
 import app.model.Sheet;
+import app.model.Transitions;
+import gui.javafx.DrawingAdapter;
 import gui.javafx.Entry;
 import gui.javafx.Transform;
 import gui.javafx.views.PresentationView;
@@ -80,7 +82,7 @@ public class PresentationController {
         Scene scene = current.getScene();
 
         root.translateYProperty().set(scene.getHeight());
-        pane.getChildren().add(root);
+        scene.setRoot(root);
 
         Timeline tm = new Timeline();
 
@@ -88,5 +90,12 @@ public class PresentationController {
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
         tm.getKeyFrames().add(kf);
         tm.play();
+
+        // GraphicsContext gc = current.getGraphicsContext2D();
+        // Transform transform = new Transform(current.getWidth(), current.getHeight(), model.getWidth(), model.getHeight());
+        
+        // DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, current.getWidth(), current.getHeight());
+        // Transitions transitions = new Transitions(model.getCurrentState(), model.getNextState());
+        // transitions.run(drawingAdapter);
     }
 }

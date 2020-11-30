@@ -5,6 +5,9 @@ import java.util.Map;
 import app.interfaces.DrawingAdapterI;
 import app.model.attributes.AttributeLabel;
 import app.model.attributes.Height;
+import app.model.attributes.PointX;
+import app.model.attributes.PointY;
+import app.model.attributes.Rotation;
 import app.model.attributes.StrokeColor;
 import app.model.attributes.Width;
 
@@ -33,6 +36,9 @@ public class Camera extends Objects{
         super(x, y, ObjectType.CAMERA.getType());
         addAttribute(new Width(width));
         addAttribute(new Height(height));
+        addAttribute(new Rotation());
+        addAttribute(new PointX());
+        addAttribute(new PointY());
         addAttribute(new StrokeColor(STROKE_COLOR));
     }
 
@@ -72,8 +78,12 @@ public class Camera extends Objects{
         double width = Double.parseDouble(attributes.get(AttributeLabel.WIDTH.getLabel()));
         double height = Double.parseDouble(attributes.get(AttributeLabel.HEIGHT.getLabel()));
         
+        double rotation = Double.parseDouble(attributes.get(AttributeLabel.ROTATION.getLabel()));
+        double px = Double.parseDouble(attributes.get(AttributeLabel.POINT_X.getLabel()));
+        double py = Double.parseDouble(attributes.get(AttributeLabel.POINT_Y.getLabel()));
+        
         drawingAdapter.setStrokeColor(attributes.get(AttributeLabel.STROKE_COLOR.getLabel()));
 
-        drawingAdapter.drawCamera(x, y, width, height);
+        drawingAdapter.drawCamera(x, y, width, height, rotation, px, py);
     }
 }

@@ -18,7 +18,9 @@ public interface DrawingAdapterI {
 
     void setLineWidth(double width);
 
-    void drawCamera(double x, double y, double width, double height);
+    void reset();
+
+    void drawCamera(double x, double y, double width, double height, double rotation, double px, double py);
     
     void drawRectangle(double x, double y, double width, double height);
 

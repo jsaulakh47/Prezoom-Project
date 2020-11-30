@@ -1,6 +1,7 @@
 package gui.javafx;
 
 import javafx.geometry.Point2D;
+import javafx.scene.transform.Affine;
 
 public class Transform {
 	
@@ -8,12 +9,13 @@ public class Transform {
 	private double viewHeight;
 	private double worldWidth;
 	private double worldHeight;
-	//private Affine transformation;
 
 	private double xScale;
 	private double yScale;
 	private double xOffset;
 	private double yOffset;
+
+	private Affine transformation;
 
     public static final double OFFSET = 4.0;
 	
@@ -47,9 +49,11 @@ public class Transform {
 		return new Point2D(x, y);
 	}
 
-	/*public void setTransformation(Affine transform) {
-		
-		this.transformation = transform;
-	}*/
-	
+	public void setTransformation(Affine transformation) {
+		this.transformation = transformation;
+	}
+
+	public Affine getTransformation() {
+		return this.transformation;
+	}
 }

@@ -13,6 +13,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 
 public class PresentationView extends Canvas {
     private final Sheet model;
@@ -86,10 +88,11 @@ public class PresentationView extends Canvas {
     private void draw() {
         double width = getWidth();
         double height = getHeight();
+
         GraphicsContext gc = getGraphicsContext2D();
         gc.setFill(Color.web(model.getCurrentState().getBackgroundColor()));
+
         Transform transform = new Transform(width, height, model.getWidth(), model.getHeight());
-        
         DrawingAdapterI drawingAdapter = new DrawingAdapter(gc, transform, width, height);
         model.draw(drawingAdapter);
     }

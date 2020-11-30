@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.KeyStore.Entry.Attribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +12,6 @@ import java.util.Map;
 
 import app.exceptions.InvalidObjectTypeException;
 import app.interfaces.DrawingAdapterI;
-import app.interfaces.ObjectFactoryI;
-import app.model.attributes.Attributes;
-import app.model.objects.ObjectFactory;
-import app.model.objects.ObjectType;
 import app.model.objects.Objects;
 import app.utility.PropertyName;
 import app.utility.Trigger;
@@ -153,6 +148,14 @@ public class Sheet {
         return states.get(currentStateIndex);
     }
 
+    public States getNextState() {
+        if (currentStateIndex < getSheetSize() - 1) {
+            return states.get(currentStateIndex);
+        }
+
+        return null;
+    }
+
     /**
      * this sub-routine return the id of current state;
      * @return Id;
@@ -228,6 +231,7 @@ public class Sheet {
         for (Objects object : states.get(index).getObjects()) {
             state.addObject(object.getType(), object.getX(), object.getY());
             state.updateObject(object.getAttributes());
+            object.setLinkId(state.getCurrentObjectId());
         }
 
         states.add(state);
@@ -308,7 +312,7 @@ public class Sheet {
      */
 
     public void draw(DrawingAdapterI drawingAdapter) {
-        for (Objects object : getCurrentState().getObjects()) {
+        for (Objects object : getCurrentState().getAllObjects()) {
             object.draw(drawingAdapter);
         }
     }

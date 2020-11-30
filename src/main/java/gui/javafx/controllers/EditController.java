@@ -261,6 +261,7 @@ public class EditController implements PropertyChangeListener {
         addLabel(background, "Background", 4);
 
         addToSideLabel("Camera", 5);
+        model.getCurrentState().setCurrentObjectIndex(0);
         setSideAttributes(model.getCurrentCameraAttributes(), 7);
     }
 
@@ -293,6 +294,7 @@ public class EditController implements PropertyChangeListener {
     */
     @FXML
     private void handleAddClick() {
+        changes.getChildren().clear();
         model.addState();
         view.update();
     }
@@ -507,11 +509,11 @@ public class EditController implements PropertyChangeListener {
         TextField textField = new TextField(value);
         if (value.matches("-?\\d+(\\.\\d+)?")) {
             textField.addEventFilter(KeyEvent.ANY, e -> {
-                char ar[] = e.getCharacter().toCharArray();
-                char ch = ar[e.getCharacter().toCharArray().length - 1];
-                if (!(ch >= '0' && ch <= '9')) {
-                    e.consume();
-                }
+                // char ar[] = e.getCharacter().toCharArray();
+                // char ch = ar[e.getCharacter().toCharArray().length - 1];
+                // if (!(ch >= '0' && ch <= '9')) {
+                //     e.consume();
+                // }
             });
         }
         textField.textProperty().addListener((e, old, text) -> {

@@ -6,6 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 
 /**
  * @author Team Alfa
@@ -22,8 +24,8 @@ public class DrawingAdapter implements DrawingAdapterI{
 		this.gc = gc ;
 		this.width = width ;
 		this.height = height ;
-        this.transform = transform ;
-        
+        this.transform = transform;
+        this.gc.transform(transform.getTransformation());       
 
 		gc.setStroke(Color.LIGHTBLUE);
         gc.clearRect(0, 0, width, height);
@@ -53,20 +55,20 @@ public class DrawingAdapter implements DrawingAdapterI{
     }
 
     @Override
-    public void getTransform() {
-        // TODO Auto-generated method stub
+    public void reset() {
+		gc.setFill(Color.WHITE);
+        gc.setTransform(new Affine());
+		gc.setStroke(Color.LIGHTBLUE);
+        gc.clearRect(0, 0, width, height);
 
-    }
-
-    @Override
-    public void transform() {
-        // TODO Auto-generated method stub
-
+		gc.fillRect(0, 0, width, height);
+        gc.strokeRect(0, 0, width, height);
     }
 
 	@Override
-	public void drawCamera(double x, double y, double width, double height) {
+	public void drawCamera(double x, double y, double width, double height, double rotation, double px, double py) {
         Point2D p = transform.worldToView(x, y);
+        Point2D pt = transform.worldToView(px, py);
         Point2D q = transform.worldToView(x + width, y + height);
 
         double i = p.getX();
@@ -74,6 +76,10 @@ public class DrawingAdapter implements DrawingAdapterI{
         double w = Math.abs(p.getX() - q.getX());
         double h = Math.abs(p.getY() - q.getY());
 
+        gc.setTransform(new Affine());
+        Rotate r = new Rotate(rotation, pt.getX(), pt.getY());
+
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         gc.strokeRect(i, j, w, h);
 	}
 
