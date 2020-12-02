@@ -33,13 +33,10 @@ classDiagram
 A state is a combination of 0 or more objects. Multiple states are present on a single sheet and change according to transitions. 
 
 ### [2]	Objects:
-Objects can have 1 attribution and can belong to multiple states.
-
-### [3]	Attribution:
-This describes a set of attributes which belongs to a particular object. 
+Objects can have 1 or more attributes and can belong to multiple states using a link id.
 
 ### [4]	Attributes:
-It describes a set of possible features related to an object (through attribution) or the camera.
+It describes a set of possible features related to an objects or the camera.
 
 ### [5]	Transitions:
 Transitions provide a transformation from one state to another through a triggering mechanism. This causes the camera to move to the next state accordingly.
