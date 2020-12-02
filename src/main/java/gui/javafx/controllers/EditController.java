@@ -428,7 +428,7 @@ public class EditController implements PropertyChangeListener {
         });
         
         
-        Point2D p = transform.viewToWorld(wrapper.i, wrapper.j);
+        Point2D p = transform.worldToView(wrapper.i, wrapper.j);
         if (attr.containsKey(AttributeLabel.STROKE_COLOR.getLabel())) {
             String key = AttributeLabel.STROKE_COLOR.getLabel();
             addColor(key, attr.get(key), position);
